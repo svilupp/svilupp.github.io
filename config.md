@@ -12,11 +12,11 @@ prepath=""
 # Base files such as LICENSE.md and README.md are ignored by default.
 ignore = ["node_modules/"]
 
-<!-- # RSS (the website_{title, descr, url} must be defined to get RSS) -->
-<!-- generate_rss = true -->
-<!-- website_title = "Jan's Scratchpad" -->
-<!-- website_descr = "Thoughts, ideas, complaints" -->
-<!-- website_url   = "https://tlienart.github.io/FranklinTemplates.jl/" -->
+# RSS (the website_{title, descr, url} must be defined to get RSS)
+generate_rss = true
+website_title = "Jan's Scratchpad"
+website_descr = "Thoughts, ideas, complaints"
+website_url   = "https://siml.earth/"
 +++
 
 <!--

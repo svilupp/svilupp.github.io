@@ -17,10 +17,10 @@ In the past year, I've been exploring the Julia language and the more I know, th
 When I'm out of office, I love to chase the waves and the wind with my :kite: avoiding :shark::shark::shark:.
 
 # Experience
-Once a management consultant at McKinsey&Company, then an investor in African Private Equity Fund, then a corporate strategy manager, then a head of product analytics function, and, lastly, a lead of the data science team at LexisNexis.
+Once a management consultant at McKinsey&Company, then an investor in African Private Equity Fund, then a corporate strategy manager, then a head of a product analytics function, and, lastly, a lead of the data science team at LexisNexis.
 
 # Getting in Touch
 If you want to get in touch, the best ways are:
 - [LinkedIn](https://www.linkedin.com/in/jan-siml-360a3858/)
-- Julia Slack (@svilupp)
+- Julia Language Slack (@svilupp)
 - Learning Bayes Stats Slack (@JS)

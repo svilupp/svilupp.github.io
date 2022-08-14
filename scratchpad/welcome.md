@@ -9,7 +9,7 @@ TL;DR  This is a new blog site that I’m trying out and it’s simultaneously a
 ## Backstory
 Over the years, I have had countless ideas for blogs: reiterating ideas I have heard, expanding on them, synthesizing my learnings, or simply collating some great resources that I found in one place
 
-Several of them I have worked out to a full dash-dot structure (forever grateful for the [Pyramid principle by Barbara Minto](https://www.goodreads.com/book/show/33206.The_Minto_Pyramid_Principle)), but I have published only a tiny fraction of them internally and **exactly zero externally** (ie, publicly).
+Several of them I have worked out to a full outline (forever grateful for the [Pyramid principle by Barbara Minto](https://www.goodreads.com/book/show/33206.The_Minto_Pyramid_Principle)), but I have published only a tiny fraction of them privately and **exactly zero publicly**.
 
 ## Root-cause Analysis
 The three main reasons were:
@@ -20,7 +20,7 @@ The three main reasons were:
 ## But, benefits?!
 But I saw clear benefits:
 - Too many packages, technologies, and services around the blogging and marketing industry that I won't be able to try otherwise, why not create a side project to explore them?
-- Unless I write something down, I cannot expose its flaws and weaknesses (see [Leslie Lamport's interesting talk](https://www.microsoft.com/en-us/research/video/leslie-lamport-thinking-code/)
+- Unless I write something down, I cannot expose its flaws and weaknesses (see [Leslie Lamport's interesting talk](https://www.microsoft.com/en-us/research/video/leslie-lamport-thinking-code/))
 - It's more effective for thoughts to be challenged by others, which cannot happen if I don't share them first
 - But, most importantly, if at least 1 person finds an article helpful, I have created some impact and that is worth more than my bruised ego if it was not perfect
 

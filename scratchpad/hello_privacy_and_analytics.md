@@ -3,7 +3,7 @@
 @def tags = ["housekeeping","privacy"]
 
 # TL;DR
-Traffic on this blog is tracked by Google Analytics in line with the requirements set out by existing regulations across various jurisdictions. You can find the details in the [Privacy Policy]("/privacy_policy/").
+Traffic on this blog is tracked by Google Analytics in line with the requirements set out by existing regulations across various jurisdictions. You can find the details in the [Privacy Policy](/privacy_policy/).
 
 # Tracking websites in the world with GDPR
 I'm obsessed by continuously improving everything I do, so I was quite keen to introduce analytics to this blog as well.

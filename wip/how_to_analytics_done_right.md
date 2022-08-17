@@ -5,7 +5,7 @@
 # THIS IS AN UNFINISHED DRAFT
 
 # TL;DR
-Privacy policy is legally required for majority of websites. If you want an effortless setup, consider Plausible.io for 90 eur/month. Best free option I found is Termly + Google Tag Manager + Google Analytics.
+Privacy policy is legally required for majority of websites. If you want an effortless option, consider Plausible.io for 90 eur/month. Best free option I found is Termly + Google Tag Manager + Google Analytics.
 
 # Motivation
 As an improvement-obsessed person, when I set up my personal blog ([here](https://simlj.earth), effortless thanks to [Franklin.jl](https://franklinjl.org/)) my first thought was “how will I measure the traffic to keep getting better?"
@@ -31,7 +31,7 @@ Practically, you should also publish Terms and Conditions for your website (even
 Now that we have established the need, let’s look into what we need to do.
 
 # So what do I need to do?
-You can read about it in detail [here](https://www.termsfeed.com/blog/sample-blog-privacy-policy-template/).
+You can read about it in detail [here](https://www.termsfeed.com/blog/sample-blog-privacy-policy-template/) or from a more authoritative source [here](https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/the-right-to-be-informed/what-privacy-information-should-we-provide/).
 
 In short, we need to:
 - collect, transfer and store the minimum information possible (in most cases your personal blog requires little or no Personal Identifiable Information (PII)) in a safe and compliant way (best to leave it to specialists)
@@ -50,8 +50,10 @@ TODO: Add more detail for each
 # Deep dive on the winning solution
 The winning solution for me was #2. It requires slightly more effort to set up, but it’s free (great for personal or open source projects!) and has more powerful analytics features for the future.
 - Tracking: GoogleAnalytics version GA4
-> Side note: Why GA4 and not Universal Analytics?
-> No one should start a new analytics account with UA in 2022. GA4 has been built with modern considerations in mind (eg, privacy-conscious consumers). This tutorial does not take advantage of its full power but it gives you extensible option for the future (eg, …)
+> Side note: Why GA4 and not Universal Analytics (UA)?
+>
+> No one should start a new analytics account with UA in 2022, as it will be sunset in July 2023. Moreover, GA4 has been built with modern considerations and experiences in mind (eg, mobile devices, privacy-conscious consumers). This tutorial does not take advantage of its full power but it gives you extensible option for the future (eg, estimated traffic if everyone consented to tracking)
+
 - Consent Management: Termly.io
 - Privacy Policy and Cookie Policy generation: Termly.io
 - Orchestration: Google Tag Manager
@@ -60,8 +62,9 @@ The winning solution for me was #2. It requires slightly more effort to set up, 
 TODO: Add screenshots and more detail
 
 ### 1) Set up GA4
-- Create an account
-- Set up property
+- Create an account [here](https://analytics.google.com/)
+- Set up a Property for measurements (Bottom left - Admin - Create Account - Create Property)
+- TODO: finish with a screenshot
 - Click on xyz to get to measurement ID <- Save this for later, we will need it to set up the Google Tag Manager
 
 I’d highly recommended changing some of the default settings to capture only what is strictly necessary and retain data (and cookies) for as short time as possible.
@@ -119,10 +122,27 @@ If you use Franklin.jl to produce your website, you can find some additional tip
 - update the pages to have headers and footers, update navbar, where to put the google tag manager
 
 ## How to reduce Google cookie expiration
-- reduce to 1month or less
+
+To see the Google support article go [here](https://support.google.com/analytics/answer/11397207?hl=en). The step that was hard for me was that you need to expand the options via "Show All" to see "Override Cookie Settings"
+
+- Go to your Google Tag Manager account
+- Open your Admin console ("Admin" on the bottom left) and select the Property for your website
+- Open Data Settings - Data Streams and select your strema (your website)
+- Click on Configure Tag Settings (at the bottom)
+- And Expand all settings options via "Show All" on the right-hand side
+- Select Override Cookie Settings - Edit - Set Cookie expiration to 1 month
+- Click "Save" for changes to take effect
+
+[![Changing GA cookie expiration](asserts/how_to_analytics_done_right/ga_change_cookie_expiration.png)]
 
 ## How to reduce Google's data retention
-- reduce to 2 months
+- Go to your Google Analytics account
+- Open your Admin console ("Admin" on the bottom left) and select the Property for your website
+- Open Data Settings - Data retention
+- Change "Event Data Retention" to 2 months
+- Click "Save" for changes to take effect
+
+[![Changing GA data retention](asserts/how_to_analytics_done_right/ga_change_data_retention.png)]
 
 
 

@@ -2,6 +2,8 @@
 <!-- @def published = "20 August 2022" -->
 @def tags = ["julia","beginners"]
 
+TODO: title Error-free data crunching patterns
+
 # THIS IS AN UNFINISHED DRAFT
 
 # TL;DR

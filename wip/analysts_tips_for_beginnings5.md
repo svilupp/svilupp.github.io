@@ -2,6 +2,7 @@
 <!-- @def published = "20 August 2022" -->
 @def tags = ["julia","beginners"]
 
+TODO: title Think about your overall workflow
 # THIS IS AN UNFINISHED DRAFT
 
 # TL;DR
@@ -40,3 +41,8 @@ Tips:
     - use Literate + Quarto
 - Automate your workflow
     - If you often repeat some commands in terminal, wrap them into a Make file or add an alias in your terminal config file
+    
+TODO: Extras
+- shout out to Watson - epi
+- science workflow 
+- ? files remote

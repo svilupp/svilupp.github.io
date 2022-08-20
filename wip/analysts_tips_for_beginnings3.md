@@ -1,5 +1,6 @@
-@def title = "Julia for Data: Tips for Better Beginning #2"
+@def title = "Julia for Analysts: Tips for Better Beginnings - Embrace the REPL (#3)"
 <!-- @def published = "20 August 2022" -->
+@def drafted = "17 August 2022"
 @def tags = ["julia","beginners"]
 
 # THIS IS AN UNFINISHED DRAFT
@@ -17,24 +18,38 @@ Official documentation says:
 That is an understatement of the century. My personal favourites are:
 (I assume you have enabled [OhMyREPL.jl](https://github.com/KristofferC/OhMyREPL.jl) package in startup.jl or just loaded it by `using OhMyREPL`)
 
-## #1 Switching modes
+## Switching modes
+- ]
+- ;
+- ?
 
-## #2 Autocompletion and ANS
-- up & down, search
+## Autocompletion and ANS
+- up & down, history search
+- use `ans` (=result of the previous line) when flying through some simple calculations or when wanting to avoid building long function pipes
 
-## #3 Getting help without leaving my workflow
+## Getting help without leaving my workflow (no more Googling)
 - Help mode: ?
-- Fuzzy search with "DataF"
-- Copy&paste with "julia>…"
+- Fuzzy search with "DataF" (or `apropos()`)
+- Effortless copy & paste of examples with "julia>" - Julia REPL will "eat it"
 - Outside… methodswith
+- typeof fieldnames / names
+    - eg, `methods(plot)[1]|>typeof|>fieldnames`
+- methods and edit
+    - eg, `methods(plot)[1].file|>string|>edit`
 
-## #4 Extracting the history
+## Extracting the history
 - Pull up the history with: `edit(REPL.find_hist_file())`
 - If you use vim, you can simply TODO: add regex to delete comments (CAREFUL NOT TO SAVE THIS FILE - it would break REPL history!)
 
 ## My Tips
 - Leverage the vertical space
-- Flying through: keyboard shortcuts like CTRL+A or +E
+- Flying through: keyboard shortcuts like CTRL+A or +E, eg, you write a function and get an errors
+    - step one type `fix` (from package TheFix) that will quickly lookup if you just made a typo and will offer a correction
+    - step 2: pull up the docstrings for that function in 2 seconds:
+        - `Arrow UP` (for previous command)
+        - `CTRL+A` (jump to beginning of the line)
+        - type `?` (trigger the help mode - you should see `?<your_function>`)
+        - and ENTER --> Voila! Your docstrings are here in 2 seconds!
 
 # Resources to learn
 - [Julia REPL Mastery Workshop](https://www.youtube.com/watch?v=bHLXEUt5KLc)

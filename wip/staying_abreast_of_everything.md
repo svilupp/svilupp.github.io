@@ -19,12 +19,12 @@ Below are my go-to resources and people that I follow on regular basis.
 
 # Recommendations
 ## Twitter
-- Sebastian Rashka
-- Sean J taylor
+- Sean J Taylor
 - Richard McElearth
 - Andrew gelman / Stats blog
 - Aki Vehtari
 - Jake VanderPlas
+- Sebastian Rashka
 - Kevin P. Murphy
 - Susan Athey
 - Jeremy Howard - Practical deep learning, nbdev, various programming languages
@@ -35,8 +35,9 @@ Below are my go-to resources and people that I follow on regular basis.
 - M. Betancourt (Patreon, twitter, github) - bayesian case studies, hamiltonian monte
 - Bogumil Kaminski - each week
 - Erik Engheim
-- Ben Stencil
-- Chip Huyen - ML Ops, also wrote. hreat book
+- Ben Stencil - Interesting reflections on the world of data analytics and its impact on decision making ([link](https://benn.substack.com/))
+- Chip Huyen - ML Ops, also wrote a great book [Designing Machine Learning Systems](https://www.amazon.com/Designing-Machine-Learning-Systems-Production-Ready/dp/1098107969)
+- Eugene Yan - A mix of observations and thorough research on various ML topics [link](https://eugeneyan.com/)
 - Batch by Andrew Ng
 - Mode / Analytics dispatch
 - Data Elixir

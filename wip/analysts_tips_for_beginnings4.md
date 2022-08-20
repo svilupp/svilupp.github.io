@@ -1,8 +1,7 @@
-@def title = "Julia for Data: Tips for Better Beginning #3"
+@def title = "Julia for Analysts: Tips for Better Beginnings - Patterns for Error-free Data Crunching (#4)"
 <!-- @def published = "20 August 2022" -->
+@def drafted = "17 August 2022"
 @def tags = ["julia","beginners"]
-
-TODO: title Error-free data crunching patterns
 
 # THIS IS AN UNFINISHED DRAFT
 
@@ -15,9 +14,13 @@ There are many ways how you can achieve the same thing in Julia. I found that a 
 ## Always use environments
 This is a must, no matter how small the analysis is. Julia REPL Pkg mode is super easy to easy and has almost no "costs" (see previous the tutorial).
 
-## Name meaningfully and consistently
-This is mouthful. You can only benefit if you choose names that represent what the logic/data they hold.
-Moreover, you should standardize your naming convention, eg, always convert to a snakecase ("finance_billings" or "count_users"). Your future self will thank you.
+All it takes `;cd my/project/path/` and `]activate .` and you're in your project-dedicated environment. Why the two commands and not `activate` with a specific path? I often want to load scripts, data, etc, which I want to address relatively (eg, `data_raw/file.csv`), so that is why I change the working directory first.
+
+## Give meaningful and consistent names
+This is a mouthful. You can only benefit if you choose names that represent what the logic/data they hold.
+Moreover, you should standardize your naming convention, eg, always convert to a snakecase ("finance_billings" or "count_users"). Your future self will thank you. 
+
+Ideally, the same would hold for your input/output files and the surrounding folder structure (eg, `data_raw/finance_billings_20220801.csv` and `data_processed/forecasting_df_20220801.feather`). It will become self-documenting and your colleague (and your future self!) will thank you for it.
 
 ## Use symbols wherever you can
 When referring to sub-objects (eg, a column in a DataFrame), you have a choice between a string ("col_A") and a symbol (:col_A).
@@ -28,7 +31,7 @@ DataFrames ecosystem is a like a swiss-army knife that is worth mastering. I fou
 
 Always start your data work with `using DataFramesMeta, StatsPlots`
 - They re-export DataFrames, Chain, and Plots packages
-- Use macros: @select/@transform/@orderby @df
+- Use macros: @select/@transform/@orderby @df ([here](https://github.com/JuliaData/DataFramesMeta.jl) and [here](https://github.com/JuliaPlots/StatsPlots.jl))
     -  Avoid brackets
 - Use chain
     -  Leverage @aside or potentially @aside @info for introspection (if you load Logging)
@@ -43,4 +46,5 @@ Always start your data work with `using DataFramesMeta, StatsPlots`
 - Incredibly easy to guess the necessary keyword (nicely composable and multiple aliases)
 - If you cannot guess, jump to help `?plot` and notice the mention of `plotattr(:Series)`
     - Use it to see all available keywords
+    - Also, leverage methods and @edit macro in REPL!
 

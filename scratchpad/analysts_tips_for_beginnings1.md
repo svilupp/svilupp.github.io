@@ -4,7 +4,8 @@
 @def tags = ["julia","beginners"]
 
 # TL;DR
-Prepare your tools before you even start coding. Get better terminal and configure it. Install pipx, juliaup, set up your `startup.jl` file.
+Tips on preparing your tools before you start coding with the Julia language for an easier and more productive learning journey. Prepare your tools before you even start coding. Get a better terminal and configure it. Install pipx, juliaup, and set up your `startup.jl` file.
+
 
 \toc
 
@@ -33,8 +34,8 @@ _Difficulty: Low_
 \
 _Downsides: None_
 
-## Shell Configurations and Secrets
-Do you often call the same long commands? Do you need some secrets or configuration to access the same data warehouse across many projects?
+## Configure your Terminal and Add Secrets
+Do you often call the same long commands? Do you need some secrets or configurations to access the same data warehouse across many projects?
 
 Invest time in setting up the default configuration of your shell (eg,`~/.zshrc` file if you have zsh).
 
@@ -55,7 +56,7 @@ export DB_ORACLE_PASSWORD="..." # add your details
 # you can even have aliases for the same value
 export MYDB_PASSWORD=$DB_ORACLE_PASSWORD #it will mirror the value above
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;- Now, try accessing these values from shell (`echo $DB_ORACLE_IP`), python (`os.environ["DB_ORACLE_IP"]`), or Julia (`ENV["DB_ORACLE_IP"]`)
+&nbsp;&nbsp;&nbsp;&nbsp;- Now, try accessing these values from the shell (`echo $DB_ORACLE_IP`), python (`os.environ["DB_ORACLE_IP"]`), or Julia (`ENV["DB_ORACLE_IP"]`)
 
 On the last point, there are several benefits:
 - You'll drastically reduce the risk of accidentally publishing a file with your passwords (eg, `.env` files)
@@ -66,7 +67,7 @@ _Difficulty: Low_
 \
 _Downsides: None_
 
-## Use pipx
+## Use Pipx
 Start using [pipx](https://pypa.github.io/pipx/) for all Python-based CLI applications (eg, AWS CLI, black, flake8, jupyter, language servers, mlflow)
 
 A lot of Python-based applications ask you to "simply install with pip" (eg, `pip install ABC`). Unfortunately doing that will change all relevant python packages in your global environment (ie, break things)!
@@ -86,7 +87,7 @@ _Difficulty: Low_
 _Downsides: None_
 
 ## Use Mamba (/Conda)
-Before Julia, having clean environments for was not easy. If you use Python, the closest thing you can get is [Mamba](https://mamba.readthedocs.io/).
+Before Julia, having clean environments was not easy. If you use Python, the closest thing you can get is [Mamba](https://mamba.readthedocs.io/).
 
 It makes creating and managing separate environments for Python easy and unlike Conda it's really fast.
 
@@ -98,7 +99,7 @@ Downsides: None_
 
 # Julia-specific Tips
 ## Use Juliaup
-Install [juliaup](https://github.com/JuliaLang/juliaup) and use it automatically update your Julia version (or to switch between different versions)
+Install [juliaup](https://github.com/JuliaLang/juliaup) to install and automatically update your Julia version as well as to switch between different versions.
 
 Installing it on a mac or linux is as simple as `curl -fsSL https://install.julialang.org | sh`
 
@@ -146,7 +147,7 @@ Downsides: Slightly slower start-up time of Julia REPL (if you add too many pack
 ## (Advanced) Precompile your Sysimage
 No beginner should ever start here, but it might happen in the first weeks/months.
 
-There is an infamous waiting time for the first time a command runs (eg, waiting for the first plot) or, in general, waiting for Julia REPL with your startup.jl file. If you find it frustrating, use [PackageCompiler.jl docs](https://julialang.github.io/PackageCompiler.jl/dev/examples/ohmyrepl.html) to create a system image with all these packages and functions you use preloaded.
+There is an infamous waiting time for the first time a command runs (eg, waiting for the first plot) or, in general, waiting for Julia REPL with your startup.jl file. If you find it frustrating, use [PackageCompiler.jl docs](https://julialang.github.io/PackageCompiler.jl/dev/examples/ohmyrepl.html) to create a system image (=[Sysimage](https://julialang.github.io/PackageCompiler.jl/dev/sysimages.html)) with all these packages and functions you use preloaded and precompiled.
 
 There is an alternative solution below.
 
@@ -159,13 +160,13 @@ Following on from the previous point, there is a different way to mostly avoid t
 
 You can use persistent sessions with tmux (=Terminal MUltipleXer, or others like Screen, Dtach, Abduco+Dvtm). Persistent means that instead of closing Julia REPL every time, you just disconnect and later on reconnect. It will remember all your loaded functions, variables, packages, etc.
 
-Note: This is incredibly useful if you use Julia REPL as your super-calculator / Excel-replacement.
+Note: This is incredibly useful if you use Julia REPL as your super-calculator / Excel replacement.
 
-Try it:
+**Try it:**
  - Open your shell
  - Type `tmux` and a new window will open
  - Type `julia` to start Julia REPL and print something, eg, `println("Hello!")`
- - Now disconnect from this session by pressing `CTRL+b` followed by `d`, and your screen show disappear (/switch back to previous shell)
+ - Now disconnect from this session by pressing `CTRL+b` followed by `d`, and your screen show disappear (/switch back to the previous shell)
  - Type `tmux a` and you should see your Julia session with "Hello" printed
 
 Read more: [Quick and Easy Guide to Tmux](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/)

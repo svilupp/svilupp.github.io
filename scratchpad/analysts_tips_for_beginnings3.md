@@ -15,14 +15,13 @@ The official documentation says:
 
 That is an understatement of the century, see [Julia REPL Tips and Tricks](https://www.youtube.com/watch?v=EkgCENBFrAY) to learn more.
 
-My personal favourites are:
-(I assume you have enabled [OhMyREPL.jl](https://github.com/KristofferC/OhMyREPL.jl) package in startup.jl or just loaded it by `using OhMyREPL`. You can find a how-to for setting up your `startup.jl` file in article #1 of this series.)
+I will highlight some of my personal favourites in the following sections. I will assume you have enabled [OhMyREPL.jl](https://github.com/KristofferC/OhMyREPL.jl) package in `startup.jl` or just loaded it by `using OhMyREPL`. You can find a how-to for setting up your `startup.jl` file in article #1 of this series.
 
 ## Switching modes
-It's a 4-in-1 deal: your standard programming mode and three more, Package, Shell, Help. Type a leading character to try them:
+It's a 4-in-1 deal: your standard programming mode and three more, Package, Shell, and Help. Type a leading character to try them:
 - `]` for Package mode: You can activate a project environment in the same folder (`activate .`) or add a package (`add XYZ`)
 - `;` for Shell mode: I never have to leave REPL and lose my progress when I want to move files and change directories, but I also don't have to use special commands (eg, `run('ls')`) to pass commands to my shell. You can also easily interpolate your Julia variables into these shell commands, an incredible power tool for working with the filesystem
-- `?` for Help mode: You can access docstrings and examples without having to switch over to the browser and to search on StackOverflow
+- `?` for Help mode: You can access docstrings and examples without having to switch over to the browser and search on StackOverflow
 
 If you delete the character (eg, with a Backspace), it will jump back to normal Julia mode.
 
@@ -34,7 +33,7 @@ For example, to active my project, I would:
 - `;cd my/project/path/` to change the directory
 - and `]activate .` to activate my project-specific environment
 
-Why did I write the two commands and not `activate` with a specific path? I often want to load scripts or data from the same folder and use relative addressess (eg, `data_raw/file.csv`), which is why I change the working directory first.
+Why did I write the two commands and not `activate` with a specific path? I often want to load scripts or data from the same folder and use relative addresses (eg, `data_raw/file.csv`), which is why I change the working directory first.
 
 ## Autocompletion, Navigation, and ans
 Keep pressing TAB. All relevant packages, variables, functions, etc. are preloaded, so you can save yourself a lot of typing.
@@ -44,7 +43,7 @@ Lastly, you can quickly fuzzy search your history with `CTRL+r`.
 
 Results of the previous command are saved in a variable named `ans`, so you simply fly through some simple calculations without having to nest multiple function calls or use pipes. Try it!
 
-## Getting help without leaving my workflow (no more Googling)
+## Getting help without leaving my workflow (no more googling)
 With Julia REPL, you can avoid the majority of googling for help, which means more productive coding time!
 
 To be able to run the below examples, you'll need to run `using DataFrames, Dates, Plots` first.
@@ -52,7 +51,7 @@ To be able to run the below examples, you'll need to run `using DataFrames, Date
 Different ways how to help yourself:
 - Open the Help mode and type the name of the function or object, eg, `?DataFrame`, to pull up the documentation and examples
 - Use fuzzy search if you're not sure about the exact name (add quotes around the word, eg, `?"DataF"` or use `apropos()`)
-- When you find a good example, copy & paste the example with "julia>" in it. Julia REPL will "eat it" and example will run
+- When you find a good example, copy & paste the example with "julia>" in it. Julia REPL will "eat it" and the example will run
 - Cannot recall the name of the function for the Week object in the Dates package? Run `methodswith(Dates.Week)` to see all functions that have specialization (a version for) Weeks
 - Not sure about what functions are exported by a certain package (ie, "that function from PackageA that does XYZ")? Run `names(PackageA)`
 - Not sure how to extract some values or attributes from a custom type `MyType` (or what fields it has)? Type `mytype|>typeof|>fieldnames` on the instance (ie, on your existing variable) or `fieldnames(MyType)` on the type itself, eg, `DataFrame|>fieldnames`
@@ -61,8 +60,9 @@ Different ways how to help yourself:
 
 Was that too many new functions? You need to remember only the first few letters, then press a TAB and REPL will magically autocomplete for you!
 
-## Extracting the history
-You can also pull all your commands to create a proper script: `edit(REPL.find_hist_file())` (You might need to run `import REPL` first)
+## Extracting the Command History
+You can also pull all your commands to create a proper script: `edit(REPL.find_hist_file())`. You might need to run `import REPL` first.
+
 If you use Vim or VSCode, you can then simply remove all the lines starting "#" and your script is ready! WARNING: Do not change the actual file - you would break it!!
 
 ## Some Random Tips

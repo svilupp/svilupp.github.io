@@ -1,22 +1,22 @@
 @def title = "Julia for Analysts: Tips for Better Beginnings - Embrace the REPL (#3)"
-<!-- @def published = "20 August 2022" -->
+@def published = "22 August 2022"
 @def drafted = "17 August 2022"
 @def tags = ["julia","beginners"]
-
-# THIS IS AN UNFINISHED DRAFT
 
 # TL;DR
 Invest time in learning to use REPL. Most importantly learn to get help (docstrings, examples, methods) within REPL to avoid breaking your [flow](https://en.wikipedia.org/wiki/Flow_(psychology)).
 
 # Embrace the REPL
-It is too powerful not to! And time invested in mastering it will return thousand-fold!
+It is too powerful not to! And the time invested in mastering it will return thousand-fold!
 
 ## What is REPL?
 Official documentation says:
 > Julia comes with a full-featured interactive command-line REPL (read-eval-print loop) built into the julia executable. In addition to allowing quick and easy evaluation of Julia statements, it has a searchable history, tab-completion, many helpful keybindings, and dedicated help and shell modes.
 
-That is an understatement of the century. My personal favourites are:
-(I assume you have enabled [OhMyREPL.jl](https://github.com/KristofferC/OhMyREPL.jl) package in startup.jl or just loaded it by `using OhMyREPL`)
+That is an understatement of the century, see [Julia REPL Tips and Tricks](https://www.youtube.com/watch?v=EkgCENBFrAY) to learn more.
+
+My personal favourites are:
+(I assume you have enabled [OhMyREPL.jl](https://github.com/KristofferC/OhMyREPL.jl) package in startup.jl or just loaded it by `using OhMyREPL`. You can find a how-to for setting up your `startup.jl` file in article #1 of this series.)
 
 ## Switching modes
 - ]

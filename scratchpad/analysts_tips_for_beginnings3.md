@@ -6,6 +6,8 @@
 # TL;DR
 Invest time in learning to use REPL. Most importantly learn to get help (docstrings, examples, methods) within REPL to avoid breaking your [flow](https://en.wikipedia.org/wiki/Flow_(psychology)).
 
+\toc
+
 # Embrace the REPL
 It is too powerful not to! And the time invested in mastering it will return a thousand-fold!
 

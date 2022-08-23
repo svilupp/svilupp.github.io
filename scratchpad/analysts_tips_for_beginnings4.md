@@ -44,7 +44,7 @@ It's easier to write (one extra symbol instead of two), it is (often) done under
 If you use the [DataFrames.jl minilanguage](https://bkamins.github.io/julialang/2020/12/24/minilanguage.html), always use symbols for column names. If something breaks, you can simply take out the commands and execute them outside of `transform()` to debug them properly (especially when broadcasting many functions across many columns).
 
 ## Use DataFramesMeta as the Center of Data Universe
-DataFrames ecosystem is the data-swiss-army knife that is worth mastering. I found that the below tips have significantly reduced the number of my errors but also increased the predictability of my outputs (ie, With the tips below, I expect to produce a stakeholder-ready load>transform>plot analysis within 30 minutes).
+DataFrames ecosystem is the data-swiss-army knife that is worth mastering. I found that the below tips have significantly reduced the number of my errors but also increased the predictability of my outputs (ie, with the tips below, I expect to produce a stakeholder-ready load>transform>plot analysis within 30 minutes).
 
 ### Using DataFramesMeta, StatsPlots
 Always start your data work with `using DataFramesMeta, StatsPlots`. They re-export most packages you need in the beginning, including DataFrames, Chain, and Plots packages.

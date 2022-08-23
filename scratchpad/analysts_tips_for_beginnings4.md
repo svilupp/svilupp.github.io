@@ -3,18 +3,16 @@
 @def drafted = "17 August 2022"
 @def tags = ["julia","beginners"]
 
-# THIS IS AN UNFINISHED DRAFT
-
 # TL;DR
 This article is focused mostly on data crunching and speeding up the "time-to-insight". Stick to DataFramesMeta+StatsPlots, use symbols, DataFramesMeta row-wise macros, and @chain pipelines.
 
 \toc
 
 # Patterns for Error-free Data Crunching
-There are many ways how you can achieve the same in Julia. I found that a few specific tips can reduces the number of errors you make and greatly enhance your "time-to-insight".
+There are many ways how you can achieve the same in Julia. I found that a few specific tips can reduce the number of errors you make and greatly enhance your "time-to-insight".
 
-## Always use environments
-This is a must, no matter how small the analysis is. Julia REPL Pkg mode is super easy to easy and has almost no "costs" (see previous the tutorial).
+## Always Use Environments
+This is a must, no matter how small the analysis is. Julia REPL Pkg mode is super easy to easy and has almost no "costs" (see article #3).
 
 All it takes is:
 ```
@@ -23,10 +21,10 @@ All it takes is:
 ``` 
 and you will be in your project-dedicated environment. Why the two commands and not just `activate` with a specific path? I often want to load scripts, data, etc, which I want to address relatively (eg, `data_raw/file.csv`), so that is why I change the working directory first.
 
-The advanced version would be to always start a new project (analysis) with `]generate` in the Package mode (see the previous article) or with [PkgTemplates.jl](https://invenia.github.io/PkgTemplates.jl/), but that is sensible only for bigger piece of work.
+The advanced version would be to always start a new project (analysis) with `]generate` in the Package mode (see the previous article) or with [PkgTemplates.jl](https://invenia.github.io/PkgTemplates.jl/), but that is sensible only for a bigger piece of work.
 
-## Give meaningful and consistent names
-This is a mouthful. You can only benefit if you choose names that represent what the logic/data they hold.
+## Give Meaningful and Consistent Names
+This is a mouthful. You can only benefit if you choose names that represent the logic/data they hold.
 Moreover, you should standardize your naming convention, eg, always convert to a snakecase (`finance_billings` or `count_users`).
 
 My frequent pattern is to apply the following column name clean-up right after loading a DataFrame:
@@ -37,8 +35,8 @@ Ideally, the same would hold for your input/output files and the surrounding fol
 
 It will become self-documenting and your colleagues (and your future self!) will thank you for it.
 
-## Use symbols wherever you can
-When referring to sub-objects (eg, a column in a DataFrame or using a `getfield()` call), you have a choice between a string ("col_A") and a symbol (:col_A).
+## Use Symbols Wherever You Can
+When referring to sub-objects (eg, a column in a DataFrame or using a `getfield()` call), you have a choice between a string (`"col_A"`) and a symbol (`:col_A`).
 Always go with symbols, ie, use `df[!,:a]` instead of `df[!,"a"]`.
 
 It's easier to write (one extra symbol instead of two), it is (often) done under the hood anyway, but most importantly since I started doing that everywhere in the DataFrames ecosystem I have made way fewer errors (in transforms, in column access, etc.) 
@@ -49,7 +47,7 @@ If you use the [DataFrames.jl minilanguage](https://bkamins.github.io/julialang/
 DataFrames ecosystem is the data-swiss-army knife that is worth mastering. I found that the below tips have significantly reduced the number of my errors but also increased the predictability of my outputs (ie, With the tips below, I expect to produce a stakeholder-ready load>transform>plot analysis within 30 minutes).
 
 ### Using DataFramesMeta, StatsPlots
-Always start your data work with `using DataFramesMeta, StatsPlots`. They re-export most packages you need in the beginning, including DataFrames, Chain, and Plots package.
+Always start your data work with `using DataFramesMeta, StatsPlots`. They re-export most packages you need in the beginning, including DataFrames, Chain, and Plots packages.
 
 ### Use Macros
 Use DataFramesMeta (and StatsPlots) macros as much as you can. Read more [here](https://github.com/JuliaData/DataFramesMeta.jl) and [here](https://github.com/JuliaPlots/StatsPlots.jl). In particular, learn to master the following ones: 
@@ -114,19 +112,19 @@ Fun fact: The above example was written automatically by [Github Copilot](https:
 
 Other highlights:
 - Using `@aside` or potentially `@aside @info` for introspection or for creating temporary variables for better readability
-- Using one-liner chain without begin-end when a simple pipe operator `|>` is not suitable (eg, multiple arguments are needed), eg, `@chain ["a","B"] join(_,"|")`
+- Using a one-liner chain without begin-end when a simple pipe operator `|>` is not suitable (eg, multiple arguments are needed), eg, `@chain ["a","B"] join(_,"|")`
 
 
 ## Use Plots.jl
 There are many great plotting libraries in Julia and I have tried switching 3 times, but, in the end, I always came back to [Plots.jl](https://docs.juliaplots.org/).
 
 My reasons to use Plots.jl:
-- Versatile (especially if you have a very specific ask/chart to make; I tend to get stuck with grammar of graphics-like syntax with our business requirements)
-- Used in the most packages I use, so it tends to be a requirement anyway
+- Versatile (especially if you have a very specific ask/chart to make; I tend to get stuck with a grammar of graphics-like syntax with our business requirements)
+- Used in most packages I use, so it tends to be a requirement anyway
 - Easy to switch between different backends but keep the same code, eg, standard `GR()` -> interactive `PlotlyJS()`
 - The most intuitive (nicely composable keywords and many aliases) and the easiest to self-help
 
-How to self-help?
+How to help yourself without googling?
 - Most times I guess the syntax or the right keyword right away
 - If not, I jump to docs with `?plot` and look for the mention of `plotattr(:Series)`. I use `plotattr(...)` commands to see all available keywords
 - As the last resort, I leverage `methods(plot)` and `edit()` in REPL to quickly pull up the source code / recipe for anything I need
@@ -136,9 +134,9 @@ What is the difference between Plots.jl and StatsPlots.jl?
 - StatsPlots.jl is a collection of recipes for common data visualizations, so you can build them faster (eg, `groupedhist`ogram, `groupedbar`, and many more; see [StatsPlots.jl](https://github.com/JuliaPlots/StatsPlots.jl))
 
 ## A Common Broadcasting Error
-If you get an error and it's a MethodError saying that there is no method defined for a Vector (or some collection), it might be a classic beginner/ex-Python user error. Don't despair, it takes maximum 1-2 weeks to understand why it happens and how to avoid it.
+If you get an error and it's a MethodError saying that there is no method defined for a Vector (or some collection), it might be a classic beginner/ex-Python user error. Don't despair, it takes at most 1-2 weeks to understand why it happens and how to avoid it.
 
-You might be calling a method (function) that is defined for individual items (eg, `s="ABC"; lowercase(s)`) on a collection of items (eg, `s_vec=["ABC","DEF"]; lowercase(s_vec)` would you give you such error).
+You might be calling a method (function) that is defined for individual items (eg, `s="ABC"; lowercase(s)`) on a collection of items (eg, `s_vec=["ABC","DEF"]; lowercase(s_vec)` would give you such an error).
 
 Often you can get away with a quick fix. Add a dot between the function name and the opening bracket to signal that Julia should apply this function to all items in the collection (eg, `s_vec=["ABC","DEF"]; lowercase.(s_vec)` - notice the `.` after lowercase). 
 

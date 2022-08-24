@@ -9,17 +9,17 @@ After the first week, have a look at other tools that the Julia ecosystem offers
 
 ## Packages that I wish to have used earlier
 
-### Revise
+### Revise.jl
 [Revise.jl](https://timholy.github.io/Revise.jl/stable/) is the best thing since sliced bread! Your (loaded) code will magically update every time you make a change and you don't need to restart Julia.
 
 I used to simply track my scripts with `includet()`, but I have now started creating a dedicated package for every mini analysis (with `]generate`). As soon as it deserves its own folder, it deserves its own project specifications - there are several downstream benefits as well.
 
-### PkgTemplates
+### PkgTemplates.jl
 If you're considering publishing your work, you should ALWAYS start your project with [PkgTemplates.jl](https://invenia.github.io/PkgTemplates.jl/).
 
 A turnkey solution for a modern Julia package - it can set up your folder structure, documentation, tests, git, Github actions, and many more.
 
-### Test
+### Test.jl
 Testing could not be easier (`using Test`)! I think the overhead for a light test suite is c. 2 minutes per function and it will save you countless hours of debugging!
 
 My workflow:
@@ -29,13 +29,13 @@ My workflow:
 - The only thing left to do is to replace `@assert` for `@test` (optionally wrap several tests into `@testset`s) and run all your tests with `]test` (in the REPL package mode).
 
 
-### Logging
+### Logging.jl
 Part of the standard library, but awesome nonetheless. Macro `@info` is your friend and you will never use print again!
 
 You can customize your loggers with [LoggingExtras.jl](https://github.com/JuliaLogging/LoggingExtras.jl).
 
-### Debugger
-[Debugger.jl](https://github.com/JuliaDebug/Debugger.jl) is an excellent tool to debug your code interactively without having to do any initial set-up.
+### Debugger.jl
+[Debugger.jl](https://github.com/JuliaDebug/Debugger.jl) is an excellent tool to debug your code interactively without having to do any initial setup.
 
 [Infiltrator.jl](https://github.com/JuliaDebug/Infiltrator.jl) is a lighter alternative if all you care about is setting a breakpoint and being able to inspect the context.
 
@@ -48,25 +48,29 @@ break_on_error(true) #or break_on(:error)
 # once inside, type ? to get help, backtick to switch to julia execution mode, and q to quit
 ```
 
-### JET
+### JET.jl
 An awesome code analyzer, [JET.jl](https://github.com/aviatesk/JET.jl), can catch your errors before you run your code.
 
 Simply run: `using JET; report_and_watch_file("my_script.jl",annotate_types=true)`
 
-### Term
+### JuliaSyntax.jl
+[JuliaSyntax.jl](https://github.com/JuliaLang/JuliaSyntax.jl) is an exciting new syntax parser that will give you much better error messages. I'm waiting for version 0.1 to add it to my startup.jl. Check out the [JuliaCon 2022 video](https://www.youtube.com/watch?v=CIiGng9Brrk)
+
+
+### Term.jl
 [Term.jl](https://github.com/FedeClaudi/Term.jl) is mostly for building beautiful CLIs and terminal applications (similar to [Rich](https://rich.readthedocs.io/en/stable/introduction.html) in Python)
 
 However, it has several nice methods for everyday use, eg, `termshow(func)` for displaying available methods and the soon-to-be-released `@showme` macro that will show you the definition of a given method instance.
 
-### JuliaFormatter
+### JuliaFormatter.jl
 [JuliaFormatter.jl](https://github.com/domluna/JuliaFormatter.jl) is a great saver and it makes your code much more readable.
 
 All you need to do is to run: `using JuliaFormatter; format(".")` in your project directory.
 
-### Literate
+### Literate.jl
 [Literate.jl](https://fredrikekre.github.io/Literate.jl/v2/) is your gateway to Literate Programming](https://en.wikipedia.org/wiki/Literate_programming).
 
-In short, you can write your code as an easily readable and version-controlled script but with one command you can export it into Markdown, Notebooks, etc. 
+In short, you can write your code as an easily readable and version-controlled script but with one command you can export it into Markdown, Notebooks, etc.
 
 The best part is that you don't need to change almost anything - just add a `#` here and there to achieve the desired layout.
 
@@ -79,7 +83,7 @@ It is even more powerful when used with Quarto.
 ### Quarto
 [Quarto](https://quarto.org/) is "an open-source scientific and technical publishing system built on Pandoc" (you could say it's a cross-platform successor to Rmarkdown + Knitr available to Python and Julia users).
 
-I have not seen a better tool for parametrized runs and for publishing of beautiful reports in many output formats (presentations, html reports, and more).
+I have not seen a better tool for parametrized runs and for publishing of beautiful reports in many output formats (presentations, HTML reports, and more).
 
 See [Using Julia in Quarto](https://quarto.org/docs/computations/julia.html).
 
@@ -109,4 +113,4 @@ My Project Ecosystem
 
 Honorable mentions that I have seen used but have no experience with:
 - [DrWatson.jl](https://github.com/JuliaDynamics/DrWatson.jl) with a tag line "The perfect sidekick to your scientific inquiries". It has been used in several projects, including UK's epidemiological modelling ([Epimap.jl](https://github.com/epimap/Epimap.jl-public))
-- [RemoteFiles.jl] when you have to keep up-to-date with some remote origins
+- [RemoteFiles.jl](https://github.com/helgee/RemoteFiles.jl) when you have to keep up-to-date with some remote origins

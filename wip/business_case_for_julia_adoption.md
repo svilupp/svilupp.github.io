@@ -41,7 +41,7 @@ The CRISP-DM process is cyclical, often requiring a return to earlier stages as 
 | Business understanding | -        | Quarto+Literate.jl                                 |
 | Data understanding     | 2W -> 1W | Julia+VSCode, ClipData, re-usable packages           |
 | Data preparation       | 4W -> 2W | DataFramesMeta.jl (macros!), re-use previous work, types+multiple dispatch |
-| Modeling               | 2W | GLM.jl, MLJ.jl, Flux.jl, Turing.jl                    |
+| Modeling               | 2W | MLJ.jl, Flux.jl, Turing.jl, SymbolicRegression.jl                   |
 | Evaluation (+Application) | 4W -> 2W | SHAP.jl, JuMP.jl, Optim.jl, Stipple.jl              |
 | Deployment             | 8W -> 3W | Pkg.jl+Test.jl, Profiler in VSCode, StructArrays.jl |
 | **Total**                 | 20W -> 10W | -                                                    |

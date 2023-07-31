@@ -6,7 +6,7 @@
 # THIS IS AN UNFINISHED DRAFT
 
 # TL;DR
-Adopting the Julia programming language for your projects can potentially cut your project completion times in half. The following sections provide several examples of how the reduction can be achieved across the different stages of the project lifecycle.
+Adopting the Julia programming language for your projects can potentially cut your project completion times in half. The following sections provide several examples of how the reduction can be achieved across the different stages of the project lifecycle. This post should serve as a scaffold and reference to help you build the business case for Julia adoption in your organization.
 
 \toc
 
@@ -23,11 +23,11 @@ There are three key sections:
 3) Examples and comments for each phase.
 
 ## Adapt me!
-Each business is different. Hopefully, the examples will help you think about where the benefits would come from and adjust it for your case when presenting it to the management.
+Each business is different.
 
-Note that I'm using estimates based on my personal experience and projects. Whilst your baselines should be different, I believe that you should be able to achieve broadly the same relative benefits (ie, halving the completion time). 
+I'm using estimates based on my personal experience and projects. Whilst your baselines should be different, I believe that you should be able to achieve broadly the same relative benefits (ie, halving the completion time). Use the examples and their relevance to adapt it to your case.
 
-Increase the odds of success by following the advice provided in my talk.
+You can increase the odds of success by following the advice provided in my talk.
 
 # CRISP-DM
 
@@ -49,17 +49,16 @@ The CRISP-DM process is cyclical, requiring a return to earlier stages as new in
 # Summary Table
 
 | Phase                 | Timeline     | Power-Ups                                            |
-|-----------------------|--------------|------------------------------------------------------|
+|:-----------------------|:--------------|:---------------------------------------------------|
 | Business understanding | -        | Quarto+Literate.jl                                 |
-| Data understanding     | 2W -> 1W | Julia+VSCode, ClipData, re-use prev. work           |
+| Data understanding     | 2W -> 1W | Julia+VSCode, ClipData.jl, Pluto.jl           |
 | Data preparation       | 4W -> 2W | DataFramesMeta.jl, re-usability, types+multiple dispatch |
 | Modeling               | 2W | MLJ.jl, Flux.jl, Turing.jl, SymbolicRegression.jl                   |
-| Evaluation (+Application) | 4W -> 2W | SHAP.jl, JuMP.jl, Optim.jl, Stipple.jl              |
-| Deployment             | 8W -> 3W | Pkg.jl+Test.jl, Profiler in VSCode  |
-| **Total**                 | 20W -> 10W | -                                                    |
+| Evaluation (+Application) | 4W -> 2W | SHAP.jl, JuMP.jl, Optim.jl, Stipple.jl       |
+| Deployment             | 8W -> 3W | Pkg.jl, Test.jl, Profiler in VSCode  |
+| **Total**                 | 20W -> 10W |   -                                           |
 
 Note: The largest source of benefits is the reusability and easy reproducibility, which generate efficiencies only in subsequent projects, i.e., expect to see their benefits in the second or third project.
-
 
 # The Examples and Comments
 
@@ -68,55 +67,112 @@ Note: The largest source of benefits is the reusability and easy reproducibility
 - Time Reduction: NaN (continuous)
 
 ### Ex1: Seamless communication with stakeholders
-`Literate.jl` and Quarto allow you to write technical documents in Julia with live code, text, visualizations and anything else you might need. 
-You can generate beautiful reports and presentations all at once with a single command, significantly reducing the preparation time and giving your team more time for other work.
+`Literate.jl` and Quarto allow you to write technical documents in Julia with live code, text, visualizations and anything else you might need. Key feature is that you define the content and the formatting is done automatically allowing you to focus on what matters. 
+
+You can generate beautiful reports and presentations in many formats, all with a single command, e.g., my talk was generated in Quarto as well and all animations were done automatically.
+
 Since the information is saved as plain text, it can be version-controlled and stored in your project repository to ensure it's kept up-to-date.
  
 ## Data Understanding
 
 - Time Reduction: From 2 weeks to 1 week
-- Notes: ClipData for rapid iteration of data between VSCode and any other source (Database clients, emails, Teams messages, ...), VS Code Julia Extensions + `vscodedisplay()`, StatsPlots.jl and DataFrameMeta.jl macros for EDA
 
 ### Ex1: Rapid iteration of data exploration
-In the early phases of a project, you often receive snippets and examples of data in various formats. With `ClipData.jl` you can quickly copy and paste data straight from (/to) your clipboard and explore any dataset immediately. This reduces the number of iterations necessary to establish the data sources needed.
+In the early phases of a project, you often receive snippets and examples of data in various formats. With `ClipData.jl` you can quickly copy and paste data straight from (/to) your clipboard and explore any dataset immediately. This reduces the number of iterations necessary to establish the data sources needed (and their fields).
 
-VS Code has several very nice preview facilities for tabular data (eg, `vscodedisplay()` or even `TerminalPager.jl`). This allows you to quickly preview the data and iterate over it, without having to switch to another application.
+VS Code has several very nice preview facilities for tabular data (eg, `vscodedisplay()`, but there is also `TerminalPager.jl` and `TabularDisplay.jl`) allowing you to quickly preview the data and iterate over it, without having to switch to another application.
 
 ### Ex2: Interactive data exploration made easy
-`Pluto.jl` notebooks provide a seamless way to build a fully reactive notebook ("dashboard") on the fly allowing you to explore various aspects of the dataset together with your subject matter experts. Full reactivity means that any change in the controllers is immediately reflected in the output of all(!) relevant cells.
+For data manipulations, `@chain` macro in `DataFramesMeta.jl` provides a way to define several subsequent data transformations (eg, select, filter, aggregate) in a pipeline with each step on a new row. This saves typing (and prevents creating unnecessary intermediate variables) and allows one to comment/uncomment individual steps to explore different aspects of the data quickly and easily.
+
+For quick visualizations, `StatsPlots.jl` offers a convenience macro `@df` that makes plotting easy with any tabular dataset. These plots can be easily added as a the last step of the `@chain` data pipeline.
+
+`Pluto.jl` notebooks provide a seamless way to build a fully reactive notebook ("dashboard") allowing you to explore various aspects of the dataset "live" with your subject matter experts. Full reactivity means that any change in the controllers is immediately reflected in the output of all(!) relevant cells.
+
+All together, in a few key strokes you can investigate all aspects of your dataset. With a few quick plots, you can stitch together an interactive dashboard with fully reactive controls (eg, add a drop-down to slide data by specific sub-groups or features) to significantly reduce the time needed to reverse-engineer the data generating process with your SMEs.
 
 ## Data Preparation
 
 - Time Reduction: From 4 weeks to 2 weeks
-- Notes: DataFramesMeta.jl macros for data transformation, re-use previous work (eg, previous pipelines that are tested), types+multiple dispatch
 
-Data Preparation is the stage where we cleanse, transform, and organize data for modeling. With Julia's package `DataFramesMeta.jl`, we can leverage macros to craft cleaner and more efficient data transformations. Take the example of joining multiple data sources or creating new derived features, `@chain` macro in `DataFramesMeta.jl` allows for easier-to-read and performant data manipulation. Coupled with Julia's emphasis on code reusability and multiple dispatch, the bespoke code we write in this phase can be repurposed in subsequent stages or future projects, significantly reducing the timeline.
+### Ex1: Data sourcing developed only once
+Each business segment has their common data sources and data capture logic, with Julia you would abstract using them into lightweight "packages" (self-standing code with associated tests) to be re-used in the future. E.g., build a simple package to download parametrized SQLs (with the SQL templates saved as separate files) embedding the necessary connection and processing details to cut down your future data discovery and acquisition times. 
 
+Julia's multiple dispatch allows building elegant and simple interfaces to your data sources, so users don't need to learn any new syntax.
+
+### Ex2: Share your work effortlessly
+Any re-usable package should be registered in your internal local registry (`LocalRegistry.jl`). It will allow any team member to easily access the latest version of each packages with Julia built-in package manager (no more copy&pasting). Being able to obtain the right version (including the past ones) on demand is key for future reproducibility!
+
+### Ex3: Re-use the data pipelines
+The `@chain` pipelines you built in the data understanding become the foundation of your codebase. You simply need to wrap them in a function, add some validation, documentation, logging and error handling and you have a robust data pipeline. All of which can be done by simply extending the `@chain` pipeline with a few extra lines (see `@assert` macro).
 
 ## Modeling
 
-- Time Reduction: NaN
-- Notes: From the simple to deep networks, all very easy and integrated to the rest of code. SymbolicRegressions.jl is amazing for discovery (and feature generation). The simplest linear regression doesn't even require any extra package - it's built-in in Julia! Julia is built around arrays!
+- Time Reduction: Stays ~2 weeks
 
-During the Modeling phase, we deploy various modeling techniques on our prepared data. Leveraging Julia packages such as `MLJ.jl` for machine learning, `Flux.jl` for deep learning, and `Turing.jl` for Bayesian inference, we can construct versatile and potent models. A practical example is using `MLJ.jl` which provides a uniform interface for calling models from various other packages. Although the timeline for this phase might remain the same, the enhanced comprehension and seamless environment that Julia offers will undoubtedly lead to better model development.
+There are several benefits Julia offers, but I would argue that they don't drastically reduce the time required, because Scikit-Learn ecosystem is very powerful as well.
 
+### Ex1: Learn new methods and approaches easily
+Julia's multiple dispatch significantly reduces the amount of syntax one has to learn. Whether it's a Bayesian Inference in `Turing.jl` or neural networks in `Flux.jl`, you'll be using the same syntax and the same packages you know from elsewhere, allowing you to learn new domains faster.
+
+### Ex2: Experiment with many model types
+Similarly to Scikit-Learn in Python, Julia has a metapackage `MLJ.jl` that provides a uniform interface to many different model classes and modelling methods (including evaluation, tuning, stacking, building learning networks, etc.). This allows you to easily experiment with many different models and compare their performance. 
+
+The clear advantage is that it can leverage the data types to guide the user to applicable models and prevent subtle bugs.
+
+### Ex3: Discover powerful features
+One of the most exciting developments in the Scientific Machine Learning (SciML) has been the development of `SymbolicRegressions.jl` package. It allows you to discover explainable yet powerful relationships in your data set!
 
 ## Evaluation/Applications
 
 - Time Reduction: From 4 weeks to 2 weeks
-- Notes: Find out how to translate model outputs into optimal actions with Optim.jl and JuMP.jl, build interactive web apps with Stipple.jl - both to communicate the logic but also to run the experience with end-users, unwrap any black-box model with SHAP.jl
 
-The Evaluation phase entails determining which of our models best align with business objectives. Julia's extensive ecosystem, boasting packages like `SHAP.jl` for model interpretability, `JuMP.jl` for optimization, and `Stipple.jl` for creating interactive web apps, turns the evaluation phase into a smoother process. For example, using `SHAP.jl`, we can better understand (non-linear! pointwise!) feature effects in complex models and effectively communicate them to stakeholders. The power of these tools can lead to a reduction in the timeline from 4 weeks to just 2.
+### Ex1: Explain your models
+We always need to check that our models don't have any inherent biases. `SHAP.jl` allows you to unwrap any black-box model and explain the predictions in a way that is easy to communicate to your stakeholders. 
 
-## Optimizing Deployment with Julia
+If you need more intuitive explanations, you should use `CounterfactualExplanations.jl`, which avoids the need for proxy model and provides explanations that anyone can understand.
+
+### Ex2: Translate model outputs into optimal actions
+Decision intelligence is a new field that combines the power of machine learning with the power of optimization. You take the model outputs and given the structure of your problem, you use `Optim.jl` or `JuMP.jl` to find the best actions that should be taken. 
+
+`Jump.jl` is the easiest way to tackle linear integration optimization problems that you've ever seen!
+
+### Ex3: Build interactive web apps
+Offline evaluation can take you only so far. You need to test your models in the real world. `Stipple.jl` allows you to build interactive web apps with a few macros that can be used to test your work with your end-users.
+
+The fact that everything is in Julia means that there is very little extra code that needs to be added leading to fast development cycle.
+
+`Stipple.jl` is built on top of the stellar `Genie.jl` allowing you to add databases, authentication, build the UI with the low-code builder in VS Code and much more!
+
+## Deployment
 
 - Time Reduction: From 8 weeks to 3 weeks
-- Notes: Very little code to change! Tests built up as the project is built and all is automatically ran in CI on every push to the code repository. Pkg.jl allows easy reproducibility. VSCode Profiler quickly highlights bottlenecks, but performance rarely requires any attention - it's more than sufficient out of the box.
 
-The final phase, Deployment, involves making our models available to stakeholders. With Julia's `Pkg.jl` and `Test.jl` for package management and testing, and the Profiler in VSCode for identifying bottlenecks, we can optimize this phase from 8 weeks to just 3. For instance, using `Pkg.jl` we can effectively manage dependencies, create reproducible environments, and ensure that our models run reliably when deployed.
+### Ex1: Change very little code
+It's a standard for all Julia code to be automatically packaged, tested and documented through out the development, which means that there is very little change required. Usually, most of effort goes into improving the documentation.
 
-In sum, adopting Julia can lead to a potential reduction in the project completion time from 20 weeks to just 10 weeks. Every stage of the CRISP-DM process reaps the benefits of Julia's flexibility, efficiency, and interoperability. Embracing Julia in your data science projects can significantly accelerate delivery timelines and produce impactful results faster.
+### Ex2: Share and reproduce easily
+Julia has best-in-class package manager (`Pkg.jl`) allowing you to perfectly replicate any environment. 
+
+It also has a built in testing framework (`Test.jl`), which means that it's easier for everyone to embrace the testing mindset.
+
+With `LocalRegistry.jl` all your internal packages are one `add` call away.
+
+### Ex3: Optimize performance
+Julia's performance is already very good out of the box. However, if you need to optimize it, you can use the built-in profiler in VS Code to quickly identify bottlenecks. 
+
+With Julia's type stability tooling (`@code_warntype`) and benchmarking suite (`BenchmarkTools.jl`) you can quickly find the optimal solutions.
+
+If you need more performance, there are tonnes of package allowing you to get C-level speeds, removing allocations, using GPUs, IPUs, MPIs, anything your application might require!
+
+# But I can do this in Python too?
+
+I know. But in business, we care a lot about efficiency and Julia provides unbeatable "time-to-results" (= time-to-learn + time-to-build + time-to-run + time-to-share or -apply).
 
 # Conclusion
 
-In conclusion, the adoption of Julia in your data science workflow presents a substantial opportunity to reduce project completion time, improve understanding, and deliver more effective results. Although the learning curve may seem steep initially, the long-term benefits are unquestionable, as demonstrated in this blog post. By investing the time to learn Julia, you're not just adding another tool to your data science toolkit, but you're embarking on a journey that will redefine your data science practices for the better. So give Julia a shot, and let it empower you to learn faster, build faster, and build better!
+In conclusion, the adoption of Julia in your data science workflow presents a substantial opportunity to reduce project completion time, improve understanding, and deliver more effective results. Although the learning curve may seem steep initially, the long-term benefits are unquestionable, as demonstrated in this blog post. 
+
+In sum, adopting Julia can lead to a potential reduction in the project completion time from 20 weeks to just 10 weeks. Every stage of the CRISP-DM process reaps the benefits of Julia's flexibility, efficiency, and interoperability.
+
+By investing the time to learn Julia, you're not just adding another tool to your data science toolkit, but you're embarking on a journey that will redefine your data science practices for the better. So give Julia a shot, and let it empower you to learn faster, build faster, and build better solutions for your business!

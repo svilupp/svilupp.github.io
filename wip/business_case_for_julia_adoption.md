@@ -6,20 +6,32 @@
 # THIS IS AN UNFINISHED DRAFT
 
 # TL;DR
-Adopting the Julia programming language for your projects can drastically expedite the entire lifecycle. With a modest learning time investment of 1-2 months in the Julia language, you can potentially cut your project completion time in half from 20 weeks to just 10 weeks. That's a return on investment worth considering.
+Adopting the Julia programming language for your projects can potentially cut your project completion times in half. The following sections provide several examples of how the reduction can be achieved across the different stages of the project lifecycle.
 
 \toc
 
 # Introduction
-At the recent JuliaCon 2023, I had the opportunity to share my thoughts (link TBU) on why Julia is a game-changer in the world of data science and business decision intelligence. My presentation was centered around three core tenets - Learn Faster, Build Faster, and Build Better - which encapsulate the potential of Julia to revolutionize the way we help businesses make data-driven decisions.
+At the recent JuliaCon 2023, I had the opportunity to share my thoughts ([link](https://www.youtube.com/watch?v=yJE3FYpHe18)) on why Julia is a game-changer in the world of data science and business decision intelligence.
 
-However, due to time constraints, I wasn't able to delve into the tangible business case for adopting Julia or provide practical examples to demonstrate these advantages. This blog post seeks to fill that gap and, hopefully, will help you make a compelling case for Julia adoption in your organization.
+My presentation was centered around three core tenets - Learn Faster, Build Faster, and Build Better - which encapsulate the potential of Julia to revolutionize the way we help businesses make data-driven decisions.
 
-In the following sections, I will illustrate how Julia's strengths align with the stages of the CRISP-DM data science process model, providing some justification for the reduction in project timeline. By contextualizing the benefits of Julia within this widely-used framework, I hope to make the business case for Julia adoption compelling and clear. Let's delve into a deeper exploration of how Julia can enhance your decision intelligence projects.
+This blog provides several examples of how the efficiencies are achieved.
+
+There are three key sections: 
+1) Introduction to CRISP-DM as the reference project lifecycle framework
+2) Summary table with the pre- and post durations
+3) Examples and comments for each phase.
+
+## Adapt me!
+Each business is different. Hopefully, the examples will help you think about where the benefits would come from and adjust it for your case when presenting it to the management.
+
+Note that I'm using estimates based on my personal experience and projects. Whilst your baselines should be different, I believe that you should be able to achieve broadly the same relative benefits (ie, halving the completion time). 
+
+Increase the odds of success by following the advice provided in my talk.
 
 # CRISP-DM
 
-Before we delve into the advantages of Julia, let's briefly discuss the Cross-Industry Standard Process for Data Mining (CRISP-DM), the framework that guides our data science journey. Introduced in 1999, CRISP-DM has emerged as a widely accepted methodology for data mining, analytics, and data science projects.
+Before we delve into the advantages of Julia, let's briefly discuss the Cross-Industry Standard Process for Data Mining (CRISP-DM). Introduced in 1999, CRISP-DM has emerged as a widely accepted methodology for data mining, analytics, and data science projects.
 
 ![CRISP-DM Framework](/assets/business_case_for_julia_adoption/CRISP-DM.png)
 
@@ -32,40 +44,46 @@ CRISP-DM is structured around six sequential phases:
 - **Evaluation:** This phase involves assessing the models against the business objectives defined in the first phase. It helps decide which model best meets the business objectives.
 - **Deployment:** The final phase involves deploying the chosen model into a business environment. It includes making the results accessible to stakeholders and integrating the model with business processes for actionable insights.
 
-The CRISP-DM process is cyclical, often requiring a return to earlier stages as new insights or issues are uncovered. This iterative approach ensures more refined and impactful outcomes over time. In the next sections, we will explore how Julia can enhance each phase of this process, potentially speeding up the data science project timeline.
+The CRISP-DM process is cyclical, requiring a return to earlier stages as new insights or issues are uncovered. This iterative approach ensures more refined and impactful outcomes over time. In the following sections, we will explore how Julia can enhance each phase of this process.
 
-# The Data Table
+# Summary Table
 
 | Phase                 | Timeline     | Power-Ups                                            |
 |-----------------------|--------------|------------------------------------------------------|
 | Business understanding | -        | Quarto+Literate.jl                                 |
-| Data understanding     | 2W -> 1W | Julia+VSCode, ClipData, re-usable packages           |
-| Data preparation       | 4W -> 2W | DataFramesMeta.jl (macros!), re-use previous work, types+multiple dispatch |
+| Data understanding     | 2W -> 1W | Julia+VSCode, ClipData, re-use prev. work           |
+| Data preparation       | 4W -> 2W | DataFramesMeta.jl, re-usability, types+multiple dispatch |
 | Modeling               | 2W | MLJ.jl, Flux.jl, Turing.jl, SymbolicRegression.jl                   |
 | Evaluation (+Application) | 4W -> 2W | SHAP.jl, JuMP.jl, Optim.jl, Stipple.jl              |
-| Deployment             | 8W -> 3W | Pkg.jl+Test.jl, Profiler in VSCode, StructArrays.jl |
+| Deployment             | 8W -> 3W | Pkg.jl+Test.jl, Profiler in VSCode  |
 | **Total**                 | 20W -> 10W | -                                                    |
+
+Note: The largest source of benefits is the reusability and easy reproducibility, which generate efficiencies only in subsequent projects, i.e., expect to see their benefits in the second or third project.
 
 
 # The Examples and Comments
 
 ## Business Understanding
 
-- Time Reduction: NaN
-- Notes: Quarto reports, writing text in Julia and converting into beautiful Quarto presentations thanks to Literate.jl
+- Time Reduction: NaN (continuous)
 
-In the initial Business Understanding phase of the CRISP-DM model, we focus on the problem definition, determining project objectives, and understanding the requirements from a business perspective. While this phase is not explicitly linked with any programming language, Julia provides certain advantages that aid in the comprehension of complex business problems.
-
-For instance, with Julia, you can quickly build interactive notebooks, or professional-looking reports using the combination of Quarto and `Literate.jl` straight from the code. These assets allow for the documentation of the business understanding phase in a format that's easy to share with all stakeholders. You can intersperse code, text, and visualizations in a single document, providing a clearer and more engaging explanation of your business understanding.
-
-This phase cuts across all stages of a project, making Julia's readability and accessibility key benefits in streamlining the overall process. The time savings here might not be as direct as in other phases but providing clear, understandable, and well-documented business understanding can significantly improve the speed and efficiency of subsequent stages.
-
+### Ex1: Seamless communication with stakeholders
+`Literate.jl` and Quarto allow you to write technical documents in Julia with live code, text, visualizations and anything else you might need. 
+You can generate beautiful reports and presentations all at once with a single command, significantly reducing the preparation time and giving your team more time for other work.
+Since the information is saved as plain text, it can be version-controlled and stored in your project repository to ensure it's kept up-to-date.
+ 
 ## Data Understanding
 
 - Time Reduction: From 2 weeks to 1 week
 - Notes: ClipData for rapid iteration of data between VSCode and any other source (Database clients, emails, Teams messages, ...), VS Code Julia Extensions + `vscodedisplay()`, StatsPlots.jl and DataFrameMeta.jl macros for EDA
 
-During the Data Understanding phase, we get familiar with the available data and ascertain its suitability and cleanliness for our project. The Julia and VS Code integration, alongside packages such as `ClipData`, make it possible for us to rapidly iterate over our data, leading to an in-depth understanding. For instance, using Julia's DataFrame capabilities in conjunction with VS Code's interactive environment, we can quickly perform exploratory data analysis (EDA), visualize data distributions, and detect outliers. This fast and thorough exploration can reduce the timeline for this stage by half.
+### Ex1: Rapid iteration of data exploration
+In the early phases of a project, you often receive snippets and examples of data in various formats. With `ClipData.jl` you can quickly copy and paste data straight from (/to) your clipboard and explore any dataset immediately. This reduces the number of iterations necessary to establish the data sources needed.
+
+VS Code has several very nice preview facilities for tabular data (eg, `vscodedisplay()` or even `TerminalPager.jl`). This allows you to quickly preview the data and iterate over it, without having to switch to another application.
+
+### Ex2: Interactive data exploration made easy
+`Pluto.jl` notebooks provide a seamless way to build a fully reactive notebook ("dashboard") on the fly allowing you to explore various aspects of the dataset together with your subject matter experts. Full reactivity means that any change in the controllers is immediately reflected in the output of all(!) relevant cells.
 
 ## Data Preparation
 

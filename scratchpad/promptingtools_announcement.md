@@ -25,9 +25,10 @@ Here's an example of its practicality for Julia developers:
 msg = ai"Efficient vectorization techniques in Julia?"
 ```
 
-> [ Info: Tokens: 389 @ Cost: $0.0008 in 9.6 seconds
-> 
-> AIMessage("Julia has several efficient vectorization techniques that you can use to optimize your code. Here are a few: .... <continues>)
+```none
+[ Info: Tokens: 389 @ Cost: $0.0008 in 9.6 seconds
+AIMessage("Julia has several efficient vectorization techniques that you can use to optimize your code. Here are a few: .... <continues>)
+```
 
 The above example would be equivalent to:
 ```julia
@@ -43,11 +44,12 @@ aai"In Julia, what is a supertype of Real?"gpt4t
 
 The results will be printed to the REPL as soon as they are ready, and you can continue with your work in the meantime.
 
-> [ Info: Tokens: 412 @ Cost: $0.0118 in 25.2 seconds
-> 
-> ┌ Info: AIMessage> In Julia, the supertype of `Real` is `Number`. The type hierarchy in Julia for numerical types is designed such that `Number` is the abstract type at the top, which includes all numeric types. Below `Number`, there are two main subtypes: `Real` for real numbers, and `Complex` for complex numbers. The `Real` type itself is an abstract type and it has various concrete subtypes representing different kinds of real numbers, such as `Integer` and `FloatingPoint`.
-> 
-> <and it continues to provide a graph of the type hierarchy and advise to use function `supertype` to explore it further>
+```none
+[ Info: Tokens: 412 @ Cost: $0.0118 in 25.2 seconds
+┌ Info: AIMessage> In Julia, the supertype of `Real` is `Number`. The type hierarchy in Julia for numerical types is designed such that `Number` is the abstract type at the top, which includes all numeric types. Below `Number`, there are two main subtypes: `Real` for real numbers, and `Complex` for complex numbers. The `Real` type itself is an abstract type and it has various concrete subtypes representing different kinds of real numbers, such as `Integer` and `FloatingPoint`.
+
+<and it continues to provide a graph of the type hierarchy and advise to use function `supertype` to explore it further>
+```
 
 PromptingTools.jl is a tool that integrates AI into your development environment intuitively and unobtrusively, enhancing productivity without disrupting your coding rhythm.
 

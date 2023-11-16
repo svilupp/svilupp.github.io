@@ -11,7 +11,7 @@ PromptingTools.jl is a Julia package developed to fill a gap in AI tooling for e
 
 # Introducing PromptingTools.jl
 
-It is both my job and passion to unlock value through AI, and PromptingTools.jl is a manifestation of this endeavor. Born from the recognition of a gap in AI tooling for personal productivity, this Julia package is tailored to automate small, yet crucial tasks in your daily routine.
+It is both my job and passion to unlock value through AI, and PromptingTools.jl is a manifestation of this endeavour. Born from the recognition of a gap in AI tooling for personal productivity, this Julia package is tailored to automate small, yet crucial tasks in your daily routine.
 
 PromptingTools.jl stands out with features like `@ai_str` and its asynchronous variant `@aai_str`, perfect for quick, in-flow questions without leaving the REPL. The ability to switch between models with simple flags like `gpt4t` adds versatility, ensuring tailored responses for diverse queries.
 
@@ -48,7 +48,7 @@ The results will be printed to the REPL as soon as they are ready, and you can c
 [ Info: Tokens: 412 @ Cost: $0.0118 in 25.2 seconds
 ┌ Info: AIMessage> In Julia, the supertype of `Real` is `Number`. The type hierarchy in Julia for numerical types is designed such that `Number` is the abstract type at the top, which includes all numeric types. Below `Number`, there are two main subtypes: `Real` for real numbers, and `Complex` for complex numbers. The `Real` type itself is an abstract type and it has various concrete subtypes representing different kinds of real numbers, such as `Integer` and `FloatingPoint`.
 
-<and it continues to provide a graph of the type hierarchy and advise to use function `supertype` to explore it further>
+<and it continues to provide a graph of the type hierarchy and advises to use a function `supertype` to explore it further>
 ```
 
 PromptingTools.jl is a tool that integrates AI into your development environment intuitively and unobtrusively, enhancing productivity without disrupting your coding rhythm.

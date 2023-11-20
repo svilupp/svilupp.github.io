@@ -1,7 +1,7 @@
 @def title = "Unleashing AI's Potential for Everyday Productivity: Introducing PromptingTools.jl"
 @def published = "16 November 2023"
 @def drafted = "30 October 2023"
-@def tags = ["julia","generative-AI","prompting"]
+@def tags = ["julia","generative-AI","genAI","prompting"]
 
 # TL;DR
 

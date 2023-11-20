@@ -5,11 +5,11 @@
 
 \toc
 
-# Introducing PromptingTools.jl
+## Introduction
 
 PromptingTools.jl is your gateway to buying back valuable time. Just a few cents can now liberate you from the tedium of repetitive tasks, leaving you free to focus on what truly matters.
 
-# Installation
+## Installation
 Installing PromptingTools.jl is a breeze. Ensure Julia is installed on your system, and add the package via the Julia REPL with `]add https://github.com/svilupp/PromptingTools.jl`. This package is designed to be user-friendly, catering to both beginners and seasoned programmers.
 
 ## Setting Up OpenAI API Key
@@ -55,7 +55,7 @@ For detailed guidance on setting persistent environment variables, refer to thes
    aitemplates("OCR")
    ```
 
-# Available Functions
+## Available Functions
 
 PromptingTools.jl offers a variety of functions including `aigenerate`, `aiextract`, `aiclassify`, and `aiscan`. Each is tailored for specific tasks, ranging from generating content to working with images. Moveover, there are pre-defined prompt templates for common tasks - find the best one with: `aitemplates`. Explore the [documentation](https://svilupp.github.io/PromptingTools.jl/stable/) to learn more about these functions and how they can transform your workflow.
 

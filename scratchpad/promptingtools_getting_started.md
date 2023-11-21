@@ -1,4 +1,4 @@
-@def title = "Getting Started with PromptingTools.jl"
+@def title = "PromptingTools.jl: Getting Started"
 @def published = "20 November 2023"
 @def drafted = "19 November 2023"
 @def tags = ["julia","generative-AI","genAI","prompting"]

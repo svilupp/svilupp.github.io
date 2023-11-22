@@ -57,6 +57,6 @@ For detailed guidance on setting persistent environment variables, refer to thes
 
 ## Available Functions
 
-PromptingTools.jl offers a variety of functions including `aigenerate`, `aiextract`, `aiclassify`, and `aiscan`. Each is tailored for specific tasks, ranging from generating content to working with images. Moveover, there are pre-defined prompt templates for common tasks - find the best one with: `aitemplates`. Explore the [documentation](https://svilupp.github.io/PromptingTools.jl/stable/) to learn more about these functions and how they can transform your workflow.
+PromptingTools.jl offers a variety of functions including `aigenerate`, `aiextract`, `aiclassify`, and `aiscan`. Each is tailored for specific tasks, ranging from generating content to working with images. Moreover, there are pre-defined prompt templates for common tasks - find the best one with `aitemplates`. Explore the [documentation](https://svilupp.github.io/PromptingTools.jl/stable/) to learn more about these functions and how they can transform your workflow.
 
 Start your AI-powered journey in Julia with PromptingTools.jl and discover a new realm of possibilities!

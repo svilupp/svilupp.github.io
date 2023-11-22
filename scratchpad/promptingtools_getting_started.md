@@ -15,7 +15,7 @@ Installing PromptingTools.jl is a breeze. Ensure Julia is installed on your syst
 ## Setting Up OpenAI API Key
 To use PromptingTools.jl, obtain an OpenAI API key by signing up at [OpenAI](https://platform.openai.com/signup). Then, set it as an environment variable in Julia: `ENV["OPENAI_API_KEY"] = "your-api-key"`. 
 
-For detailed guidance on setting persistent environment variables, refer to these links for [Windows](https://docs.microsoft.com/en-us/windows/deployment/usmt/usmt-recognized-environment-variables) and [Unix/Linux](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/).
+For detailed guidance on setting persistent environment variables, refer to these links for [Windows (see "Windows Set-up")](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety) and [Unix/Linux](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/).
 
 ## Usage Examples
 

@@ -6,6 +6,8 @@
 # TL;DR
 This blog highlights how Generative AI can be a time-saving asset for Julia programmers, offering an economical way to 'buy' time by efficiently handling everyday mini-tasks and minimizing distractions.
 
+/toc 
+
 ## Welcome to the Future of Programming!
 
 Hello, Julia enthusiasts! We're kicking off an exciting new blog series exploring how Generative AI, especially through PromptingTools.jl, can revolutionize your coding experience - "GenAI Mini-Tasks". Imagine turning the mundane, time-consuming tasks into a breeze. That's what we're here to uncover!
@@ -56,7 +58,7 @@ msg = aigenerate(:DetailOrientedTask; task="Change the double quotes to single q
 
 It took ~30 seconds to write the command and we get solid results back in ~1 second.
 The cost is two-ten-thousands of a cent (0.0002 USD)!
-```none
+```plaintext
 [ Info: Tokens: 121 @ Cost: $0.0002 in 1.1 seconds
 AIMessage("['USDT/BTC', 'USDT/ETH', 'USDT/BCH', 'USDT/XRP', 'USDT/EOS']")
 ```
@@ -64,14 +66,14 @@ AIMessage("['USDT/BTC', 'USDT/ETH', 'USDT/BCH', 'USDT/XRP', 'USDT/EOS']")
 I can practically hear: "But that's a toy example! I can do it manually!" 
 
 Well, the full task was 300 pairs and it wasn't that much slower/more expensive:
-```none
+```plaintext
 [ Info: Tokens: 2174 @ Cost: $0.0034 in 6.1 seconds
 ```
 So we have our results in a matter of seconds for a _fraction of a cent_.
 
 I hear: "But this task is super easy to code in Julia!"
 
-Assuming that something is easy is the most common mistake. I didn't think twice and started writing a list comprehension, then I realize I need to split twice, then I need to remove the square brackets, and then them back elsewhere, then I need to join, then I need to add quotes, then I need to flip the order, then I need to join again, then I need to join the list of pairs... and I keep writing and re-write code and I'm not done.
+Assuming that something is easy is the most common mistake. I didn't think twice and started writing a list comprehension, then I realized I need to split twice, then I need to remove the square brackets, and then them back elsewhere, then I need to join, then I need to add quotes, then I need to flip the order, then I need to join again, then I need to join the list of pairs... and I keep writing and re-write code and I'm not done.
 
 8 minutes later I was done with a Frankenstein-code that I'm not proud of:
 ```julia
@@ -88,7 +90,7 @@ pairs_flip = join(pairs_flip, ", ") |> x -> string("[", x, "]")
 
 It would have been much easier to do some of the cleanup in the editor to have easier types and then use Regex substitutions to do the rest, but I didn't think about it because it was "easy". Also, I'm not that familiar with Regex substitutions, so I would have had to Google it anyway -> context switch! Lastly, this has no comment or documentation, so I would have to add that to explain what I'm doing.
 
-**Summary:** GenAI version is easier to read, faster to produce (30s vs. 8 minutes), and it costs a fraction of a cent. It's an excellent productivity boost if the value of your time is higher than $0.03/hour (`0.0034/7.5*60 ≈ $0.03`)
+**Summary:** GenAI version is easier to read, faster to produce (30s vs. 8 minutes), and costs a fraction of a cent. It's an excellent productivity boost if the value of your time is higher than \$0.03/hour (`0.0034/7.5*60 ≈ $0.03`)
 
 
 ## Embracing AI in Your Workflow

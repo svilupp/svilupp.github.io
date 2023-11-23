@@ -6,7 +6,7 @@
 # TL;DR
 TL;DR: Use Generative AI and the PromptingTools.jl package to effortlessly convert screenshots into text, eliminating the need for manual re-typing and streamlining everyday tasks like extracting data from images. This simple, efficient solution leverages the GPT-4 vision model for quick and accurate text extraction.
 
-/toc 
+\toc 
 
 ## Scenario
 
@@ -63,7 +63,7 @@ There are a few ways useful keyword arguments of `aiscan`:
 ## Troubleshooting
 Currently, this feature is exclusive to the GPT-4 Vision model (`gpt-4-vision-preview` which we aliased with `gpt4v`). Attempting it with other models will result in an error, but the solution is simple: switch to `model=gpt4v`, and you're set!
 
-Error you get when using the wrong model:
+The error you get when using the wrong model:
 ```plaintext
 {
   "error": {

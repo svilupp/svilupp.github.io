@@ -6,7 +6,7 @@
 # TL;DR
 This blog highlights how Generative AI can be a time-saving asset for Julia programmers, offering an economical way to 'buy' time by efficiently handling everyday mini-tasks and minimizing distractions.
 
-/toc 
+\toc 
 
 ## Welcome to the Future of Programming!
 

@@ -26,7 +26,6 @@ Let's break down the task into two steps:
 ```julia
 using PromptingTools
 
-# Example screenshot we saved into a file
 aiscan(:OCRTask; task="Transcribe the SQL code in the image.", image_path="my_sql.png",model="gpt4v")
 ```
 

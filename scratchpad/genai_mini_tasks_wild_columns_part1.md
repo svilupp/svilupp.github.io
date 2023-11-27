@@ -198,7 +198,7 @@ rename(df_survey, rename_dict)
 
 ## Notes
 
-- Never start by making all 250 API calls at once. Pick a few tricky examples and tune the prompt/setup to work well for them. You'll save a lot of time and $$$s that way (AI engineering is all about iterating quickly and effectively)
+- Never start by making all 250 API calls at once. Pick a few tricky examples and tune the prompt/setup to work well for them. You'll save a lot of time and \$\$\$s that way (AI engineering is all about iterating quickly and effectively)
 - Provide the output format as a Struct type via the `return_type` keyword argument
 - The main argument of `aiextract` is the text to use for extraction. You can add some instructions there (format them into markdown-style sections), eg, `# Instructions\n\nDo ABC\n\n\n\n# Data\n\n\<your_data>`
 - You can use the docstring of the `return_type` Struct to provide additional instructions for the individual fields. Docstrings will be sent to the LLM as well

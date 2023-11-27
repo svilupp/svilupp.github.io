@@ -8,7 +8,7 @@ Transform messy data columns into clear, understandable names, making survey dat
 
 \toc 
 
-This is a follow-up to the first part of the blog: [GenAI Mini-Tasks: Taming Wild Table Columns](https://svilupp.github.io/scratchpad/genai_mini_tasks_taming_wild_table_columns_part2/), where we cleaned up columns in the City of Austin's community survey data by sending the column names one-by-one in separate `aiextract` calls.
+This is a follow-up to the first part of the blog: [GenAI Mini-Tasks: Taming Wild Table Columns Part1](https://svilupp.github.io/scratchpad/genai_mini_tasks_taming_wild_table_columns_part1/), where we cleaned up columns in the City of Austin's community survey data by sending the column names one-by-one in separate `aiextract` calls.
 
 Quick reminder, we have >250 quite verbose columns that we want to clean up. Let's show a few:
 
@@ -35,7 +35,7 @@ last(names(df_survey), 10)
 
  Let's re-use the previous return type `RenameColumn` and the prompt, but we'll make a few tweaks.
 
- 1. Add more fields to `RenameColumn4` to capture the old column name and the question ID (if available). It's nicer to have it together, because you cannot control in what order will the new column names be generated
+ 1. Add more fields to `RenameColumn4` to capture the old column name and the question ID (if available). It's nicer to have it together because you cannot control in what order will the new column names be generated
  2. Add a docstring for `RenameColumn4` to provide instructions for the `question_id` field and set it as optional (by allowing `Nothing` type)
  3. Create a wrapper type `RenameColumnList` which is simply a vector of `RenameColumn4` -> this way LLM knows to extract many columns
  4. Add an extra instruction to the prompt that we want the new column names to be unique (and to add a suffix _2 if they are not)
@@ -101,7 +101,7 @@ msg.content.better_names
 
 Awesome! It worked well. We got the old names, the parent question IDs (where relevant) and the new column names that are unique (notice the `_2` suffix).
 
-All we have to do now, is to rename our columns:
+All we have to do now is to rename our columns:
 ```julia
 rename_dict = Dict(cols.old_name => cols.better_name for cols in msg.content.better_names)
 
@@ -116,9 +116,9 @@ Imagine all the other things you can do! In the past, I've also sent a sample of
 
 A few things to note:
 - Our return type must be always a struct, but we can define wrappers like `RenameColumnsList`, if we want to extract several objects at once. It's very easy!
-- `question_id` field had some nuanced logic, so to keep it closer to the field itself, we've described it in the docstring and it has passed to the LLM. Morever, this field was marked as optional by allowing `Nothing` type
+- `question_id` field had some nuanced logic, so to keep it closer to the field itself, we've described it in the docstring and it has passed to the LLM. Moreover, this field was marked as optional by allowing `Nothing` type
 - We have updated the instructions slightly for the different task
-- Notice that we increased the `readtimeout` (HTTP.jl keyword argument) to 500 seconds to allow for longer prompts. That's because the longer the generated text (eg, 250 columns), the longer it takes and we don't want to time out!
+- Notice that we increased the `readtimeout` (HTTP.jl keyword argument) to 500 seconds to allow for really long outputs. That's because the longer the generated text (eg, 250 columns), the longer it takes and we don't want to time out!
 - Since we knew it would take a long time, we sent the message asynchronously to not have to wait for it (`Threads.@spawn ai...`). This way we can keep working while it runs in the background and we'll be notified when it finishes by the usual INFO log
 
 

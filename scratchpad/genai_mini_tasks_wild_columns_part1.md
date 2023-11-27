@@ -50,7 +50,7 @@ msg = aigenerate(:DetailOrientedTask; task="This is a dataset about car consumpt
  ```
 
 ```plaintext
-[ Info: Tokens: 168 @ Cost: $0.0003 in 1.4 seconds
+[ Info: Tokens: 168 @ Cost: \$0.0003 in 1.4 seconds
 AIMessage("["car_make", "car_model", "engine_size", "year", "num_cylinders", "transmission_type", "drive_type", "city_mpg", "highway_mpg", "fuel_type", "vehicle_class"]")
 ``` 
 
@@ -126,7 +126,7 @@ col = "Q25 - Share with the Mayor Topics"
 msg = aiextract(column_prompt; old_column=col, return_type=RenameColumn3, model="gpt4t")
 msg.content # we can access the string like this: msg.content.better_name (see the Struct above)
 
-# [ Info: Tokens: 184 @ Cost: $0.002 in 0.8 seconds
+# [ Info: Tokens: 184 @ Cost: \$0.002 in 0.8 seconds
 # PromptingTools.DataMessage(RenameColumn3)
 
 # RenameColumn3("q25_share_topics")

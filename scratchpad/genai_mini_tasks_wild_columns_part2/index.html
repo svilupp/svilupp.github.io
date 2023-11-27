@@ -1,0 +1,97 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">GenAI Mini-Tasks: Taming Wild Table Columns - Part 2</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Transform messy data columns into clear, understandable names, making survey data easier to manage and analyze.</p> <p><div class=franklin-toc ><ol><li><a href="#notes">Notes</a><li><a href="#conclusion">Conclusion</a></ol></div> </p> <p>This is a follow-up to the first part of the blog: <a href="https://svilupp.github.io/scratchpad/genai_mini_tasks_taming_wild_table_columns_part2/">GenAI Mini-Tasks: Taming Wild Table Columns</a>, where we cleaned up columns in the City of Austin&#39;s community survey data by sending the column names one-by-one in separate <code>aiextract</code> calls.</p> <p>Quick reminder, we have &gt;250 quite verbose columns that we want to clean up. Let&#39;s show a few:</p> <pre><code class="julia hljs">df_survey = CSV.File(<span class=hljs-string >&quot;Community_Survey_cItyofaustin.csv&quot;</span>) |&gt; DataFrame
+last(names(df_survey), <span class=hljs-number >10</span>)</code></pre> <pre><code class="plaintext hljs">10-element Vector{String}:
+ &quot;Q25 - If there was one thing yo&quot; ⋯ 77 bytes ⋯ &quot;stion, etc.), what would it be?&quot;
+ &quot;Q25 - One thing to share with Mayor Topics&quot;
+ &quot;Quality of Life Topics&quot;
+ &quot;Economic Opportunity and Affordability Topics&quot;
+ &quot;Mobility Topics&quot;
+ &quot;Health and the Environment Topics&quot;
+ &quot;Safety Topics&quot;
+ &quot;Government That Works for All Topics&quot;
+ &quot;Culture and Lifelong Learning Topics&quot;
+ &quot;Share with the Mayor Topics&quot;</code></pre> <h2>Sending All Columns at Once</h2> <p>Let&#39;s re-use the previous return type <code>RenameColumn</code> and the prompt, but we&#39;ll make a few tweaks.</p> <ol> <li><p>Add more fields to <code>RenameColumn4</code> to capture the old column name and the question ID &#40;if available&#41;. It&#39;s nicer to have it together, because you cannot control in what order will the new column names be generated</p> <li><p>Add a docstring for <code>RenameColumn4</code> to provide instructions for the <code>question_id</code> field and set it as optional &#40;by allowing <code>Nothing</code> type&#41;</p> <li><p>Create a wrapper type <code>RenameColumnList</code> which is simply a vector of <code>RenameColumn4</code> -&gt; this way LLM knows to extract many columns</p> <li><p>Add an extra instruction to the prompt that we want the new column names to be unique &#40;and to add a suffix _2 if they are not&#41;</p> <li><p>Lastly, we&#39;ll make the API call asynchronous to not have to wait for it to finish &#40;big tasks can take several minutes&#41;</p> </ol> <pre><code class="julia hljs"><span class=hljs-string >&quot;question_id is optional and should be extracted from the old_name where available (example: \&quot;q25\&quot;)&quot;</span>
+<span class=hljs-keyword >struct</span> RenameColumn4
+    question_id::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >Nothing</span>,<span class=hljs-built_in >String</span>} <span class=hljs-comment ># optional</span>
+    old_name::<span class=hljs-built_in >String</span>
+    better_name::<span class=hljs-built_in >String</span>
+<span class=hljs-keyword >end</span>
+<span class=hljs-string >&quot;Vector of RenameColumn4 holding the old and new column names&quot;</span>
+<span class=hljs-keyword >struct</span> RenameColumnsList
+    better_names::<span class=hljs-built_in >Vector</span>{RenameColumn4} <span class=hljs-comment ># extract all columns at once and return it as a vector</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># updated prompt</span>
+multicolumn_prompt = <span class=hljs-string >&quot;&quot;&quot;# Instructions
+You get list of column names from the City of Austin survey data. Define a better clean and descriptive column name for each of them.
+
+# Guidelines
+- Better Name should be brief, descriptive, snakecase, 2-3 words max. IT MUST BE LOWERCASED.
+- Do not mention its from Austin as its obvious
+- If some Question ID is included in the name (eg, &quot;Q25 Some Topic&quot;), extract it into the field `question_id` and in the better name (eg, q25_some_topic)
+- All Better Names MUST BE UNIQUE. If there is a duplicate Better Name used already, use suffix _2, _3, etc.
+
+# Old Column Names
+{{old_columns}}
+&quot;&quot;&quot;</span>
+
+<span class=hljs-comment ># we take a subset to demonstrate the approach</span>
+sample_cols = last(names(df_survey), <span class=hljs-number >10</span>)
+
+<span class=hljs-comment ># format the data as bullet points</span>
+old_columns = [<span class=hljs-string >&quot; - ID: <span class=hljs-variable >$idx</span>, Column: <span class=hljs-variable >$col</span>\n&quot;</span> <span class=hljs-keyword >for</span> (idx, col) <span class=hljs-keyword >in</span> enumerate(sample_cols)] |&gt; join
+
+<span class=hljs-comment ># use Threads.@spawn to send the message asynchronously to not have to wait for it to finish</span>
+<span class=hljs-comment ># long readtimeout to allow more time for longer generation task and a slow model like GPT4</span>
+task = Threads.<span class=hljs-meta >@spawn</span> aiextract(multicolumn_prompt; old_columns, return_type=RenameColumnsList, http_kwargs=(; readtimeout=<span class=hljs-number >500</span>), model=<span class=hljs-string >&quot;gpt4t&quot;</span>)</code></pre> <p>This is an asynchronous &#40;non-blocking&#41; call, so we can keep working. When it&#39;s ready, we&#39;ll see the usual INFO log:</p> <pre><code class="plaintext hljs">[ Info: Tokens: 754 @ Cost: \$0.014 in 30.8 seconds</code></pre>
+<p>Let&#39;s review the results:</p>
+<pre><code class="julia hljs">msg = fetch(task)
+msg.content.better_names
+<span class=hljs-comment >#  RenameColumn4(&quot;q25&quot;, &quot;Q25 - If there was one thing you could share with the Mayor regarding the City of Austin (any comment, suggestion, etc.), what would it be?&quot;, &quot;mayor_feedback&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(&quot;q25&quot;, &quot;Q25 - One thing to share with Mayor Topics&quot;, &quot;mayor_feedback_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Quality of Life Topics&quot;, &quot;quality_life_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Economic Opportunity and Affordability Topics&quot;, &quot;economic_affordability_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Mobility Topics&quot;, &quot;mobility_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Health and the Environment Topics&quot;, &quot;health_environment_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Safety Topics&quot;, &quot;safety_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Government That Works for All Topics&quot;, &quot;government_works_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Culture and Lifelong Learning Topics&quot;, &quot;culture_learning_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Share with the Mayor Topics&quot;, &quot;mayor_shared_topics_2&quot;)</span></code></pre>
+<p>Awesome&#33; It worked well. We got the old names, the parent question IDs &#40;where relevant&#41; and the new column names that are unique &#40;notice the <code>_2</code> suffix&#41;.</p>
+<p>All we have to do now, is to rename our columns:</p>
+<pre><code class="julia hljs">rename_dict = <span class=hljs-built_in >Dict</span>(cols.old_name =&gt; cols.better_name <span class=hljs-keyword >for</span> cols <span class=hljs-keyword >in</span> msg.content.better_names)
+
+rename(df_survey, rename_dict) <span class=hljs-comment ># No error this time!</span></code></pre>
+<p>And we&#39;re done&#33; It was only 10 columns, so if we did all 250, it would take a few minutes and cost around &#36;0.3 - 0.5, but that&#39;s still nothing compared to the time and mental energy it would take to do it manually.</p>
+<p>Imagine all the other things you can do&#33; In the past, I&#39;ve also sent a sample of a few unique responses in each column to make column names more reflective of the actual data.</p>
+<h2 id=notes ><a href="#notes" class=header-anchor >Notes</a></h2>
+<p>A few things to note:</p>
+<ul>
+<li><p>Our return type must be always a struct, but we can define wrappers like <code>RenameColumnsList</code>, if we want to extract several objects at once. It&#39;s very easy&#33;</p>
+
+<li><p><code>question_id</code> field had some nuanced logic, so to keep it closer to the field itself, we&#39;ve described it in the docstring and it has passed to the LLM. Morever, this field was marked as optional by allowing <code>Nothing</code> type</p>
+
+<li><p>We have updated the instructions slightly for the different task</p>
+
+<li><p>Notice that we increased the <code>readtimeout</code> &#40;HTTP.jl keyword argument&#41; to 500 seconds to allow for longer prompts. That&#39;s because the longer the generated text &#40;eg, 250 columns&#41;, the longer it takes and we don&#39;t want to time out&#33;</p>
+
+<li><p>Since we knew it would take a long time, we sent the message asynchronously to not have to wait for it &#40;<code>Threads.@spawn ai...</code>&#41;. This way we can keep working while it runs in the background and we&#39;ll be notified when it finishes by the usual INFO log</p>
+
+</ul>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>There are pros and cons to both approaches. Let&#39;s summarize them:</p>
+<p><strong>Pros:</strong> You can see that this was much easier in terms of using the results. We didn&#39;t have to clean up the resulting dictionary, deduplicate the names, etc. It was also slightly cheaper &#40;the prompt tokens are sent only once VS in each one of the 250 API calls&#41;.</p>
+<p><strong>Cons:</strong> It required an extra step to set up the prompt and the return type. Also, the feedback loop was much longer &#40;eg, waiting a few minutes for results&#41;, so if made some mistakes, it would always take a few minutes to find out and try again.</p>
+<p>You can see that choosing the right approach requires some experience and skill, it&#39;s just something you&#39;ll learn over time. It&#39;s similar to how we all had to learn to Google.</p>
+<p>Until next time&#33;</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 27, 2023.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
+</div>
+</div>
+  </main> 
+  <script src="/libs/vela/metisMenu.min.js"></script>
+  <script src="/libs/vela/slideout.min.js"></script>
+  
+  
+    <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

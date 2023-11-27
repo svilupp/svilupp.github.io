@@ -49,7 +49,7 @@ using PromptingTools
 pairs = """["BTC/USDT", "ETH/USDT", "BCH/USDT", "XRP/USDT", "EOS/USDT"]"""
 ```
 
-Let's use a template prompt `DetailOrientedTask` with placeholders `{{task}}` and `{{pairs}}` and split the tasks into two parts to make it easier for GenAI:
+Let's use a template prompt `DetailOrientedTask` with placeholders `{{task}}` and `{{data}}` and split the tasks into two parts to make it easier for GenAI:
 
 ```julia
 # Set temperature=0 to avoid creative responses
@@ -73,7 +73,7 @@ So we have our results in a matter of seconds for a _fraction of a cent_.
 
 I hear: "But this task is super easy to code in Julia!"
 
-Assuming that something is easy is the most common mistake. I didn't think twice and started writing a list comprehension, then I realized I need to split twice, then I need to remove the square brackets, and then them back elsewhere, then I need to join, then I need to add quotes, then I need to flip the order, then I need to join again, then I need to join the list of pairs... and I keep writing and re-write code and I'm not done.
+Assuming that something is easy is the most common mistake. I didn't think twice and started writing a list comprehension, then I realized I need to split twice, then I need to remove the square brackets, and then add them back elsewhere, then I need to join, then I need to add quotes, then I need to flip the order, then I need to join again, then I need to join the list of pairs... and I keep writing and re-write code and I'm not done.
 
 8 minutes later I was done with a Frankenstein-code that I'm not proud of:
 ```julia

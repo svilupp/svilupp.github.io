@@ -1,0 +1,101 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">GenAI Mini-Tasks: Automating the Little Helpers for Plotting</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>GenAI Mini-Tasks harness the power of Generative AI to automate tedious tasks in data science, such as formatting plot labels, freeing up time for more complex challenges and enhancing overall productivity in projects using tools like Julia&#39;s PromptingTools.jl.</p> <p><div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#the_small_tasks_challenge">The Small Tasks Challenge</a><li><a href="#genai_your_coding_assistant">GenAI: Your Coding Assistant</a><li><a href="#practical_example_streamlining_plot_labels">Practical Example: Streamlining Plot Labels</a><li><a href="#pro_tips">Pro Tips</a><li><a href="#conclusion">Conclusion</a><li><a href="#appendix">Appendix</a></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Welcome to the world of GenAI Mini-Tasks&#33; Here, we explore how Generative AI can revolutionize even the smallest tasks in your data analyses, saving your brain power and more you more effective.</p> <h2 id=the_small_tasks_challenge ><a href="#the_small_tasks_challenge" class=header-anchor >The Small Tasks Challenge</a></h2> <p>In data science, it&#39;s often the little things that eat up time - like tweaking plot labels or formatting data. These tasks are simple yet tedious, and they distract from the bigger picture.</p> <h2 id=genai_your_coding_assistant ><a href="#genai_your_coding_assistant" class=header-anchor >GenAI: Your Coding Assistant</a></h2> <p>Thanks to GenAI and tools like Julia&#39;s PromptingTools.jl, you can now delegate these mini-tasks to AI. Whether it&#39;s adjusting plot labels in Makie or something else, GenAI is here to help.</p> <h2 id=practical_example_streamlining_plot_labels ><a href="#practical_example_streamlining_plot_labels" class=header-anchor >Practical Example: Streamlining Plot Labels</a></h2> <p>As a case study, let&#39;s consider plot labels in data visualization. They vary in length and can mess up the aesthetics of your charts &#40;especially if you&#39;re creating many charts with the same layout but different data series&#41;. </p> <p><img src="/assets/genai_mini_tasks_plotting_helpers/barplot_legend_long.png" alt="Barplot with a bad legend" /></p> <p>We need a function to split the labels onto a new line whenever they exceed some width. Let&#39;s ask GenAI to generate a &#39;wrap string&#39; function to uniformly right-size these labels. The result? A handy function that automatically adjusts the text, saving us time and frustration.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PromptingTools
+
+<span class=hljs-comment ># if you need a reminder which Julia templates are available</span>
+aitemplates(<span class=hljs-string >&quot;Julia&quot;</span>) 
+
+<span class=hljs-comment ># call GPT-4 Turbo with the JuliaExpertAsk template</span>
+msg = aigenerate(:JuliaExpertAsk; ask=<span class=hljs-string >&quot;Write a function `wrap_string`. It iterates over words and it will add a new line each time a maximum `text_width::Int=10` would be exceeded. Provide an example&quot;</span>, model=<span class=hljs-string >&quot;gpt4t&quot;</span>)</code></pre> <pre><code class="plaintext hljs">[ Info: Tokens: 350 @ Cost: $0.0086 in 7.9 seconds
+AIMessage(&quot;Here is a function `wrap_string` that wraps words nto lines such that each line does not exceed the text_width`:</code></pre> <pre><code class="julia hljs"><span class=hljs-keyword >function</span> wrap_string(text::<span class=hljs-built_in >String</span>, text_width::<span class=hljs-built_in >Int</span>=<span class=hljs-number >10</span>)
+     words = split(text)
+     wrapped_text = <span class=hljs-string >&quot;&quot;</span>
+     current_line_length = <span class=hljs-number >0</span>
+
+     <span class=hljs-keyword >for</span> word <span class=hljs-keyword >in</span> words
+         <span class=hljs-keyword >if</span> current_line_length + length(word) &lt;= text_width
+             wrapped_text *= (current_line_length == <span class=hljs-number >0</span> ? <span class=hljs-string >&quot;&quot;</span> :  <span class=hljs-string >&quot; &quot;</span>) * word
+             current_line_length += length(word) + current_line_length == <span class=hljs-number >0</span> ? <span class=hljs-number >0</span> : <span class=hljs-number >1</span>
+         <span class=hljs-keyword >else</span>
+             wrapped_text *= <span class=hljs-string >&quot;\n&quot;</span> * word
+             current_line_length = length(word)
+         <span class=hljs-keyword >end</span>
+     <span class=hljs-keyword >end</span>
+
+     <span class=hljs-keyword >return</span> wrapped_text
+<span class=hljs-keyword >end</span></code></pre> <pre><code class="plaintext hljs">Example usage of the function:</code></pre>
+<pre><code class="julia hljs">text = <span class=hljs-string >&quot;This function will wrap words into lines&quot;</span>
+ wrapped_text = wrap_string(text)
+ println(wrapped_text)</code></pre>
+<pre><code class="plaintext hljs">This will output the text wrapped to the specified width as per the function. Due to the 10-character limit, you could expect the output to be in several lines, with each line&#x27;s length up to or a bit less than 10 characters, depending on the words&#x27; lengths and the spaces between them.&quot;)</code></pre>
+<p>Pretty good for a single shot&#33; It took ~40 seconds to write, a few more seconds to generate and cost only a cent&#33;</p>
+<p>We tried the example and all works as expected:</p>
+<pre><code class="julia hljs">text = <span class=hljs-string >&quot;This function will wrap words into lines&quot;</span>
+ wrapped_text = wrap_string(text)
+<span class=hljs-comment ># &quot;This\nfunction\nwill wrap\nwords into\nlines&quot;</span></code></pre>
+<p>Let&#39;s use it for our chart &#40;see the code in the appendix. Algebra of Graphics is amazing&#33;&#33;&#33;&#41;:</p>
+<p><img src="/assets/genai_mini_tasks_plotting_helpers/barplot_legend_fixed.png" alt="Barplot with a fixed legend" /></p>
+<h2 id=pro_tips ><a href="#pro_tips" class=header-anchor >Pro Tips</a></h2>
+<p>Be explicit in what you want &#40;&quot;iterate over words&quot;&#41; and ask for examples &#40;&quot;provide an example&quot;&#41;. This allows you to quickly copy and paste the code and test it.</p>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>GenAI Mini-Tasks show that even the most mundane coding tasks can be streamlined with AI. Embrace these tools to focus on what truly matters in your data science projects. Stay tuned for more insights on using GenAI to tackle everyday coding challenges&#33;</p>
+<h2 id=appendix ><a href="#appendix" class=header-anchor >Appendix</a></h2>
+<p>Code used to produce the examples above:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> DataFramesMeta
+<span class=hljs-keyword >using</span> CairoMakie, AlgebraOfGraphics
+
+<span class=hljs-comment ># Example data for barplot with 2 stacked series</span>
+dummy = DataFrame(
+    x = repeat([<span class=hljs-string >&quot;Year 1&quot;</span>, <span class=hljs-string >&quot;Year 2&quot;</span>], inner = <span class=hljs-number >3</span>),
+    y = repeat([<span class=hljs-string >&quot;This is extremely long name for category A&quot;</span>, <span class=hljs-string >&quot;B&quot;</span>, <span class=hljs-string >&quot;C&quot;</span>], outer = <span class=hljs-number >2</span>),
+    z = [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >4</span>, <span class=hljs-number >5</span>, <span class=hljs-number >6</span>],
+)
+
+<span class=hljs-comment ># Plot with AoG</span>
+plt =
+    data(dummy) *
+    mapping(:x =&gt; <span class=hljs-string >&quot;Years&quot;</span>, :z =&gt; <span class=hljs-string >&quot;Values&quot;</span>, color = :y =&gt; <span class=hljs-string >&quot;Category&quot;</span>, stack = :y) *
+    visual(BarPlot) |&gt; draw
+save(<span class=hljs-string >&quot;barplot_legend_long.png&quot;</span>, plt, px_per_unit = <span class=hljs-number >2</span>)
+
+
+<span class=hljs-string >&quot;Wraps a string to a given width by inserting newlines.&quot;</span>
+<span class=hljs-keyword >function</span> wrap_string(text::<span class=hljs-built_in >String</span>, text_width::<span class=hljs-built_in >Int</span> = <span class=hljs-number >10</span>)
+    words = split(text)
+    wrapped_text = <span class=hljs-string >&quot;&quot;</span>
+    current_line_length = <span class=hljs-number >0</span>
+
+    <span class=hljs-keyword >for</span> word <span class=hljs-keyword >in</span> words
+        <span class=hljs-keyword >if</span> current_line_length + length(word) &lt;= text_width
+            wrapped_text *= (current_line_length == <span class=hljs-number >0</span> ? <span class=hljs-string >&quot;&quot;</span> : <span class=hljs-string >&quot; &quot;</span>) * word
+            current_line_length += length(word) + (current_line_length == <span class=hljs-number >0</span> ? <span class=hljs-number >0</span> : <span class=hljs-number >1</span>)
+        <span class=hljs-keyword >else</span>
+            wrapped_text *= <span class=hljs-string >&quot;\n&quot;</span> * word
+            current_line_length = length(word)
+        <span class=hljs-keyword >end</span>
+    <span class=hljs-keyword >end</span>
+
+    <span class=hljs-keyword >return</span> wrapped_text
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Plot with AoG and wrapped labels (using the function above)</span>
+plt =
+    data(dummy) *
+    mapping(
+        :x =&gt; <span class=hljs-string >&quot;Years&quot;</span>,
+        :z =&gt; <span class=hljs-string >&quot;Values&quot;</span>,
+        color = :y =&gt; (x -&gt; wrap_string(x, <span class=hljs-number >20</span>)) =&gt; <span class=hljs-string >&quot;Category&quot;</span>,
+        stack = :y,
+    ) *
+    visual(BarPlot) |&gt; draw
+save(<span class=hljs-string >&quot;barplot_legend_fixed.png&quot;</span>, plt, px_per_unit = <span class=hljs-number >2</span>)</code></pre>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 27, 2023.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
+</div>
+</div>
+  </main> 
+  <script src="/libs/vela/metisMenu.min.js"></script>
+  <script src="/libs/vela/slideout.min.js"></script>
+  
+  
+    <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

@@ -1,5 +1,5 @@
 @def title = "GenAI Mini-Tasks: Should I Watch this Youtube Video?"
-<!-- @def published = "27 November 2023" -->
+<!-- @def published = "28 November 2023" -->
 @def drafted = "28 November 2023"
 @def tags = ["julia","generative-AI","genAI","prompting"]
 
@@ -87,11 +87,12 @@ AIMessage("# Chapter 1: Introduction to Julia Adoption in Business [00:00:00]
 For a nicer display, I would recommend using Julia Markdown `Markdown.parse(msg.content)` or just copy it to a separate window in VSCode `clipboard(msg.content)`
 
 All this in just a few seconds! 
-Also, this video sounds interesting, I should probably watch it! :)
+Yeah, this video sounds interesting, I should probably watch it! 😃
 
 ## Practical Tip: Zoom out!
 
 GenAI isn't just about quick analysis; it's about customization.
+
 One of the best things is that it allows you to effortlessly increase or decrease the level of detail of a summary, similar to having zoom-in and zoom-out buttons but for the amount of information!
 
 My favorite instruction when I want to quickly scan something is to say “Make it 5 words at maximum” or "Maximum 5 words per bullet point" and run it again:
@@ -140,6 +141,6 @@ Talk about a lifesaver! Now, I can jump to the specific section I need without h
 
 
 ## Conclusion: A Time-Saving Trick for the Digital Age
-In less than a minute, you've analyzed the video and saved yourself potentially hours. You spent 30 seconds on analysis and another 30 to scan the chapters – that's 8x time saved compared to watching the entire video!
+In less than a minute, you've analyzed the key messages and extracted their timestamps - that's ~10x timesaving compared to watching the entire video!
 
 Stay tuned for more GenAI mini-task magic in upcoming posts, where we'll continue to explore practical, time-saving uses of Generative AI for everyday tasks. Happy coding and watching! 🚀📺

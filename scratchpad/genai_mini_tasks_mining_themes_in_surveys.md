@@ -1,5 +1,5 @@
 @def title = "GenAI Mini-Tasks: Mining Themes in Survey Responses"
-<!-- @def published = "27 November 2023" -->
+@def published = "28 November 2023"
 @def drafted = "28 November 2023"
 @def tags = ["julia","generative-AI","genAI","prompting"]
 
@@ -138,7 +138,7 @@ First, OpenAI API does not use your training for training and it only retains fo
 
 Second, you can use a few utilities we provide to scrub specific named entities (see `?PT.replace_words`).
 
-Third, PromptingTools.jl supports Ollama models, so you can switch over to local models without any changes to your code and your data never leaves your computer.
+Third, PromptingTools.jl supports Ollama models, so you can switch over to local models without any changes to your code and your data never leaves your computer. If you need something quick and small, consider `openhermes2.5-mistral` or `zephyr`. If you have Apple M1 or Nvidia GPU, you can use something bigger like `yi:34b-chat`.
 
 ## Conclusion
 By leveraging GenAI, we've saved countless hours and gained a clear view of community opinions. This approach isn't just a time-saver; it's a game-changer in making data analysis more accessible and efficient. Join us next time for more GenAI-powered data solutions!

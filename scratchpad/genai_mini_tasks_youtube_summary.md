@@ -1,5 +1,5 @@
 @def title = "GenAI Mini-Tasks: Should I Watch this Youtube Video?"
-<!-- @def published = "28 November 2023" -->
+@def published = "29 November 2023"
 @def drafted = "28 November 2023"
 @def tags = ["julia","generative-AI","genAI","prompting"]
 
@@ -139,6 +139,12 @@ AIMessage("# Chapter 1: Julia Adoption in Business [00:00:00 - 00:09:18]
 
 Talk about a lifesaver! Now, I can jump to the specific section I need without having to watch the entire video.
 
+## Why not simply use ChatGPT?
+
+Of course, use it whenever you can! The benefits of using PromptingTools.jl are:
+- The full power of Julia REPL at your disposal (eg, chunk long documents, merge answers, scrub sensitive information)
+- Automate tasks, eg, "Summarize these 20 Youtube videos in my Watch Later list and save it as a nicely formatted Markdown file or a Quarto document"
+- Leverage intricate templates in PromptingTools.jl and placeholders in them (eg, just provide the transcript and we take care of the rest)
 
 ## Conclusion: A Time-Saving Trick for the Digital Age
 In less than a minute, you've analyzed the key messages and extracted their timestamps - that's ~10x timesaving compared to watching the entire video!

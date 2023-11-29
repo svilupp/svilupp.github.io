@@ -63,7 +63,7 @@ Voila!
 
 ```plaintext
 
-[ Info: Tokens: 3785 @ Cost: $0.0058 in 7.7 seconds
+[ Info: Tokens: 3785 @ Cost: \$0.0058 in 7.7 seconds
 AIMessage("# Theme 1: Traffic and Transportation Improvement
 - Best illustrated by: "Traffic is the main concern and needs to be addressed. Buses cause a major backup, they need to be allowed to pull over without backing up traffic even if the sidewalk needs to be pushed back in order to accommodate this, then it should be done. Many other cities do this."
 - This theme is focused on the issues of traffic congestion, buses causing backups, and the need for improvement in transportation infrastructure.
@@ -95,7 +95,7 @@ aigenerate(:AnalystThemesInResponses; question=col, responses=sample_responses, 
 ```
 
 ```plaintext
-[ Info: Tokens: 4137 @ Cost: $0.0532 in 34.2 seconds
+[ Info: Tokens: 4137 @ Cost: \$0.0532 in 34.2 seconds
 AIMessage("```
 # Theme 1: Infrastructure and Traffic Management
 - Best illustrated by: "Traffic is the main concern and needs to be addressed. Buses cause a major backup, they need to be allowed to pull over without backing up traffic even if the sidewalk needs to be pushed back in order to accommodate this, then it should be done. Many other cities do this."

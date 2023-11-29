@@ -94,8 +94,8 @@ tasks = [Threads.<span class=hljs-meta >@spawn</span> aigenerate(:AnalystChapter
 <span class=hljs-comment >#  Task (runnable) @0x000000014abe6270</span>
 <span class=hljs-comment >#  Task (runnable) @0x000000014abe6400</span></code></pre>
 <p>A few seconds later, we get the familiar INFO logs announcing that the results are ready:</p>
-<pre><code class="plaintext hljs">[ Info: Tokens: 5087 @ Cost: $0.0052 in 4.5 seconds
-[ Info: Tokens: 3238 @ Cost: $0.0034 in 6.0 seconds</code></pre>
+<pre><code class="plaintext hljs">[ Info: Tokens: 5087 @ Cost: \$0.0052 in 4.5 seconds
+[ Info: Tokens: 3238 @ Cost: \$0.0034 in 6.0 seconds</code></pre>
 <p>If you want to check if the tasks are done &#40;ie, we received all responses&#41;, you can simply run <code>all&#40;istaskdone, tasks&#41;</code>. If you send a lot of chunks, you might want to disable the INFO logs with <code>verbose&#61;false</code>.</p>
 <p>Unfortunately, now we have 2 tasks that have messages in them. We want to: convert tasks to messages with <code>fetch</code> , extract the content with <code>msg.content</code> and then concatenate the messages into a single piece of text. We can do it all as a one-liner with <code>mapreduce</code> &#40;it executes the first function on each task and then joins them together&#41;:</p>
 <pre><code class="julia hljs">mapreduce(x -&gt; fetch(x).content * <span class=hljs-string >&quot;\n&quot;</span>, *, msgs) |&gt; Markdown.parse</code></pre>

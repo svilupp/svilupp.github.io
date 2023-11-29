@@ -19,7 +19,7 @@ Let's take a "not-so-random" video from this year's JuliaCon: [Julia-fying Your 
 **Step 1: Download the Transcript**
    - Go to the YouTube video
    - Below the video, click on the 'more' option to expand extra information
-   - Scroll to Transcript section and click 'Show Transcript'
+   - Scroll to the Transcript section and click 'Show Transcript'
    - Copy the transcript (you can save it to a file or a variable, depending on its size)
 
 **Step 2: Analyze with GenAI**
@@ -84,7 +84,7 @@ AIMessage("# Chapter 1: Introduction to Julia Adoption in Business [00:00:00]
 
 ```
 
-For a nicer display, I would recommend using Julia Markdown `Markdown.parse(msg.content)` or just copy it to a separate window in VSCode `clipboard(msg.content)`
+For a nicer display, I would recommend using Julia Markdown `Markdown.parse(msg.content)` or just copying it to a separate window in VSCode `clipboard(msg.content)`
 
 All this in just a few seconds! 
 Yeah, this video sounds interesting, I should probably watch it! 😃

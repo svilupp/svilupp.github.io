@@ -43,9 +43,17 @@ TODO: Add example for long transcripts
 
 **The best part?** This entire process takes less than 2 minutes and costs mere pennies, saving you a whopping 1.5 hours! That's a 45x benefit!
 
-**Privacy Concern? No Problem!**
+## How about privacy?
 
 Handling a sensitive meeting? Switch to Ollama models for enhanced privacy (see previous posts). Plus, you can always scrub key entities before uploading, like this simple Julia `replace_words` code snippet.
+
+## Why not simply use ChatGPT?
+
+Of course, use it whenever you can! The benefits of using PromptingTools.jl are:
+- The full power of Julia REPL at your disposal (eg, chunk long documents, merge answers, scrub sensitive information)
+- Automate tasks, eg, "Summarize these 20 Youtube videos in my Watch Later list and save it as a nicely formatted Markdown file or a Quarto document"
+- Leverage intricate templates in PromptingTools.jl and placeholders in them (eg, just provide the transcript and we take care of the rest)
+
 
 ## Conclusion
 

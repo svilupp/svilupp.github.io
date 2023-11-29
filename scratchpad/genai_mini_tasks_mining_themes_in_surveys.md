@@ -96,7 +96,7 @@ aigenerate(:AnalystThemesInResponses; question=col, responses=sample_responses, 
 
 ```plaintext
 [ Info: Tokens: 4137 @ Cost: \$0.0532 in 34.2 seconds
-AIMessage("```
+AIMessage("
 # Theme 1: Infrastructure and Traffic Management
 - Best illustrated by: "Traffic is the main concern and needs to be addressed. Buses cause a major backup, they need to be allowed to pull over without backing up traffic even if the sidewalk needs to be pushed back in order to accommodate this, then it should be done. Many other cities do this."
 
@@ -126,7 +126,7 @@ AIMessage("```
 
 # Theme 10: Pollution Control and Waste Management
 - Best illustrated by: "THERE ARE MANY CRAZY PEOPLE WHO WANT FLUORIDE OUT OF THE DRINKING WATER HERE, PLEASE SEE PAST THE CRAZY AND REALIZE THERE ARE RATIONAL, LOGICAL AND FISCAL REASONS TO REMOVE FLUORIDE FROM THE WATER, IT IS REMOVED PEOPLE CAN STILL OPT-IN AND THE CITY CAN GET THEM FLUORIDE IN ANOTHER WAYS BUT IF IT REMAINS IN IT IS FORCED ON EVERYONE EVEN THOSE WHO DON'T WANT IT AND THOSE WITH MEDICAL CONDITION FLUOROSIS REMOVE FLUORIDE ITS A WASTE OF MONEY"
-```")
+")
 
 This way you can slice and dice your data in many ways, and GenAI will adapt to your needs.
 

@@ -33,7 +33,7 @@ msg = aigenerate(:AnalystChaptersInTranscript; transcript=txt, instructions="Non
 ```
 
 ```plaintext
-[ Info: Tokens: 4082 @ Cost: $0.0543 in 46.9 seconds
+[ Info: Tokens: 4082 @ Cost: \$0.0543 in 46.9 seconds
 AIMessage("# Chapter 1: Introduction to Julia Adoption in Business [00:00:00]
 
 - The speaker discusses the adoption of the Julia programming language in business settings, particularly for decision intelligence.
@@ -102,7 +102,7 @@ msg = aigenerate(:AnalystChaptersInTranscript; transcript=txt, instructions="Max
 ```
 
 ```plaintext
-[ Info: Tokens: 3729 @ Cost: $0.0434 in 21.5 seconds
+[ Info: Tokens: 3729 @ Cost: \$0.0434 in 21.5 seconds
 AIMessage("# Chapter 1: Julia Adoption in Business [00:00:00 - 00:09:18]
 
 - Discussing Julia's advantages.

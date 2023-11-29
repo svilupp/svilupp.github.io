@@ -8,7 +8,7 @@ Using Generative AI and Julia's PromptingTools.jl, we efficiently extracted key 
 
 \toc 
 
-**Introduction**
+## Introduction
 Welcome to our GenAI Mini-Tasks series! Today, we're diving into how Generative AI can transform the way we analyze survey data, using a real-life example from the Austin Community Survey (source: [Austin Community Survey Data](https://data.austintexas.gov/dataset/Community-Survey/s2py-ceb7/data)).
 
 ```julia

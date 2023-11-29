@@ -170,8 +170,8 @@ tasks = [Threads.@spawn aigenerate(:AnalystChaptersInTranscript; transcript=chun
 
 A few seconds later, we get the familiar INFO logs announcing that the results are ready:
 ```plaintext
-[ Info: Tokens: 5087 @ Cost: $0.0052 in 4.5 seconds
-[ Info: Tokens: 3238 @ Cost: $0.0034 in 6.0 seconds
+[ Info: Tokens: 5087 @ Cost: \$0.0052 in 4.5 seconds
+[ Info: Tokens: 3238 @ Cost: \$0.0034 in 6.0 seconds
 ```
 If you want to check if the tasks are done (ie, we received all responses), you can simply run `all(istaskdone, tasks)`. If you send a lot of chunks, you might want to disable the INFO logs with `verbose=false`.
 

@@ -1,0 +1,175 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">GenAI Mini-Tasks: Oh no, I missed a meeting. What now?</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Use GenAI and PromptingTools.jl in Julia to quickly summarize missed meetings or webinars in minutes, saving hours of catch-up time with a concise, AI-generated overview that&#39;s easy and efficient.</p> <div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#how_to_turn_oops_into_ahh">How to turn &quot;oops&quot; into &quot;ahh&quot;</a><li><a href="#example_a_video_recorded_on_stream">Example: A Video Recorded on Stream</a><li><a href="#but_wait_theres_more">But wait, there&#39;s more&#33;</a><li><a href="#tips_for_longer_meetings">Tips for Longer Meetings</a><li><a href="#how_about_privacy">How about privacy?</a><li><a href="#why_not_simply_use_chatgpt">Why not simply use ChatGPT?</a><li><a href="#conclusion">Conclusion</a></ol></div> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Ever found yourself in a pinch for missing a meeting or a webinar? Maybe it slipped your mind, or you skipped it to keep coding &#40;we don&#39;t judge&#33;&#41;. But now you&#39;re scrambling to catch up without sitting through hours of recordings. Fear not&#33; GenAI and PromptingTools.jl are here to rescue your day.</p> <h2 id=how_to_turn_oops_into_ahh ><a href="#how_to_turn_oops_into_ahh" class=header-anchor >How to turn &quot;oops&quot; into &quot;ahh&quot;</a></h2> <p>Steps:</p> <ol> <li><p><strong>Get the Transcript</strong>: Most meetings and webinars have a downloadable transcript. If not, you can usually get it from Chrome Inspector. </p> <ul> <li><p>With Microsoft Stream, jump to the Chrome Inspector, open the Network tab, filter for &quot;streamContent&quot; and reload the video&#33; You&#39;ll see both the flat text file &#40;VTT&#41; version and the JSON-formatted version</p> <li><p>With Zoom, you can download the transcript directly from the Cloud Recordings tab in your browser</p> <li><p>Save the transcript into a text file on your computer</p> </ul> <li><p><strong>Clean and Chunk</strong>: Trim out the fluff from the script &#40;eg, IDs and markup&#41;. Next, break it into chunks &#40;say, every 35000 characters for a model with a 16K context window&#41;. This makes it more digestible for our AI buddy and it can work on it in parallel.</p> <li><p><strong>Let GenAI Do Its Magic</strong>: Send each chunk to GenAI asynchronously. Add instructions to keep the summary succinct.</p> <li><p><strong>Merge and Marvel</strong>: Once processed, stitch the summaries together. You can either display them directly or beautify them in Markdown format.</p> </ol> <p><strong>And voilà&#33;</strong> In about a minute, you have a concise, to-the-point summary of your missed meeting. You can now jump to the crucial parts if needed.</p> <h2 id=example_a_video_recorded_on_stream ><a href="#example_a_video_recorded_on_stream" class=header-anchor >Example: A Video Recorded on Stream</a></h2> <p>Let&#39;s use a recording of a lightning talk for JuliaCon 2022 and save the transcript.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Markdown <span class=hljs-comment ># for nicer display</span>
+<span class=hljs-keyword >using</span> PromptingTools
+<span class=hljs-keyword >const</span> PT = PromptingTools
+
+fn = <span class=hljs-string >&quot;stream_mmm.txt&quot;</span>
+txt = read(fn) |&gt; <span class=hljs-built_in >String</span>
+print(first(txt, <span class=hljs-number >50</span>))</code></pre> <p>Preview:</p> <pre><code class="plaintext hljs">WEBVTT
+
+25649d85-10aa-4aba-87cc
+00:00:32.798 --&gt; 00:00:33.008
+Well.
+
+25649d85-10aa-4aba-87cc
+00:00:33.088 --&gt; 00:00:36.460
+Come to this lightning talk
+about optimizing marketing
+
+25649d85-10aa-4aba-87cc
+00:00:36.460 --&gt; 00:00:36.828
+spent.</code></pre> <p>We can see that the transcript is not perfect &#40;eg, breaking the word &quot;Welcome&quot;&#41; and that it contains a lot of useless data &#40;the ID 256...&#41;, but we can still get a lot of useful information from it.</p> <p>Let&#39;s load it again, but this time line-by-line skipping the lines starting with &quot;256&quot; &#40;why pay the tokens for it...&#41; We will replace some abbreviations with <code>PromptingTools.replace_words</code> - this is a great utility if you have a list of sensitive words/names that you want to quickly scrub.</p> <pre><code class="julia hljs">words_to_replace = [<span class=hljs-string >&quot;MMM&quot;</span>] <span class=hljs-comment ># this can be also useful to remove sensitive words like `[&quot;Apple, Inc.&quot;, &quot;Samsung&quot;, &quot;Huawei&quot;] -&gt; &quot;Company&quot;`</span>
+replacement = <span class=hljs-string >&quot;Mix Media Modelling&quot;</span>
+
+<span class=hljs-comment ># Notice that we skip all the lines starting with 256...</span>
+<span class=hljs-comment ># And then we join the lines together into a single string</span>
+txt = [PT.replace_words(line, words_to_replace; replacement) <span class=hljs-keyword >for</span> line <span class=hljs-keyword >in</span> readlines(fn) <span class=hljs-keyword >if</span> !startswith(line, <span class=hljs-string >&quot;256&quot;</span>)] |&gt; x -&gt; join(x, <span class=hljs-string >&quot;\n&quot;</span>)
+
+<span class=hljs-comment ># We use the usual trick &quot;maximum 5 words&quot; to make the summary more zoomed-out</span>
+msg = aigenerate(:AnalystChaptersInTranscript; transcript=txt, instructions=<span class=hljs-string >&quot;Maximum 3 Chapters. Each bullet point must be maximum 5 words.&quot;</span>, model=<span class=hljs-string >&quot;gpt4t&quot;</span>);
+Markdown.parse(msg.content)</code></pre> <p>Voilà&#33; Notice that we&#39;ve used the Instructions placeholder to zoom out a bit and get a less wordy summary.</p> <pre><code class="plaintext hljs">[ Info: Tokens: 4505 @ Cost: \$0.0524 in 26.9 seconds
+AIMessage(&quot;# Chapter 1: Introduction to Marketing Optimization [00:00:32.798]
+
+- Marketing spend optimization discussed.
+- Motivational quote highlights waste.
+- Issue: identifying effective ad spend.
+
+## Section 1.1: Challenges in Optimization [00:03:44.138]
+
+- Insufficient and unobservable data problematic.
+- Underspecified problems with multiple solutions.
+- Bayesian framework used for plausibility.
+
+## Section 1.2: Benefits of Julia [00:04:43.198]
+
+- Julia&#x27;s composability advantageous for modeling.
+- Contrasted with Facebook&#x27;s mixed-language Robin package.
+
+# Chapter 2: Understanding Media Mix Modeling [00:03:08.978]
+
+- Media mix modeling quantifies marketing.
+- Aims to maximize revenue from spend.
+- Beware of vendors overestimating their value.
+
+## Section 2.1: Diminishing Returns and Adstock Effect [00:06:49.948]
+
+- Marginal ROAS and diminishing returns examined.
+- Hill curve demonstrates diminishing returns effect.
+- Adstock accounts for lagged advertising impact.
+
+# Chapter 3: Implementing Optimization Example [00:05:12.618]
+
+- Local business with three channels presented.
+- Goal: maximize revenue across channels.
+- Model fitted to historical revenue.
+
+## Section 3.1: Analyzing Marketing Contributions [00:07:37.838]
+
+- Revenue contribution by channel measured.
+- Marginal ROAS quantifies spending efficiency.
+- Disparity in spend versus effect opportunity.
+
+## Section 3.2: Optimal Budget Allocation [00:09:09.038]
+
+- Adjusts marketing spend for optimization.
+- Projected benefits through budget reallocation analyzed.
+- Bayesian framework contextualizes uncertainty in uplift.
+- Suggests experimenting with optimized budget plan.&quot;)</code></pre> <h2 id=but_wait_theres_more ><a href="#but_wait_theres_more" class=header-anchor >But wait, there&#39;s more&#33;</a></h2> <p>What if we wanted to use this approach with an open-source model that has only a 4K context window? Let&#39;s mimic it with the default model GPT-3 Turbo &#40;the older version, not the latest 1106-preview&#41;:</p> <pre><code class="julia hljs">msg = aigenerate(:AnalystChaptersInTranscript; transcript=txt, instructions=<span class=hljs-string >&quot;Maximum 3 Chapters. Each bullet point must be maximum 5 words.&quot;</span>)</code></pre>
+<p>We get a familiar error saying that the document is too large for the model context window:</p>
+<pre><code class="plaintext hljs">{
+  &quot;error&quot;: {
+    &quot;message&quot;: &quot;This model&#x27;s maximum context length is 4097 tokens. However, your messages resulted in 7661 tokens. Please reduce the length of the messages.&quot;,
+    &quot;type&quot;: &quot;invalid_request_error&quot;,
+    &quot;param&quot;: &quot;messages&quot;,
+    &quot;code&quot;: &quot;context_length_exceeded&quot;
+  }
+}</code></pre>
+<p>Let&#39;s use our chunking utility <code>PromptingTools.split_by_length</code>, which does what it says on the tin - it splits the text by spaces and ensures that each &quot;chunk&quot; is fewer than <code>max_length</code> characters. I tend to use a rule of thumb of 2,500 characters for each 1K tokens of context &#40;to account for the prompt and leave some space for the response&#41;. </p>
+<p>Let&#39;s chunk our text into two parts by splitting on <code>max_length&#61;10_000</code> characters &#40;for 4K tokens&#41;.</p>
+<pre><code class="julia hljs">chunked_text = PT.split_by_length(txt; max_length=<span class=hljs-number >10_000</span>)
+<span class=hljs-comment ># Output: 2-element Vector{String}: ...</span></code></pre>
+<p>Great, we can use that directly in our list comprehension to send each chunk for analysis asynchronously &#40;I don&#39;t like waiting&#41;:</p>
+<pre><code class="julia hljs">instructions = <span class=hljs-string >&quot;Maximum 1-2 Chapters. Maximum 2 bullets per Chapter/Section. Each bullet point must be maximum 5 words.&quot;</span>
+tasks = [Threads.<span class=hljs-meta >@spawn</span> aigenerate(:AnalystChaptersInTranscript; transcript=chunk, instructions, model=<span class=hljs-string >&quot;gpt3t&quot;</span>) <span class=hljs-keyword >for</span> chunk <span class=hljs-keyword >in</span> PT.split_by_length(txt; max_length=<span class=hljs-number >10_000</span>)]
+
+<span class=hljs-comment ># Output 2-element Vector{Task}:</span>
+<span class=hljs-comment >#  Task (runnable) @0x000000014abe6270</span>
+<span class=hljs-comment >#  Task (runnable) @0x000000014abe6400</span></code></pre>
+<p>A few seconds later, we get the familiar INFO logs announcing that the results are ready:</p>
+<pre><code class="plaintext hljs">[ Info: Tokens: 5087 @ Cost: \$0.0052 in 4.5 seconds
+[ Info: Tokens: 3238 @ Cost: \$0.0034 in 6.0 seconds</code></pre>
+<p>If you want to check if the tasks are done &#40;ie, we received all responses&#41;, you can simply run <code>all&#40;istaskdone, tasks&#41;</code>. If you send a lot of chunks, you might want to disable the INFO logs with <code>verbose&#61;false</code>.</p>
+<p>Unfortunately, now we have 2 tasks that have messages in them.  We want to: </p>
+<ol>
+<li><p>convert tasks to messages with <code>fetch&#40;task&#41;</code></p>
+
+<li><p>extract the content with <code>msg.content</code> and </p>
+
+<li><p>concatenate the messages into a single piece of text</p>
+
+</ol>
+<p>We can do it all as a one-liner with <code>mapreduce</code> &#40;it executes the first function argument on each task and then joins them together with the second function argument&#41;:</p>
+<pre><code class="julia hljs">mapreduce(x -&gt; fetch(x).content * <span class=hljs-string >&quot;\n&quot;</span>, *, msgs) |&gt; Markdown.parse</code></pre>
+<pre><code class="plaintext hljs">Chapter 1: Optimizing Marketing [00:00:32 - 00:07:22]
+  ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+  Section 1.1: Introduction and Motivation
+  ========================================
+
+    •  Lightning talk about marketing optimization.
+
+    •  Discusses the challenge of tracking advertising spending effectiveness.
+
+  Section 1.2: Marketing Optimization Strategies
+  ==============================================
+
+    •  Media mix modeling for quantifying marketing benefits.
+
+    •  Challenges include insufficient data and underspecified problems.
+
+  Chapter 1: Model Fitting and Revenue Impact [00:07:22 - 00:09:12]
+  ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+  Section 1.1: Model Fitting Challenges [00:07:22 - 00:08:02]
+  ===========================================================
+
+    •  Different parameters can lead to the same curves.
+
+    •  Fitting these models is challenging.
+
+  Section 1.2: Revenue Impact Analysis [00:08:04 - 00:09:12]
+  ==========================================================
+
+    •  Search ads contribute almost 10% to revenues.
+
+    •  Optimizing search ads can yield 4X revenues.</code></pre>
+<p>Perfect&#33; It took a minute, cost less than a cent and we have our meeting summary&#33; Note that the Chapter numbering is misaligned as we produced each chunk separately, but that&#39;s not a big deal for our use case of scanning what we&#39;ve missed.</p>
+<p>If you want to copy the resulting summary into your text editor, you can replace <code>|&gt; Markdown.parse</code> with <code>|&gt; clipboard</code>&#33;</p>
+<h2 id=tips_for_longer_meetings ><a href="#tips_for_longer_meetings" class=header-anchor >Tips for Longer Meetings</a></h2>
+<p>For longer meetings &#40;&gt;30 minutes&#41;, I would recommend always chunking your transcript even if your AI model supports large context &#40;&gt;100K tokens&#41;. It is a well-known fact that even GPT-4 Turbo and Claude 2 struggle to utilize the full context length effectively and you might miss some important parts of your meetings.</p>
+<p>As a bonus, if you split your transcript into several chunks, they can be analyzed in parallel, which means you&#39;ll get your answers faster&#33;</p>
+<h2 id=how_about_privacy ><a href="#how_about_privacy" class=header-anchor >How about privacy?</a></h2>
+<p>Handling a sensitive meeting? Switch to Ollama models for enhanced privacy &#40;see previous posts&#41;. Plus, you can always scrub all key entities/names before uploading using our <code>replace_words</code> utility.</p>
+<h2 id=why_not_simply_use_chatgpt ><a href="#why_not_simply_use_chatgpt" class=header-anchor >Why not simply use ChatGPT?</a></h2>
+<p>Of course, use it whenever you can&#33; The benefits of using PromptingTools.jl are:</p>
+<ul>
+<li><p>The full power of Julia REPL at your disposal &#40;eg, chunk long documents, merge answers, scrub sensitive information&#41;</p>
+
+<li><p>Automate tasks, eg, &quot;Summarize these 20 meetings and save it as a nicely formatted Markdown file or a Quarto document&quot;</p>
+
+<li><p>Leverage intricate templates in PromptingTools.jl and placeholders in them &#40;eg, just provide the transcript and we take care of the rest&#41;</p>
+
+</ul>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>With all this saved time, maybe catch another episode of your favorite show? Or dive into another Julia project? The choice is yours&#33;</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 30, 2023.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
+</div>
+</div>
+  </main> 
+  <script src="/libs/vela/metisMenu.min.js"></script>
+  <script src="/libs/vela/slideout.min.js"></script>
+  
+  
+    <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

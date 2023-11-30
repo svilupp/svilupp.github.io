@@ -1,0 +1,69 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">GenAI Mini-Tasks: Oops, Missed Another Meeting? Get the Agreed Next Steps in a Snap!</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Missed a meeting? Use PromptingTools.jl in Julia to quickly extract key decisions and next steps from the meeting transcript with just a few lines of code&#33; 🚀📝</p> <p><div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#approach">Approach</a><li><a href="#lets_code">Let&#39;s Code</a><li><a href="#conclusion">Conclusion</a></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Hey there, Julia enthusiasts and multitaskers&#33; Remember how we zoomed through video chapters in our last post? Today, we&#39;re tackling another mini-task lifesaver: extracting gold from missed meetings&#33;</p> <p>Did you miss the last Julia Machine Learning community call? No worries. Let&#39;s dig into <strong>what was decided and the next steps</strong> - without actually being there. Magic, right? 🌟</p> <h2 id=approach ><a href="#approach" class=header-anchor >Approach</a></h2> <p>A quick recap of the steps we&#39;ll take. If you&#39;re already familiar with the process, feel free to skip ahead.</p> <p><strong>Step 1:</strong> Grab that transcript. YouTube&#39;s got you covered. Click “More” → “Show Transcript” for the full scoop &#40;for other platforms, see previous posts&#41;.</p> <p><strong>Step 2:</strong> Time for some Julia charm. We&#39;re using <code>PromptingTools.jl</code> with the nifty <code>AnalystDecisionsInTranscript</code> template. &#40;Psst, type <code>aitemplates&#40;&quot;decisions&quot;&#41;</code> to peek under the hood&#33;&#41;</p> <p><strong>Step 3:</strong> Chop-chop&#33; Our transcript is a lengthy 50K characters. GPT-3 Turbo can only chew 16K at a time, so let&#39;s split it into two.</p> <p><strong>Step 4:</strong> Send those chunks off asynchronously. Julia handles this like a pro - no sweat.</p> <h2 id=lets_code ><a href="#lets_code" class=header-anchor >Let&#39;s Code</a></h2> <p>Let&#39;s first open the file and see what we&#39;re working with:</p> <pre><code class="julia hljs">fn = <span class=hljs-string >&quot;youtube-ml-community-call-20231020.txt&quot;</span>
+txt = read(fn) |&gt; <span class=hljs-built_in >String</span>
+first(txt, <span class=hljs-number >200</span>) |&gt; print</code></pre> <pre><code class="plaintext hljs">0:03
+okay so uh thanks everyone for joining we have a couple ems on the agenda
+0:11
+today um starting with uh tracker and
+0:16
+chain rules integration um so Marius or yonas I don&#x27;t know ich
+0:24</code></pre> <p>And length?</p> <pre><code class="julia hljs">length(txt) <span class=hljs-comment ># 50K -&gt; split into 2x 25K</span></code></pre>
+<p>We have almost 50K characters, so let&#39;s split it into two chunks.</p>
+<pre><code class="julia hljs">tasks = [Threads.<span class=hljs-meta >@spawn</span> aigenerate(:AnalystDecisionsInTranscript; transcript=chunk, instructions=<span class=hljs-string >&quot;None.&quot;</span>, model=<span class=hljs-string >&quot;gpt3t&quot;</span>) <span class=hljs-keyword >for</span> chunk <span class=hljs-keyword >in</span> PT.split_by_length(txt; max_length=<span class=hljs-number >25_000</span>)];
+
+<span class=hljs-comment ># Check if tasks are done: all(istaskdone, tasks)</span>
+
+<span class=hljs-comment ># When it finishes:</span>
+<span class=hljs-comment ># [ Info: Tokens: 7614 @ Cost: \$0.008 in 7.6 seconds</span>
+<span class=hljs-comment ># [ Info: Tokens: 7326 @ Cost: \$0.0079 in 9.9 seconds</span></code></pre>
+<p>And we merge the chunks back together:</p>
+<pre><code class="julia hljs">mapreduce(x -&gt; fetch(x).content * <span class=hljs-string >&quot;\n&quot;</span>, *, tasks) |&gt; Markdown.parse</code></pre>
+<pre><code class="plaintext hljs">Key Decision 1: Moving to Chain Rules for Second Order Derivatives [00:45:00]
+  ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+    •  The decision to switch from Tracker to Chain Rules for handling second-order derivatives was made due to encountering issues with the second order derivatives using Tracker. It
+       was noted that some rules from the diff rule package were not correct.
+
+  Next Steps for Decision 1
+  =========================
+
+    •  Define a proposal for requesting changes in chain rules to facilitate the implementation of higher-order derivatives in Tracker at [25:07:00]
+
+    •  Explore the potential trade-offs and safety implications of the proposed changes, such as relying on proper rule writers, and discuss these findings with the team at [26:05:00]
+
+    •  Experiment with and review the proposal of overloading the track method to maintain the entire graph, and share feedback with the team for further discussion at [30:03:00]
+
+  Key Decision 2: Organizing Documentation Structure [36:04:00]
+  ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+    •  The decision to organize the ecosystem documentation structure was discussed, with a focus on the categories and subcategories that should be included in the top bar.
+
+  Next Steps for Decision 2
+  =========================
+
+    •  Collaborate on defining the categories and subcategories to be included in the top bar, such as models, training, ecosystem, and data wrangling at [37:58:00]
+
+    •  Share a proposal including the categories, subcategories, and the corresponding packages to gather feedback from the team at [39:02:00]
+
+  Other Next Steps
+  ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+    •  Explore the ecosystem drop-down menu to include relevant packages such as mlj, flux, and sol at [39:33:00]
+
+    •  Consider the addition of zot and in to the ecosystem drop-down menu while ensuring Flux remains ad-agnostic at [40:50:00]
+
+&lt;CROPPED TO SAVE SPACE&gt;</code></pre>
+<p>Voila&#33; In less time than brewing your coffee, you&#39;ve got the meeting&#39;s crux and your to-dos. It&#39;s a bit verbose, but you can easily add some instructions to get a more concise summary &#40;see previous posts&#41;.</p>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>So, the next time you miss a meeting, don&#39;t fret. With a few clicks and some Julia wizardry, you&#39;re back in the loop. Stay tuned for more GenAI mini-task hacks&#33; 🚀👩‍💻👨‍💻</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 30, 2023.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
+</div>
+</div>
+  </main> 
+  <script src="/libs/vela/metisMenu.min.js"></script>
+  <script src="/libs/vela/slideout.min.js"></script>
+  
+  
+    <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

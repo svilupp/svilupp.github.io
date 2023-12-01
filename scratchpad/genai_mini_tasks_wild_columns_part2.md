@@ -8,6 +8,8 @@ Transform messy data columns into clear, understandable names, making survey dat
 
 \toc 
 
+## Introduction
+
 This is a follow-up to the first part of the blog: [GenAI Mini-Tasks: Taming Wild Table Columns Part1](https://svilupp.github.io/scratchpad/genai_mini_tasks_wild_columns_part1/), where we cleaned up columns in the City of Austin's community survey data by sending the column names one-by-one in separate `aiextract` calls.
 
 Quick reminder, we have >250 quite verbose columns that we want to clean up. Let's show a few:

@@ -12,11 +12,7 @@
 
 As a data analyst, you're no stranger to the Herculean task of sifting through heaps of documents, emails, and web pages to find those few precious nuggets of information. It's like finding a needle in a haystack, right? But what if I told you that there's a magic wand in the Julia universe that can turn this tedious task into a piece of cake? Enter `aiextract` from PromptingTools.jl and say goodbye to the old days of wrestling with complex regex patterns!
 
-## Real-Life Magic with aiextract
-
-Let's dive into some real-life magic with `aiextract`.
-
-### Example 1: The Contact Information from a Conference
+## Example 1: The Contact Information from a Conference
 
 Picture this: You have a blob of notes from a conference mentioning several contacts from different companies that you met and you want to ping them. Traditional methods would have you manually searching each name, company, and contact detail and using some crazy Regex rules. But with `aiextract`, it's a breeze! 
 
@@ -75,7 +71,7 @@ Just a few lines of code, and voilà! You have the names, companies, and optiona
 
 Note that we're using the simplest OpenAI model (GPT 3.5 Turbo), so there is potential to improve for harder tasks.
 
-### Example 2: Measurements in Different Units
+## Example 2: Measurements in Different Units
 
 Another scenario: You need to extract ages and weights from a narrative, but the weights are in different units (pounds, kilograms). With Julia Enums (see `?@enum`), handling these variations is as easy as pie.
 

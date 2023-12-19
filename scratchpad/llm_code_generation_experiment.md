@@ -18,7 +18,7 @@ My experiment was straightforward. I ran a grid search across 36 combinations of
 
 Interestingly, mistral-medium's performance soared from 54 to 87 points by adjusting to top_p: 0.3 and temperature: 0.9. 
 
-![mistral-medium-first-results](assets/llm_code_generation_experiment/mistral-medium-parameter-search-stage2-20231215.png)
+![mistral-medium-first-results](/assets/llm_code_generation_experiment/mistral-medium-parameter-search-stage2-20231215.png)
 
 This has been after c. 200 runs (representing <20% of the available test cases). I decided to pick these as the new "optimal" parameters and re-run the full benchmark (I did the same for all other models as well).
 
@@ -26,7 +26,7 @@ But here's the twist—repeating the benchmark revealed no significant change. A
 
 See how the same heatmap looked one day later:
 
-![mistral-medium-later-results](assets/llm_code_generation_experiment/mistral-medium-parameter-search-stage2-20231216.png)
+![mistral-medium-later-results](/assets/llm_code_generation_experiment/mistral-medium-parameter-search-stage2-20231216.png)
 
 "Wait, isn't it just because you didn't run enough samples?"
 
@@ -57,34 +57,34 @@ In other words, don't take these results as gospel. Instead, use them as a start
 
 The GPT-4-1106-Preview model showed remarkable adaptability in the grid search, with the top three hyperparameter combinations centered around extremes of temperature and top_p. Notably, the combination with a low temperature of 0.1 and a high top_p of 0.9 yielded the highest score of approximately 87.22. This suggests a preference for highly deterministic output with a wide selection pool, a setting that may be beneficial for generating more creative yet precise code.
 
-![GPT-4-1106-Preview Heatmap](assets/llm_code_generation_experiment/gpt-4-1106-preview-parameter-search.png)
+![GPT-4-1106-Preview Heatmap](/assets/llm_code_generation_experiment/gpt-4-1106-preview-parameter-search.png)
 
 ## Mistral-Medium
 
 Mistral-Medium displayed a significant increase in performance when the temperature was set high at 0.9, coupled with a more selective top_p of 0.3, scoring around 82.81. This indicates that a warmer temperature, allowing for more diverse responses, in combination with a moderate selection probability, optimizes performance for this model.
 
-![Mistral-Medium Heatmap](assets/llm_code_generation_experiment/mistral-medium-parameter-search.png)
+![Mistral-Medium Heatmap](/assets/llm_code_generation_experiment/mistral-medium-parameter-search.png)
 
 ## GPT-3.5-Turbo-1106
 
 For GPT-3.5-Turbo-1106, the best results came from a high temperature of 0.9 and a low top_p of 0.1, with a score close to 81.25. This pattern aligns with a tendency towards creative responses but with a narrow choice spectrum, which seems to enhance performance for this particular model.
 
-![GPT-3.5-Turbo-1106 Heatmap](assets/llm_code_generation_experiment/gpt-3.5-turbo-1106-parameter-search.png)
+![GPT-3.5-Turbo-1106 Heatmap](/assets/llm_code_generation_experiment/gpt-3.5-turbo-1106-parameter-search.png)
 
 ## Mistral-Small
 
 Note: Due to the evaluation parser improvements, the scores for the mistral-small model have changed slightly. The highest scoring combination with sufficient sample size is still 0.9/0.3 (same as mistral-medium), the highest value in the heatmap (85.0) does not have sufficient sample size (only 1 run).
 
-![Mistral-Small Heatmap](assets/llm_code_generation_experiment/mistral-small-parameter-search.png)
+![Mistral-Small Heatmap](/assets/llm_code_generation_experiment/mistral-small-parameter-search.png)
 
 ## GPT-3.5-Turbo
 
 The GPT-3.5-Turbo favored a temperature of 0.9 and top_p set at 0.5 yielding 70.39. However, this score is fairly closed to a more balanced setting of 0.5 for both temperature and top_p with medium variability and selection probability, which achieved a score of approximately 68.11.
 
-![GPT-3.5-Turbo Heatmap](assets/llm_code_generation_experiment/gpt-3.5-turbo-parameter-search.png)
+![GPT-3.5-Turbo Heatmap](/assets/llm_code_generation_experiment/gpt-3.5-turbo-parameter-search.png)
 
 ## Mistral-Tiny
 
 Note: All the re-sampled combinations from Stage 2 drop off this table to performance ~0.5. Ie, no need to keep re-sampling the "top" combinations, they are just a noise/lucky shot.
 
-![Mistral-Tiny Heatmap](assets/llm_code_generation_experiment/mistral-tiny-parameter-search.png)
+![Mistral-Tiny Heatmap](/assets/llm_code_generation_experiment/mistral-tiny-parameter-search.png)

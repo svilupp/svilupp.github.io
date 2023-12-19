@@ -1,5 +1,5 @@
 @def title = "GenAI Mini-Tasks: Oops, Missed Another Meeting? Get the Agreed Next Steps in a Snap!"
-<!-- @def published = "1 December 2023" -->
+@def published = "1 December 2023"
 @def drafted = "30 November 2023"
 @def tags = ["julia","generative-AI","genAI","prompting"]
 

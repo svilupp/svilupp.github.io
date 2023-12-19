@@ -1,17 +1,20 @@
-@def title = "Building a Retrieval Augmented Generation (RAG) Chatbot for DataFrames.jl Documentation - Hands-on Guide"
+@def title = "Building a RAG Chatbot over DataFrames.jl Documentation - Hands-on Guide"
 @def published = "18 December 2023"
 @def drafted = "17 December 2023"
 @def tags = ["julia","generative-AI","genAI","rag"]
 
 # TL;DR
+In this tutorial, you'll learn how to build a sophisticated RAG chatbot in Julia, focusing on efficiently retrieving and processing information from the DataFrames.jl documentation to generate accurate and contextually relevant responses. It's a hands-on guide to understanding and implementing the key components of retrieval-augmented generation, from API interactions to response generation.
 
 \toc 
 
-Dive into the worlds of Generative AI and Julia programming as we build a Retrieval Augmented Generation (RAG) chatbot, tailored to navigate and interact with the `DataFrames.jl` documentation. This hands-on guide will lead you through crafting a chatbot that's not just smart, but also specialized in the intricacies of this popular data manipulation package in Julia.
+Dive into the worlds of Generative AI and Julia programming as we build a Retrieval Augmented Generation (RAG) chatbot, tailored to navigate and interact with the `DataFrames.jl` documentation. "RAG" is probably the most common and valuable pattern in Generative AI at the moment. This hands-on guide will lead you through crafting a chatbot that's not just smart, but also specialized in the intricacies of this popular data manipulation package in Julia.
 
 - **Targeted Learning**: We're focusing specifically on `DataFrames.jl`, turning the great but extensive documentation into an interactive, AI-powered guide.
 - **Practical Application**: This isn't just theory; it's about applying RAG concepts to create a real-world, domain-specific chatbot.
-- **Hands-on Experience**: We'll be building the chatbot from scratch, so you'll get a deep understanding of the inner workings of RAG. No frameworks, no shortcuts—just pure Julia code and a few core packages.
+- **Hands-on Experience**: We'll be building the chatbot from scratch, so you'll get a deep understanding of the inner workings of RAG. No frameworks, no shortcuts — just pure Julia code and a few core packages.
+
+If you're not familiar with "RAG", start with [this article](https://towardsdatascience.com/add-your-own-data-to-an-llm-using-retrieval-augmented-generation-rag-b1958bf56a5a).
 
 ## What to Expect in Part 1
 
@@ -32,24 +35,9 @@ Each section will focus on different aspects of the chatbot app. Whether you're 
 
 ## Looking Ahead to Part 2
 
-Stay tuned for the upcoming Part 2 of this series, where we will introduce a streamlined approach to building RAG chatbots using `PromptingTools.jl`. This second installment will focus on:
+Stay tuned for the upcoming Part 2 of this series, where we will introduce a streamlined approach to building RAG chatbots using `PromptingTools.jl`.
 
-- **Simplifying the Process**: How `PromptingTools.jl` can significantly reduce the complexity of building RAG chatbots.
-- **Efficiency and Ease-of-Use**: Demonstrating the ease with which you can achieve similar or improved results with less effort.
-- **Advanced Features and Tips**: Exploring additional functionalities and tips for optimizing your RAG chatbot.
-
-Part 2 is ideal for those looking to save time and effort without compromising on the performance and capabilities of their RAG chatbot.
-
-## Conclusion of Part 1
-
-As we conclude this part of the tutorial, we encourage you to experiment with the concepts and code presented here. Building a RAG chatbot by hand offers a deep understanding of its inner workings, laying a strong foundation for more advanced explorations in Part 2. Stay connected for the next part, where we make the journey even more accessible and efficient with `PromptingTools.jl`. 
-
-Let's embark on this exciting journey of exploring the potential of Retrieval Augmented Generation in Julia!
-
-
-
-
-# Building a Retrieval Augmented Generation (RAG) Chatbot in Julia
+## Introduction
 
 Welcome to an in-depth tutorial on constructing a Retrieval Augmented Generation (RAG) chatbot using Julia. RAG combines retrieval from a database with AI-generated responses, enhancing the relevance and accuracy of interactions.
 
@@ -70,8 +58,8 @@ using HTTP, JSON3 # for making API calls
 # using OpenAI # for interacting with the API if you want to skip the first part of tutorial
 using LinearAlgebra # for calculating "closeness" of document chunks
 
-const MODEL_CHAT = "gpt-3.5-turbo" 
-const MODEL_EMBEDDING = "text-embedding-ada-002"
+const MODEL_CHAT = "gpt-3.5-turbo" # default model for chat, fast and "cheap"
+const MODEL_EMBEDDING = "text-embedding-ada-002" # default model for embedding test
 const API_KEY = ENV["OPENAI_API_KEY"];  # Your API key should be kept secure - use ENV variables
 ```
 
@@ -95,7 +83,7 @@ In this section, we'll learn how to make direct REST API calls, a fundamental sk
 
 ### Script for API Calls
 
-First, start with checking the API reference and an example call: [link](https://platform.openai.com/docs/api-reference/chat/create).
+First, start with checking the [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat/create).
 
 This is the example call that we will replicate:
 
@@ -233,7 +221,7 @@ We start by importing necessary Julia packages and setting up configurations for
 ```
 
 **Explanation**: 
-- **Importing Packages**: `OpenAI` for API interaction, `JSON3` for JSON processing, and others for various functionalities.
+- **Importing Packages**: `OpenAI` for API interaction (if you haven't defined `create_chat` yet), `JSON3` for JSON processing, and others for various functionalities.
 - **Setting Constants**: Defining the model and embedding constants for ease of use throughout the script.
 
 ### Custom Types and Functions
@@ -241,14 +229,17 @@ We start by importing necessary Julia packages and setting up configurations for
 We define structures (`structs`) for managing prompts, AI responses, and document chunks efficiently.
 
 ```julia
+# Define shared abstract type for custom printing
+abstract type AbstractBuildingBlock end
+
 # Convenience for building "messages" for the chatbot faster (see the standard format in the API calls section...)
-@kwdef struct PromptTemplate
+@kwdef struct PromptTemplate <: AbstractBuildingBlock
     system_prompt::Union{String, Nothing} = nothing
     user_prompt::String = ""
 end
 
 # Return type for the AI model
-@kwdef struct AIMessage
+@kwdef struct AIMessage <: AbstractBuildingBlock
     content::AbstractString
     status::Union{Int, Nothing} = nothing
     tokens::Tuple{Int, Int} = (-1, -1)
@@ -256,8 +247,8 @@ end
 end
 
 # Stores document chunks and their embeddings
-@kwdef struct ChunkIndex{T <: AbstractString}
-    id::Symbol = gensym("ChunksIndex")
+@kwdef struct ChunkIndex{T <: AbstractString} <: AbstractBuildingBlock
+    id::Symbol = gensym("ChunkIndex")
     embeddings::Matrix{Float32}
     chunks::Vector{T}
     sources::Vector{<:AbstractString}
@@ -332,16 +323,15 @@ function aiembed(docs::Union{AbstractString, Vector{<:AbstractString}},
     return mapreduce(x -> postprocess(x[:embedding]), hcat, r.response.data)
 end
 
-"Finds distance (cosine) of `query_emb` to each chunk embedded in `emb`."
-distance_to_chunks(emb::AbstractMatrix{<:Real}, query_emb::AbstractVector{<:Real}) = query_emb' *
-                                                                                     emb |>
-                                                                                     vec |>
-                                                                                     sortperm |>
-                                                                                     reverse
-function distance_to_chunks(index::ChunkIndex, query_emb::AbstractVector{<:Real})
-    distance_to_chunks(index.embeddings, query_emb)
+"Finds the indices of chunks (represented by embeddings in `emb`) that are closest (cosine similarity) to query embedding (`query_emb`). Returns only `top_k` closest indices."
+function find_closest(emb::AbstractMatrix{<:Real},
+        query_emb::AbstractVector{<:Real};
+        top_k::Int = 100)
+    query_emb' * emb |> vec |> sortperm |> reverse |> x -> first(x, top_k)
 end
-
+function find_closest(index::ChunkIndex, query_emb::AbstractVector{<:Real}; top_k::Int=100)
+    find_closest(index.embeddings, query_emb; top_k)
+end
 ```
 **Explanation**: 
 - **render**: To process and format prompts for the AI. 
@@ -420,7 +410,7 @@ emb2 = aiembed("I like Cauliflower, but it must be grilled.")
 sum(emb .* emb2) # 0.73 --> smaller than 1.0 because it's less similar
 ```
 
-Try a few different sentences to see how the similarity changes. This is effectively what function `distance_to_chunks` does across the ChunkIndex - it finds the closest chunks to the query.
+Try a few different sentences to see how the similarity changes. This is effectively what function `find_closest` does across the ChunkIndex - it finds the closest chunks to the query.
 
 ### Data Preparation and Chunking
 
@@ -506,6 +496,8 @@ for (fn, lbl) in zip(files, labels)
             split_pattern = r"\n|\. "),
         vcat,
         texts)
+    # Notice that we embed all doc_chunks at once, not one by one
+    # OpenAI supports embedding multiple documents if they are short enough, ie, it's only because the documentation pages are small
     embeddings = aiembed(doc_chunks) .|> Float32
     index = ChunkIndex(;
         embeddings,
@@ -544,11 +536,11 @@ question = "I like dplyr, what is the equivalent in Julia?"
 question_emb = aiembed(question)
 
 # Build the context of similar docs -- take the top 3 closest chunks
-idxs = distance_to_chunks(index, question_emb)
+idxs = find_closest(index, question_emb; top_k = 3)
 
 # We add 2 chunks before and after each of the closest chunk
 close_chunks = [join(index.chunks[max(begin, i - 2):min(end, i + 2)], "\n")
-                for i in first(idxs, 3)]
+                for i in idxs]
 answer = aigenerate(rag_template;
     question,
     context = join(close_chunks, "\n\n"))
@@ -560,7 +552,7 @@ In this section, we're putting together the RAG chatbot's response generation pr
 **Explanation**: 
 - **Setting Up the Prompt Template**: `rag_template` is created with a specific instruction for the AI to act as an expert in the Julia language, ensuring responses are focused and relevant. It includes placeholders for dynamic context and the user's question.
 - **Processing the User Question**: The user's question, "I like dplyr, what is the equivalent in Julia?", is converted into an embedding using `aiembed`. This numerical representation is used to find relevant information.
-- **Retrieving Relevant Context**: The `distance_to_chunks` function calculates the closeness of each chunk in our indexed database (created using `ChunkIndex`) to the question embedding. We select the indices (`idxs`) of the top 3 closest chunks.
+- **Retrieving Relevant Context**: The `find_closest` function calculates the closeness of each chunk in our indexed database (created using `ChunkIndex`) to the question embedding. We select the indices (`idxs`) of the top 3 closest chunks.
 - **Building Contextual Information**: For each of the top chunks, we expand the context by also including two preceding and following chunks. This enriches the context, making the AI's response more informed.
 - **Generating the Answer**: The `aigenerate` function then takes this context, along with the user's question, to generate a response. The `rag_template` guides the response format.
 - **Outputting the Response**: Finally, the generated response (`answer.content`) is printed out, providing an informed and contextually relevant answer to the user's question based on the `DataFrames.jl` documentation. 
@@ -575,14 +567,13 @@ First, let's wrap the whole process into a function:
 ```julia
 "RAG wrapper that answers the given question and inject the context if needed from `index`"
 function airag(index::ChunkIndex, rag_template::PromptTemplate;
-        question::AbstractString,
-        kwargs...)
+        question::AbstractString, top_k::Int = 3, kwargs...)
     question_emb = aiembed(question;)
 
-    idxs = distance_to_chunks(index, question_emb)
+    idxs = find_closest(index, question_emb; top_k)
     # We add 2 chunks before and after each of the closest chunk
     close_chunks = [join(index.chunks[max(begin, i - 2):min(end, i + 2)], "\n")
-                    for i in first(idxs, 3)]
+                    for i in idxs]
     return aigenerate(rag_template;
         question,
         context = join(close_chunks, "\n\n"),
@@ -609,3 +600,10 @@ Success!
 Through this tutorial, you've learned how to build a RAG chatbot in Julia, starting from making direct API calls to constructing the full chatbot system. This approach emphasizes the significance of retrieval in enhancing the performance of generative models and highlights the importance of systematic evaluation and improvement. Now, you're equipped to experiment with and refine your own RAG chatbot, tailoring it to your specific needs and data.
 
 That was long! If you made it this far, congratulations! You're now ready to build your own RAG chatbot in Julia. Stay tuned for Part 2 of this tutorial, where we'll explore a more streamlined approach to building RAG chatbots using `PromptingTools.jl`.
+
+If you don't want to copy & paste all the code, you can get it all at once from this [gist](https://gist.github.com/svilupp/8f7d364e37650ba7520f9b4783482cb2).
+
+## Want to Learn More?
+- For any serious RAG system, you must first prepare an evaluation set of reference questions & answers (at least 50). You'll use them later for every change and decision (eg, “how big should my chunk size be”)
+- Great tutorials and tips for building production-ready RAG: [here](https://www.anyscale.com/blog/a-comprehensive-guide-for-building-rag-based-llm-applications-part-1) and [here](https://docs.llamaindex.ai/en/stable/optimizing/production_rag.html). It will teach you about things like query rephrasing, re-ranking, etc.
+- In practice, we would probably want to scrape all DataFrames.jl documentation automatically (to make it easy to update with future releases) and to serialize the ChunkIndex/embeddings to persist them in between REPL sessions.

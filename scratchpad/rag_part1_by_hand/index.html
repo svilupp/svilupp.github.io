@@ -214,7 +214,7 @@ println(msg.content)
 
 <span class=hljs-comment ># similarity between two different texts</span>
 sum(emb .* emb2) <span class=hljs-comment ># 0.73 --&gt; smaller than 1.0 because it&#x27;s less similar</span></code></pre>
-<p>Try a few different sentences to see how the similarity changes. This is effectively what function <code>find_closest</code> does across the ChunkIndex - it finds the closest chunks to the query.</p>
+<p>Try a few different sentences to see how the similarity changes. This is effectively what the function <code>find_closest</code> does across the ChunkIndex - it finds the closest chunks to the query.</p>
 <h3 id=data_preparation_and_chunking ><a href="#data_preparation_and_chunking" class=header-anchor >Data Preparation and Chunking</a></h3>
 <p>This assumes you&#39;ve already downloaded several pages &#40;eg, 5?&#41; from the <a href="https://dataframes.juliadata.org/stable/">DataFrames.jl documentation</a> and saved them as separate text files in a folder <code>documents/</code>. If you haven&#39;t, do it now&#33; Remember, garbage in, garbage out&#33;</p>
 <h4 id=loading_and_chunking_data ><a href="#loading_and_chunking_data" class=header-anchor >Loading and Chunking Data</a></h4>

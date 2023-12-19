@@ -410,7 +410,7 @@ emb2 = aiembed("I like Cauliflower, but it must be grilled.")
 sum(emb .* emb2) # 0.73 --> smaller than 1.0 because it's less similar
 ```
 
-Try a few different sentences to see how the similarity changes. This is effectively what function `find_closest` does across the ChunkIndex - it finds the closest chunks to the query.
+Try a few different sentences to see how the similarity changes. This is effectively what the function `find_closest` does across the ChunkIndex - it finds the closest chunks to the query.
 
 ### Data Preparation and Chunking
 

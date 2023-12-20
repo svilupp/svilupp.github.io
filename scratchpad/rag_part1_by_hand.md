@@ -192,7 +192,7 @@ function create_chat(api_key::String,
         "Content-Type" => "application/json")
     # JSON-encoded data (string)
     body = (; messages, model, api_kwargs...) |> JSON3.write
-    resp = HTTP.request("POST", url; body, headers; http_kwargs...)
+    resp = HTTP.request("POST", url; body, headers, http_kwargs...)
     return (;
         response = JSON3.read(resp.body),
         status = resp.status)

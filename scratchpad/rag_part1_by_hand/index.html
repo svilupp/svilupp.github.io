@@ -79,7 +79,7 @@ cost = usage[:prompt_tokens] * <span class=hljs-number >1e-6</span> + usage[:com
         <span class=hljs-string >&quot;Content-Type&quot;</span> =&gt; <span class=hljs-string >&quot;application/json&quot;</span>)
     <span class=hljs-comment ># JSON-encoded data (string)</span>
     body = (; messages, model, api_kwargs...) |&gt; JSON3.write
-    resp = HTTP.request(<span class=hljs-string >&quot;POST&quot;</span>, url; body, headers; http_kwargs...)
+    resp = HTTP.request(<span class=hljs-string >&quot;POST&quot;</span>, url; body, headers, http_kwargs...)
     <span class=hljs-keyword >return</span> (;
         response = JSON3.read(resp.body),
         status = resp.status)
@@ -389,7 +389,7 @@ answer = airag(index, rag_template; question)</code></pre>
 
 </ul>
 <div class=page-foot >
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: December 19, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: December 20, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
 </div>
 </div>

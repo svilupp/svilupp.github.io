@@ -1,5 +1,5 @@
 @def title = "Building a RAG Chatbot over DataFrames.jl Documentation - Easy Mode"
-<!-- @def published = "18 December 2023" -->
+<!-- @def published = "23 December 2023" -->
 @def drafted = "21 December 2023"
 @def tags = ["julia","generative-AI","genAI","rag"]
 
@@ -7,8 +7,6 @@
 We're advancing our RAG chatbot development by integrating PromptingTools.jl and RAGTools, focusing on streamlining the process of creating a chatbot on top of the DataFrames.jl documentation. We will also introduce evaluations.
 
 \toc 
-
-
 
 In our last session, we handcrafted a RAG chatbot. Today, we're upping our game. Let's dive into a sleeker, more efficient way to build RAG chatbots using PromptingTools.jl and its new sub-module, RAGTools. Get ready for a smoother ride with Julia and PromptingTools!
 
@@ -80,7 +78,7 @@ Let's generate them from the chunks in our index!
 
 ## Generate Q&A pairs
 
-We need to provide: chunks and sources (file paths for future reference)
+We need to provide: document chunks and sources (=file paths for future reference)
 
 ````julia
 evals = build_qa_evals(RT.chunks(index),
@@ -170,6 +168,8 @@ semijoin: Like an inner join, but output is restricted to columns from the first
  parameters: Dict(:top_k => 3)
 
 ````
+
+QAEvalResult is a simple struct that holds the evaluation results for a single Q&A pair. You can use it to analyze the quality of your system.
 
 Fortunately, we don't have to do this one by one -- let's evaluate all our Q&A pairs at once.
 

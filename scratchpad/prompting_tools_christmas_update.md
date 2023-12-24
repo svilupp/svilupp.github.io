@@ -1,5 +1,5 @@
 @def title = "Jingle All the Way with the Latest PromptingTools.jl Updates!"
-@def published = "16 November 2023"
+@def published = "24 December 2023"
 @def drafted = "24 December 2023"
 @def tags = ["julia","generative-AI","genAI","prompting"]
 

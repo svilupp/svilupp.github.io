@@ -10,7 +10,7 @@ Dive into advanced data extraction techniques using Julia's PromptingTools.jl, w
 
 ## Introduction
 
-Welcome back to our series, GenAI Mini-Tasks! Today, we're diving into Part 2 of our exploration on structured data extraction, focusing on some nifty advanced techniques using the PromptingTools.jl package. If you thought Part 1 was a game-changer, brace yourself for even more Julia language wizardry!
+Welcome back to our series, GenAI Mini-Tasks! Today, we're diving into Part 2 of our exploration on structured data extraction, focusing on some nifty advanced techniques using the PromptingTools.jl package. If you thought Part 1 was great, brace yourself for even more GenAI wizardry!
 
 We'll be tackling two advanced techniques today:
 
@@ -137,7 +137,7 @@ end
 But it saves you the time of defining it yourself and it's guaranteed to be compatible with `aiextract` and other functions in PromptingTools.jl.
 
 
-#### Enhanced Item Reasoning
+## Add Reasoning Layer
 
 We can add a layer of reasoning to force the model to think more deeply during each extraction. It's like Chain of Thought, but for data extraction. Let's see how we can do this.
 
@@ -194,7 +194,7 @@ We've added a new layer of depth to our data extraction, asking the model to rea
 
 Note: Why did we keep the `skin_risk` column with AI messages? It allows us to quickly sum up the elapsed time, costs or see what went wrong.
 
-#### Conclusion
+## Conclusion
 
 Wrapping up, we see how effortlessly we can integrate this processed data into a DataFrame. It's not just about extracting data anymore; it's about enriching it, understanding it, and making it work for you.
 

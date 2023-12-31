@@ -1,0 +1,127 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">GenAI Mini-Tasks: Advanced Data Extraction Techniques</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Dive into advanced data extraction techniques using Julia&#39;s PromptingTools.jl, where we gracefully handle messy CSV files and enrich data extraction with reasoning about each item, transforming complex text datasets into structured, insightful information.</p> <p><div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#todays_task_-_broken_csv_file">Today&#39;s Task - Broken CSV File</a><li><a href="#maybeextractt">MaybeExtract&#123;T&#125;</a><ol><li><a href="#enhanced_item_reasoning">Enhanced Item Reasoning</a><li><a href="#conclusion">Conclusion</a></ol></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Welcome back to our series, GenAI Mini-Tasks&#33; Today, we&#39;re diving into Part 2 of our exploration on structured data extraction, focusing on some nifty advanced techniques using the PromptingTools.jl package. If you thought Part 1 was a game-changer, brace yourself for even more Julia language wizardry&#33;</p> <p>We&#39;ll be tackling two advanced techniques today:</p> <ul> <li><p>Graceful Error Handling: With the MaybeExtract&#123;T&#125; wrapper, you can elegantly manage extraction errors and understand why they occurred.</p> <li><p>Add Model Reasoning: This involves asking the model to reason about each item&#39;s extraction to improve the quality of the output or to add a layer of depth to the data.</p> </ul> <h2 id=todays_task_-_broken_csv_file ><a href="#todays_task_-_broken_csv_file" class=header-anchor >Today&#39;s Task - Broken CSV File</a></h2> <p>Let&#39;s dive into an example. We&#39;ve got a text blob of product data, but it&#39;s riddled with issues &#40;broken lines, missing columns, inconsistent separators.&#41;. You cannot use CSV.jl anymore. What to do? </p> <pre><code class="julia hljs"><span class=hljs-comment >## Imports we need</span>
+<span class=hljs-keyword >using</span> DataFramesMeta, CSV
+<span class=hljs-keyword >using</span> PromptingTools
+PT = PromptingTools
+
+<span class=hljs-comment ># Fake product data - notice that there are several invalid rows and that the last two rows are missing any reviews or ratings, ie, it&#x27;s not possible to load this file with CSV.jl</span>
+text_blob = <span class=hljs-string >&quot;&quot;&quot;
+  Product ID,Product Name,Price,Rating,Number of Reviews,Description
+  B01XYZW0,Eco-Friendly Water Bottle,\$15.99,4.5,112,&quot;Stay hydrated and eco-friendly with our BPA-free, stainless steel water bottle. Perfect for travel and outdoor activities.&quot;
+  B04XYZW2,Wireless Bluetooth Headphones,\$89.99,4.0,340,&quot;Experience high-quality sound without the hassle of wires. Ideal for workouts, commuting, and leisure.&quot;
+  B07XYZW4,Compact Digital Camera,\$120.50,4.2,85,&quot;Capture your precious moments with our easy-to-use, high-resolution camera. Compact design, perfect for travel.&quot;
+  B010XYZW6,Portable External Hard Drive,\$59.99,4.7,220,&quot;Secure and portable storage solution for your files. USB 3.0 for fast data transfer, robust and slim design.&quot;
+  ,,,,,
+  ,,,,,,,,,
+  jaksdsjdlkaskjdaslkdjaksjdlaksdj
+  ,,,,,
+  ,,,,,
+  B013XYZW8,Smart LED Light Bulb,\$17.99,4.3,150,&quot;Control your lighting with voice commands or via mobile app. Energy-efficient, customizable colors and brightness.&quot;
+  B016XYZW10,High-Speed USB Flash Drive,\$25.99,4.6,95,Quickly transfer and store your files with our high-speed USB 3.2 flash drive. Durable and compact design.
+  B019XYZW12,Ergonomic Wireless Mouse,\$29.99,4.1,78,&quot;Enjoy comfortable navigation with our ergonomic wireless mouse. Long battery life, precise tracking, and silent clicks.&quot;
+  B022XYZW14,Noise Cancelling Earbuds,\$99.99,4.8,305,&quot;Block out the noise and focus on your music with our advanced noise-cancelling technology. Comfortable fit, long battery life.&quot;
+  B025XYZW16,Waterproof Smartwatch,\$199.99,&quot;Track your fitness and stay connected with our waterproof smartwatch. Heart rate monitor, GPS, and various health tracking features.&quot;
+  B028XYZW18,Ultra-Thin Laptop,\$899.99,&quot;Lightweight yet powerful, this laptop is ideal for both work and entertainment. High-resolution display, long battery life, fast processor.&quot;
+  &quot;&quot;&quot;</span>
+CSV.read(<span class=hljs-built_in >IOBuffer</span>(text_blob), DataFrame); <span class=hljs-comment ># Outputs garbled data, showing the need for advanced extraction.</span></code></pre> <p>Let&#39;s use <code>aiextract</code> to extract the data we need. We&#39;ll define a custom struct to hold the extracted data and use the <code>:DetailOrientedTask</code> template to extract the data. We&#39;ll also use the <code>MaybeExtract&#123;T&#125;</code> wrapper to handle extraction errors gracefully.</p> <pre><code class="julia hljs"><span class=hljs-comment ># Let&#x27;s define a schema for our data</span>
+<span class=hljs-comment ># Notice that whenever we&#x27;re not sure if the data is present, we use Union with `Nothing` to indicate that the data may be missing.</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> Product
+    id::<span class=hljs-built_in >String</span>
+    name::<span class=hljs-built_in >String</span>
+    price::<span class=hljs-built_in >Float64</span>
+    rating::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >Float64</span>,<span class=hljs-built_in >Nothing</span>} = <span class=hljs-literal >nothing</span>
+    reviews::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >Int</span>,<span class=hljs-built_in >Nothing</span>} = <span class=hljs-literal >nothing</span>
+    description::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >String</span>,<span class=hljs-built_in >Nothing</span>} = <span class=hljs-literal >nothing</span>
+<span class=hljs-keyword >end</span>
+<span class=hljs-comment ># Create a wrapper to extract all products at once</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> ManyProducts
+    products::<span class=hljs-built_in >Vector</span>{Product}
+<span class=hljs-keyword >end</span>
+
+msg = aiextract(:DetailOrientedTask; task=<span class=hljs-string >&quot;Extract all Products in the provided in the Data.&quot;</span>, data=text_blob, return_type=ManyProducts, model=<span class=hljs-string >&quot;gpt4t&quot;</span>)
+msg.content.products <span class=hljs-comment ># Preview results</span></code></pre> <pre><code class="plaintext hljs">10-element Vector{Product}:
+ Product(&quot;B01XYZW0&quot;, &quot;Eco-Friendly Water Bottle&quot;, 15.99, 4.5, 112, &quot;Stay hydrated and eco-friendly with our BPA-free, stainless steel water bottle. Perfect for travel and outdoor activities.&quot;)
+ Product(&quot;B04XYZW2&quot;, &quot;Wireless Bluetooth Headphones&quot;, 89.99, 4.0, 340, &quot;Experience high-quality sound without the hassle of wires. Ideal for workouts, commuting, and leisure.&quot;)
+ Product(&quot;B07XYZW4&quot;, &quot;Compact Digital Camera&quot;, 120.5, 4.2, 85, &quot;Capture your precious moments with our easy-to-use, high-resolution camera. Compact design, perfect for travel.&quot;)
+ Product(&quot;B010XYZW6&quot;, &quot;Portable External Hard Drive&quot;, 59.99, 4.7, 220, &quot;Secure and portable storage solution for your files. USB 3.0 for fast data transfer, robust and slim design.&quot;)
+ Product(&quot;B013XYZW8&quot;, &quot;Smart LED Light Bulb&quot;, 17.99, 4.3, 150, &quot;Control your lighting with voice commands or via mobile app. Energy-efficient, customizable colors and brightness.&quot;)
+ Product(&quot;B016XYZW10&quot;, &quot;High-Speed USB Flash Drive&quot;, 25.99, 4.6, 95, &quot;Quickly transfer and store your files with our high-speed USB 3.2 flash drive. Durable and compact design.&quot;)
+ Product(&quot;B019XYZW12&quot;, &quot;Ergonomic Wireless Mouse&quot;, 29.99, 4.1, 78, &quot;Enjoy comfortable navigation with our ergonomic wireless mouse. Long battery life, precise tracking, and silent clicks.&quot;)
+ Product(&quot;B022XYZW14&quot;, &quot;Noise Cancelling Earbuds&quot;, 99.99, 4.8, 305, &quot;Block out the noise and focus on your music with our advanced noise-cancelling technology. Comfortable fit, long battery life.&quot;)
+ Product(&quot;B025XYZW16&quot;, &quot;Waterproof Smartwatch&quot;, 199.99, nothing, nothing, &quot;Track your fitness and stay connected with our waterproof smartwatch. Heart rate monitor, GPS, and various health tracking features.&quot;)
+ Product(&quot;B028XYZW18&quot;, &quot;Ultra-Thin Laptop&quot;, 899.99, nothing, nothing, &quot;Lightweight yet powerful, this laptop is ideal for both work and entertainment. High-resolution display, long battery life, fast processor.&quot;)</code></pre> <p>Notice that the last two rows are missing any reviews or ratings, but we simply receive the values as nothing - easy to detect and handle in Julia.</p> <p>We can simply create a DataFrame:</p> <pre><code class="julia hljs">df = DataFrame(msg.content.products)</code></pre>
+<p>That was easy, wasn&#39;t it? But what if we want to scan the data row-by-row? Or what if we want to scan many text blobs some of which may not contain any products? Let&#39;s look at <code>MaybeExtract&#123;T&#125;</code> wrapper.</p>
+<h2 id=maybeextractt ><a href="#maybeextractt" class=header-anchor >MaybeExtract&#123;T&#125;</a></h2>
+<p>Let&#39;s see what happens when we try to extract products from a text that doesn&#39;t contain any products:</p>
+<pre><code class="julia hljs">msg = aiextract(:DetailOrientedTask; task=<span class=hljs-string >&quot;Extract all Products in the provided in the Data.&quot;</span>, data=<span class=hljs-string >&quot;njahkshdshdkjhasdjahskdjhaskjhdkasjdhaksjdha&quot;</span>, return_type=Product, model=<span class=hljs-string >&quot;gpt4t&quot;</span>)
+msg.content</code></pre>
+<pre><code class="plaintext hljs">Product(&quot;njahkshdshdkjhasdjahskdjhaskjhdkasjdhaksjdha&quot;, &quot;njahkshdshdkjhasdjahskdjhaskjhdkasjdhaksjdha&quot;, 0.0, nothing, nothing, nothing)</code></pre>
+<p>We get a valid <code>Product</code> object, that&#39;s guaranteed by the <code>return_type</code> feature, but it&#39;s not a valid product&#33; The model just always returns <em>something</em>.</p>
+<p><code>MaybeExtract&#123;T&#125;</code> allows you to handle extraction errors gracefully and get a reason why extraction failed, so you can run your extraction of any arbitrary text without fear of crashing your program.</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># Notice the return_type is MaybeExtract{Product}</span>
+msg = aiextract(:DetailOrientedTask; task=<span class=hljs-string >&quot;Extract all Products in the provided in the Data.&quot;</span>, data=<span class=hljs-string >&quot;njahkshdshdkjhasdjahskdjhaskjhdkasjdhaksjdha&quot;</span>, return_type=PT.MaybeExtract{Product}, model=<span class=hljs-string >&quot;gpt4t&quot;</span>)
+msg.content</code></pre>
+<pre><code class="plaintext hljs">PromptingTools.MaybeExtract{Product}(nothing, true, &quot;The provided data does not contain any product information.&quot;)</code></pre>
+<p>If a product was found, it would be in the <code>result</code> field. If no product was found, <code>result</code> is <code>nothing</code> and the <code>error</code> field is <code>true</code>. The <code>message</code> field contains a short and concise reason why the extraction failed.</p>
+<p>So using the <code>MaybeExtract&#123;Product&#125;</code> is effectively the same as creating:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >struct</span> MaybeExtractProduct
+    result::<span class=hljs-built_in >Union</span>{Product, <span class=hljs-built_in >Nothing</span>}
+    error::<span class=hljs-built_in >Bool</span> <span class=hljs-comment ># true if a result is found, false otherwise</span>
+    message::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >Nothing</span>, <span class=hljs-built_in >String</span>} <span class=hljs-comment ># Only present if no result is found, should be short and concise</span>
+<span class=hljs-keyword >end</span></code></pre>
+<p>But it saves you the time of defining it yourself and it&#39;s guaranteed to be compatible with <code>aiextract</code> and other functions in PromptingTools.jl.</p>
+<h4 id=enhanced_item_reasoning ><a href="#enhanced_item_reasoning" class=header-anchor >Enhanced Item Reasoning</a></h4>
+<p>We can add a layer of reasoning to force the model to think more deeply during each extraction. It&#39;s like Chain of Thought, but for data extraction. Let&#39;s see how we can do this.</p>
+<p>Let&#39;s work with our product data again. Let&#39;s say we want to extract the body part that is most likely to be in contact with the product, because of some skin irritation risk. For example, it could become a feature in a downstream machine-learning model or a new search filter.</p>
+<p>This information is not directly in our data, but we can ask the model to reason about it. Let&#39;s define a new return type, add a <code>reasoning</code> field and add a docstring to tell the model what to do. We can then use our favorite DataFrame tools for the rest.</p>
+<pre><code class="julia hljs"><span class=hljs-string >&quot;First, reason about which body part is in contact with the product in `reasoning_for_body_part` and then record the body part in `body_part_in_contact`. If there are multiple, separate them with a comma.&quot;</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> ProductSkinRisk
+    reasoning_for_body_part::<span class=hljs-built_in >String</span>
+    body_part_in_contact::<span class=hljs-built_in >String</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Let&#x27;s run the extraction - we can use our favorite macros to do that:</span>
+<span class=hljs-comment ># (If you have a lot of duplicate rows or want to run it in parallel, I&#x27;d recommend the asyncmap or Threads.@spawn!)</span>
+df = <span class=hljs-meta >@chain</span> df <span class=hljs-keyword >begin</span>
+    <span class=hljs-comment >## Call LLM for each row (data gets injected into &quot;data&quot; field from each respective column)</span>
+    <span class=hljs-meta >@rtransform</span> skin_risk = aiextract(:DetailOrientedTask; task=<span class=hljs-string >&quot;Extract all Products in the provided in the Data.&quot;</span>, data=<span class=hljs-string >&quot;Name: <span class=hljs-subst >$(:name)</span>, Description: <span class=hljs-subst >$(:description)</span>&quot;</span>, return_type=ProductSkinRisk, model=<span class=hljs-string >&quot;gpt4t&quot;</span>)
+    <span class=hljs-comment >## Extract the result from the LLM response into respective columns</span>
+    <span class=hljs-meta >@rtransform</span> <span class=hljs-keyword >begin</span>
+        :reasoning_for_body_part = :skin_risk.content.reasoning_for_body_part
+        :body_part_in_contact = :skin_risk.content.body_part_in_contact
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+select(df, :name, :reasoning_for_body_part, :body_part_in_contact)</code></pre>
+<pre><code class="plaintext hljs">10×3 DataFrame
+ Row │ name                           reasoning_for_body_part            body_part_in_contact 
+     │ String                         String                             String               
+─────┼────────────────────────────────────────────────────────────────────────────────────────
+   1 │ Eco-Friendly Water Bottle      The user is likely to hold the w…  hands
+   2 │ Wireless Bluetooth Headphones  Headphones are designed to be wo…  Ears
+   3 │ Compact Digital Camera         Typically, cameras are held and …  hands
+   4 │ Portable External Hard Drive   When using a Portable External H…  Hands
+   5 │ Smart LED Light Bulb           The light bulb would typically b…  Hands
+   6 │ High-Speed USB Flash Drive     A USB flash drive is primarily h…  hands
+   7 │ Ergonomic Wireless Mouse       The product mentioned is a mouse…  hand
+   8 │ Noise Cancelling Earbuds       The product described is `Noise …  ears
+   9 │ Waterproof Smartwatch          The waterproof smartwatch is typ…  wrist
+  10 │ Ultra-Thin Laptop              The laptop is most commonly in c…  hands, lap</code></pre>
+<p>Let&#39;s review one of the responses:</p>
+<pre><code class="julia hljs">df.skin_risk[<span class=hljs-number >10</span>].content
+<span class=hljs-comment ># Output: ProductSkinRisk(&quot;The laptop is most commonly in contact with the user&#x27;s hands while typing or navigating, and it may also be placed on the user&#x27;s lap during use.&quot;, &quot;hands, lap&quot;)</span></code></pre>
+<p>We&#39;ve added a new layer of depth to our data extraction, asking the model to reason about the product&#39;s contact with skin, leading to more insightful features - incredible&#33;</p>
+<p>Note: Why did we keep the <code>skin_risk</code> column with AI messages? It allows us to quickly sum up the elapsed time, costs or see what went wrong.</p>
+<h4 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h4>
+<p>Wrapping up, we see how effortlessly we can integrate this processed data into a DataFrame. It&#39;s not just about extracting data anymore; it&#39;s about enriching it, understanding it, and making it work for you.</p>
+<p>Stay tuned for more tips and tricks in our &quot;GenAI Mini Tasks&quot; series. Happy data wrangling with Julia and PromptingTools.jl&#33; 🌟📊🎩</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: December 31, 2023.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
+</div>
+</div>
+  </main> 
+  <script src="/libs/vela/metisMenu.min.js"></script>
+  <script src="/libs/vela/slideout.min.js"></script>
+  
+  
+    <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

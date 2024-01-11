@@ -14,14 +14,21 @@ It's a fascinating time in the world of generative AI and large language models.
 
 What made this possible is the recent release of Llama.cpp, supporting new 2-bit quantization. This practically compresses the model to use almost 16 times less memory compared to traditional Float32 parameters. It's an incredible leap in model efficiency and accessibility. It's not without "price", but its performance is still impressive.
 
+## Llama.jl to the rescue!
+
 For those eager to try this out, the Julia programming community has made it incredibly easy. Recently, I discovered a nifty package [Llama.jl](https://github.com/marcom/Llama.jl), which wraps the famous llama.cpp, but you don't have to compile anything! Julia's Artifact ecosystem streamlines the process.
+
 Here’s how you can do it:
 
 ```julia
+# Install the package first
+using Pkg; Pkg.add("https://github.com/marcom/Llama.jl")
+
 using Llama
 
+# Go make a cup of tea while you wait... this is a 20GB download!
 url = "https://huggingface.co/ikawrakow/various-2bit-sota-gguf/resolve/main/llama-v2-70b-2.12bpw.gguf"
-model = download_model(url) # Go make a cup of tea while you wait... this is a 20GB download!
+model = download_model(url) 
 
 # and now we can run the server:
 Llama.run_server(; model)
@@ -45,7 +52,9 @@ It may take a few seconds...
 AIMessage("Julia is a high-level, high performance dynamic programming language for numerical computing. It provides an ecosystem of open source tools built by the community.")
 ```
 
-The above code snippet allows you to download and run a massive 70 billion-parameter model right on your machine with just ~20GB of memory requirement. 
+The above code snippet allows you to download and run a massive 70 billion-parameter model right on your machine with just ~20GB of memory requirement (it's slightly more than that but not 200GB like the original model). 
+
+## Try the Rocket model
 
 If a 20GB model seems overkill for your needs, try the [Rocket model](https://huggingface.co/pansophic/rocket-3B), which is less than 1GB in size but still boasts 3 billion parameters.
 
@@ -72,6 +81,8 @@ msg = aigenerate(PT.CustomOpenAISchema(), "What is Julia lang good for?"; api_kw
 # AIMessage("Julia is a high-performance, open-source numerical computing language designed for scientific and engineering applications. It offers fast and efficient computation capabilities with features like multi-threading, automatic array memory optimization, and built-in support for popular libraries such as NumPy, Pandas, and Matplotlib. Julia has gained popularity among data scientists, engineers, and researchers due to its speed, scalability, and ease of use. It is particularly useful when you need to perform complex computations with large datasets or handle high-dimensional arrays efficiently.")
 
 ```
+
+## Conclusion
 
 As you can see, the responses are impressive for a 1GB model! It’s truly remarkable how the open-source scene is rapidly advancing, making powerful AI tools accessible to more and more people.
 

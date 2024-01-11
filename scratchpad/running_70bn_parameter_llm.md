@@ -8,7 +8,7 @@ You can now run the 70 billion parameter Llama2 language model locally on an M1 
 
 \toc 
 
-## Title: Running 70 Billion Parameters on Your Mac?
+## Running 70 Billion Parameters on Your Mac?
 
 It's a fascinating time in the world of generative AI and large language models. I recently had an experience that seemed almost surreal just a year ago—I ran a 70 billion parameter language model, Llama2, locally on my Mac M1. To put that into perspective, if each parameter were an M&M, we could fill more than 10 Olympic-sized swimming pools!
 
@@ -41,7 +41,7 @@ msg = aigenerate(PT.CustomOpenAISchema(), "What is Julia lang good for?"; api_kw
 It may take a few seconds...
 
 ```plaintext
-[ Info: Tokens: 97 @ Cost: $0.0002 in 19.2 seconds
+[ Info: Tokens: 97 in 19.2 seconds
 AIMessage("Julia is a high-level, high performance dynamic programming language for numerical computing. It provides an ecosystem of open source tools built by the community.")
 ```
 

@@ -116,7 +116,7 @@ Now, we have both the top-level themes and the sub-themes available in `index.to
 Remember that with PlotlyJS backend, you can zoom in/out, pan, and hover over the points to see the document text.
 Also, by single-clicking / double-clicking on the topics in the legend, you can hide/show the topics.
 
-### Conclusion
+## Conclusion
 
 The "Interactive Topic Explorer" with [`LLMTextAnalysis.jl`](https://github.com/svilupp/LLMTextAnalysis.jl) is a prime example of how generative AI together with your existing Julia tools can significantly enhance productivity and insight in data analysis. It's not just a tool; it's a new way to interact with your data, bringing efficiency and depth to your analysis processes.
 

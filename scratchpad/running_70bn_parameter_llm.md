@@ -77,4 +77,4 @@ As you can see, the responses are impressive for a 1GB model! It’s truly remar
 
 This exploration into running large language models locally is just a glimpse into the potential of AI and how it's being democratized. It's a testament to the power of open-source software and the continuous innovation in the field of AI and data science. Stay tuned for more amazing developments!
 
-EDIT: Yes, we do need a nicer integration between PromptingTools.jl and Llama.jl. I'm already working on it. Stay tuned!
+PS: Yes, we do need a nicer integration between PromptingTools.jl and Llama.jl. I'm already working on it. Stay tuned!

@@ -1,4 +1,4 @@
-@def title = "GenAI Mini-Tasks: Extracting Data Part 2!"
+@def title = "Running a 70 Billion-Parameter LLM on Your Laptop?"
 @def published = "11 January 2024"
 @def drafted = "9 January 2024"
 @def tags = ["julia","generative-AI","genAI"]
@@ -8,7 +8,7 @@ You can now run the 70 billion parameter Llama2 language model locally on an M1 
 
 \toc 
 
-## Running 70 Billion Parameters on Your Mac?
+## Running a 70 Billion-Parameter LLM on Your Laptop?
 
 It's a fascinating time in the world of generative AI and large language models. I recently had an experience that seemed almost surreal just a year ago—I ran a 70 billion parameter language model, Llama2, locally on my Mac M1. To put that into perspective, if each parameter were an M&M, we could fill more than 10 Olympic-sized swimming pools!
 

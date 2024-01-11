@@ -4,19 +4,19 @@
 @def tags = ["julia","generative-AI","genAI"]
 
 # TL;DR
-Discover the power of generative AI in data analysis with our tutorial on [`LLMTextAnalysis.jl`](https://github.com/svilupp/LLMTextAnalysis.jl), a tool that transforms the way you explore and visualize key themes in large text datasets, making deep insights accessible in minutes rather than hours.
+Discover the power of generative AI in data analysis with our tutorial on [LLMTextAnalysis.jl](https://github.com/svilupp/LLMTextAnalysis.jl), a tool that transforms the way you explore and visualize key themes in large text datasets, making deep insights accessible in minutes rather than hours.
 
 \toc 
 
 ## GenAI Mini-Tasks: Interactive Topic Explorer With LLMTextAnalysis.jl
 
-Welcome to our "GenAI Mini Tasks" series, where we showcase how generative AI can boost everyday tasks. Today, we're excited to introduce a powerful tool that exemplifies this series perfectly: the "Interactive Topic Explorer" using [`LLMTextAnalysis.jl`](https://github.com/svilupp/LLMTextAnalysis.jl).
+Welcome back to our "GenAI Mini-Tasks" series, where we showcase how generative AI can boost everyday tasks. Today, we're excited to introduce a powerful tool that exemplifies this series perfectly: the "Interactive Topic Explorer" using [LLMTextAnalysis.jl](https://github.com/svilupp/LLMTextAnalysis.jl).
 
-In this installment, we're focusing on how you can quickly surface the themes at different "levels" in your text datasets (eg, the top 3 themes, sub-themes, individual texts, ...), a task that traditionally requires hours of slicing, dicing, and eventually reading the various texts. With [`LLMTextAnalysis.jl`](https://github.com/svilupp/LLMTextAnalysis.jl), you can now gain insights in minutes, transforming the way you interact with large text datasets.
+In this instalment, we're focusing on how you can quickly surface the themes at different "levels" in your text datasets (eg, the top 3 themes, sub-themes, individual texts, ...), a task that traditionally requires hours of slicing, dicing, and eventually reading the various texts. With [LLMTextAnalysis.jl](https://github.com/svilupp/LLMTextAnalysis.jl), you can now gain insights in minutes, transforming the way you interact with large text datasets.
 
 ## Exploration with LLMTextAnalysis.jl
 
-To power the analyses, `LLMTextAnalysis.jl` uses large language models to produce "embeddings" (ie, translate texts into vectors of numbers), which allows us to leverage semantic similarity between the texts. 
+To power the analyses, LLMTextAnalysis.jl uses large language models to produce "embeddings" (ie, translate texts into vectors of numbers), which allows us to leverage semantic similarity between the texts. 
  
 This enables you to:
 
@@ -24,7 +24,7 @@ This enables you to:
 2. **Interactively Explore the Data**: Use PlotlyJS to create dynamic, interactive visualizations that make data exploration engaging and insightful. (Looking into supporting Makie.jl as well)
 3. **Adapt the Level of Depth**: Tailor your exploration depth based on your needs, from high-level themes to individual texts.
 
-Now, let's dive into how you can use `LLMTextAnalysis.jl` to explore text data.
+Now, let's dive into how you can use LLMTextAnalysis.jl to explore text data.
 
 ### Setting Up the Environment
 
@@ -87,7 +87,7 @@ A few words on `plot`:
 
 ### Advanced Tips
 
-1. **Zooming In/Out on Information**: Adjust the level of thematic detail as needed.
+1. **Zooming In/Out on Topic Depth**: Adjust the level of thematic detail as needed.
 
 One of the biggest superpowers of LLMs, is that you can zoom in/out in the abstraction level to help you digest information more gradually.
 
@@ -118,6 +118,6 @@ Also, by single-clicking / double-clicking on the topics in the legend, you can 
 
 ## Conclusion
 
-The "Interactive Topic Explorer" with [`LLMTextAnalysis.jl`](https://github.com/svilupp/LLMTextAnalysis.jl) is a prime example of how generative AI together with your existing Julia tools can significantly enhance productivity and insight in data analysis. It's not just a tool; it's a new way to interact with your data, bringing efficiency and depth to your analysis processes.
+The "Interactive Topic Explorer" with [LLMTextAnalysis.jl](https://github.com/svilupp/LLMTextAnalysis.jl) is a prime example of how generative AI together with your existing Julia tools can significantly enhance productivity and insight in data analysis. It's not just a tool; it's a new way to interact with your data, bringing efficiency and depth to your analysis processes.
 
 Stay tuned for more GenAI mini tasks, where we continue to explore practical, impactful uses of generative AI in everyday scenarios!

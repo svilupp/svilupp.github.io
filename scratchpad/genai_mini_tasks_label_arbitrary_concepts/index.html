@@ -1,0 +1,98 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">Concepts to Spectrums: Unleashing LLM's Power in Text Analysis</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Explore the new capabilities of LLMTextAnalysis.jl to explore any arbitrary concept and spectrum. We demonstrate how to easily evaluate responses on whether they are &quot;action-oriented&quot; and &quot;forward-looking&quot;.</p> <p><div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#getting_started">Getting Started</a><li><a href="#preparing_the_data">Preparing the Data</a><li><a href="#building_the_text_index">Building the Text Index</a><li><a href="#understanding_concept_and_spectrum">Understanding Concept and Spectrum</a><li><a href="#training_a_concept">Training a Concept</a><li><a href="#training_a_spectrum">Training a Spectrum</a><li><a href="#visualization_and_interactive_analysis">Visualization and Interactive Analysis</a><li><a href="#conclusion">Conclusion</a></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>In the world of data science, Large Language Models &#40;LLMs&#41; offer an innovative approach to text analysis. This blog post demonstrates an application of LLMTextAnalysis.jl on the City of Austin&#39;s Community Survey, focusing on classifying responses by their alignment with specific concepts and spectrums.</p> <p>We will pick one open-ended question. Let&#39;s say we want to help the mayor to prioritize ideas, so we will lay out the verbatims against the concepts of being &quot;action-oriented&quot; and &quot;forward-looking&quot;.</p> <h2 id=getting_started ><a href="#getting_started" class=header-anchor >Getting Started</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Downloads, CSV, DataFrames
+<span class=hljs-keyword >using</span> Plots
+<span class=hljs-keyword >using</span> LLMTextAnalysis
+plotlyjs(); <span class=hljs-comment ># for interactive plots</span></code></pre> <h2 id=preparing_the_data ><a href="#preparing_the_data" class=header-anchor >Preparing the Data</a></h2> <p>Download the survey data</p> <pre><code class="julia hljs">Downloads.download(<span class=hljs-string >&quot;https://data.austintexas.gov/api/views/s2py-ceb7/rows.csv?accessType=DOWNLOAD&quot;</span>,
+    joinpath(<span class=hljs-meta >@__DIR__</span>, <span class=hljs-string >&quot;cityofaustin.csv&quot;</span>));</code></pre> <p>Read the survey data into a DataFrame</p> <pre><code class="julia hljs">df = CSV.read(joinpath(<span class=hljs-meta >@__DIR__</span>, <span class=hljs-string >&quot;cityofaustin.csv&quot;</span>), DataFrame);</code></pre>
+<p>Let&#39;s select one of the open-ended questions, eg,</p>
+<pre><code class="julia hljs">col = <span class=hljs-string >&quot;Q25 - If there was one thing you could share with the Mayor regarding the City of Austin (any comment, suggestion, etc.), what would it be?&quot;</span>
+docs = df[!, col] |&gt; skipmissing |&gt; collect;</code></pre>
+<h2 id=building_the_text_index ><a href="#building_the_text_index" class=header-anchor >Building the Text Index</a></h2>
+<p>Indexing documents, or survey responses in our case, is the first critical step. The <code>build_index</code> function prepares the data for subsequent analysis.</p>
+<pre><code class="julia hljs">index = build_index(docs)
+<span class=hljs-comment ># Output: DocIndex(Documents: 2933, PlotData: None, Topic Levels: None)</span></code></pre>
+<p>Let&#39;s use those 30 seconds to understand the difference between a concept and a spectrum.</p>
+<h2 id=understanding_concept_and_spectrum ><a href="#understanding_concept_and_spectrum" class=header-anchor >Understanding Concept and Spectrum</a></h2>
+<p>Sometimes you know what you&#39;re looking for, but it&#39;s hard to define the exact keywords. For example, you might want to identify documents that are &quot;action-oriented&quot; or &quot;pessimistic&quot; or &quot;forward-looking&quot;.</p>
+<p>For these situations, <code>LLMTextAnalysis</code> offers two basic functionalities: <code>train_concept</code> and <code>train_spectrum</code>. Each serves a different purpose in text analysis.</p>
+<ul>
+<li><p><strong>Concept &#40;type: <code>TrainedConcept</code>&#41;</strong>:</p>
+<ul>
+<li><p><strong>Purpose</strong>: Analyzes a single, specific idea within texts.</p>
+
+<li><p><strong>Ideal Use</strong>: Best for targeted analysis focusing on a singular concept.</p>
+
+<li><p><strong>Function</strong>: <code>train_concept</code></p>
+
+</ul>
+
+<li><p><strong>Spectrum &#40;type: <code>TrainedSpectrum</code>&#41;</strong>:</p>
+<ul>
+<li><p><strong>Purpose</strong>: Places texts on a continuum between two opposing concepts.</p>
+
+<li><p><strong>Ideal Use</strong>: Suitable for comparative analysis between contrasting ideas.</p>
+
+<li><p><strong>Function</strong>: <code>train_spectrum</code></p>
+
+</ul>
+
+</ul>
+<p>Why do we need <code>train_spectrum</code> and not simply use two <code>TrainedConcepts</code>? It&#39;s because the opposite of &quot;forward-looking&quot; can be many things, eg, &quot;short-sighted&quot;, &quot;dwelling in the past&quot;, or simply &quot;not-forward looking&quot;.</p>
+<h2 id=training_a_concept ><a href="#training_a_concept" class=header-anchor >Training a Concept</a></h2>
+<p>Let&#39;s say we want to identify documents that are &quot;action-oriented&quot;. We can use <code>train_concept</code> to train a model to identify documents that are &quot;action-oriented&quot; and score the documents against the concept.</p>
+<p>Let&#39;s show the top 5 documents that are most &quot;action-oriented&quot;.</p>
+<pre><code class="julia hljs">concept = train_concept(index,
+    <span class=hljs-string >&quot;action-oriented&quot;</span>;
+    aigenerate_kwargs = (; model = <span class=hljs-string >&quot;gpt3t&quot;</span>))
+
+scores = score(index, concept)
+index.docs[first(sortperm(scores, rev = <span class=hljs-literal >true</span>), <span class=hljs-number >5</span>)]</code></pre>
+<pre><code class="plaintext hljs">5-element Vector{String}:
+ &quot;stop delaying important decisions and make the best one available and move on to solutions&quot;
+ &quot;We need real transportation options, not just more lip service and endless studies that do not achieve implementation.&quot;
+ &quot;We need a comprehensive plan/vision for managing the growth of this city!&quot;
+ &quot;Ensure that all citizens, regardless of race/ethnicity, gender, gender identity feel protected and respected by our police services.&quot;
+ &quot;we need to plan for global climate change, water and energy programs must be robust&quot;</code></pre>
+<h2 id=training_a_spectrum ><a href="#training_a_spectrum" class=header-anchor >Training a Spectrum</a></h2>
+<p>We may want to define an arbitrary &quot;spectrum&quot; &#40;axis/polar opposites&#41; and score documents on it. Let&#39;s introduce a spectrum for &quot;dwelling in the past&quot; vs &quot;forward-looking&quot;. The higher the score &#40;eg, 100&#37;&#41;, the more &quot;forward-looking&quot; the document/text is.</p>
+<p>Let&#39;s show the top 5 documents that are most &quot;forward-looking&quot;.</p>
+<pre><code class="julia hljs">spectrum = train_spectrum(index,
+    (<span class=hljs-string >&quot;dwelling in the past&quot;</span>, <span class=hljs-string >&quot;forward-looking&quot;</span>);
+    aigenerate_kwargs = (; model = <span class=hljs-string >&quot;gpt3t&quot;</span>))
+
+scores = score(index, spectrum)
+index.docs[first(sortperm(scores, rev = <span class=hljs-literal >true</span>), <span class=hljs-number >5</span>)]</code></pre>
+<pre><code class="plaintext hljs">5-element Vector{String}:
+ &quot;Enhance affordability and ensure a diverse, healthy population.&quot;
+ &quot;MANAGING GROWTH IN A WAY THAT IMPROVES QUALITY OF LIFE FOR ALL CITIZENS&quot;
+ &quot;Affordable housing. Better planning for future. Mass transit (rail system that covers City wide.&quot;
+ &quot;Plan for greater urban density and more public transportation.&quot;
+ &quot;need more affordable housing and more public transportation to ensure diverse and successful population&quot;</code></pre>
+<p>And how about the ones &quot;dwelling in the past&quot; &#40;set <code>rev&#61;false</code> to look for low scores&#41;?</p>
+<pre><code class="julia hljs">index.docs[first(sortperm(scores, rev = <span class=hljs-literal >false</span>), <span class=hljs-number >5</span>)]</code></pre>
+<pre><code class="plaintext hljs">5-element Vector{String}:
+ &quot;It is so sad to see long time local business disappearing. We loved Austin because it was unique, and used to have the feeling of a small town with the advantages of a big city. Now, it is just another city in Texas with gas stations,  banks and Walgreen&#x27;s on every corner of every rd. So sad to see Austin go down that rd!&quot;
+ &quot;The cost of living in Austin and the surrounding v areas is 100% absurd. Beyond ridiculous. I would do anything to have the \&quot;old Austin\&quot; back.&quot;
+ &quot;Used to be proud of Austin and tour visiting friends around.\nNow it&#x27;s just a crowded nasty city.&quot;
+ &quot;I WISH I HAD BUS STOP BACK AT LEDESMA AND LOTT. I USED TO RIDE THE BUS TO WORK.&quot;
+ &quot;I&#x27;m really sad about what Austin has become.  It used to feel like home.  Now, it just feels like a big, impersonal city with not much personality, and a lot of traffic (and high taxes).  The city that I loved is gone, which makes me sad and angry.&quot;</code></pre>
+<h2 id=visualization_and_interactive_analysis ><a href="#visualization_and_interactive_analysis" class=header-anchor >Visualization and Interactive Analysis</a></h2>
+<p>Visualizing the results is made easy with <code>plot</code> and can be enhanced with <code>plotlyjs</code> for interactivity.</p>
+<p>The positions of arguments <code>concept</code> and <code>spectrum</code> are important, as they determine the position of the concepts in the plot &#40;x-axis, y-axis&#41;</p>
+<pre><code class="julia hljs">pl = plot(index, spectrum, concept;
+    title = <span class=hljs-string >&quot;Prioritizing Action-Oriented and Forward-Looking Ideas (Top-right Corner)&quot;</span>)</code></pre>
+<p><img src="/assets/genai_mini_tasks_label_arbitrary_concepts/scatter-plot.png" alt="Prioritized Ideas" /></p>
+<p>Note: What if you need to add some additional information to the tooltip for each data point? You can do that with <code>hoverdata</code> argument, see <code>?plot</code> for more details.</p>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>Concept labeling provides a nuanced approach to text analysis, suitable for a wide range of applications in data science. It empowers users to go beyond traditional analysis methods, offering insights into previously unexplored areas of textual data.</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: January 17, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
+</div>
+</div>
+  </main> 
+  <script src="/libs/vela/metisMenu.min.js"></script>
+  <script src="/libs/vela/slideout.min.js"></script>
+  
+  
+    <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

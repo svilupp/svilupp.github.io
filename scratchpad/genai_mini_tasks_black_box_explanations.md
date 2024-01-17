@@ -180,7 +180,7 @@ In the end, the combination of her traveling in second class, her companionship 
 instance_context = prepare_instance_context(data_shap, y_pred, y, 126)
 # [ Info: Selected item: 126, Proba: 0.07623318385650224 vs SHAP values for instance 0.12002796217871464 -> Outcome: the passenger died
 
-msg = aigenerate(tpl; task_context..., instance_context..., model="gpt4t")
+msg = aigenerate(:StorytellerExplainSHAP; task_context..., instance_context..., model="gpt4t")
 ```
 
 ```plaintext
@@ -209,7 +209,7 @@ The stories above are not really suitable for a boardroom presentation.
 However, you can easily provide additional information about the audience, context, style, tone, etc. via `instructions` placeholder.
 
 ```julia
-msg = aigenerate(tpl; task_context..., instance_context..., instructions="Be brief. Adjust the story for boardroom presentation.", model="gpt4t")
+msg = aigenerate(:StorytellerExplainSHAP; task_context..., instance_context..., instructions="Be brief. Adjust the story for boardroom presentation.", model="gpt4t")
 ```
 
 ```plaintext
@@ -221,7 +221,7 @@ AIMessage("In our analysis, we encountered a male passenger aged 27 who had emba
 If you want to see what we're sending to the LLM (for debugging), simply render the template without sending it to the LLM:
 
 ```julia
-conv_rendered = PT.render(PT.NoSchema(), tpl; task_context..., instance_context...)
+conv_rendered = PT.render(PT.NoSchema(), :StorytellerExplainSHAP; task_context..., instance_context...)
 println(conv_rendered[2].content)
 ```
 

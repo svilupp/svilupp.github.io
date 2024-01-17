@@ -141,7 +141,7 @@ index.docs[first(sortperm(scores, rev = false), 5)]
 
 ## Visualization and Interactive Analysis
 
-Visualizing the results is made easy with `plot` and can be enhanced with `plotlyjs` for interactivity.
+Visualizing the results is made easy with `plot` and can be enhanced with `PlotlyJS` for interactivity.
 
 The positions of arguments `concept` and `spectrum` are important, as they determine the position of the concepts in the plot (x-axis, y-axis)
 

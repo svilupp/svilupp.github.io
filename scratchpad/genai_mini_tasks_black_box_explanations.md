@@ -155,7 +155,7 @@ msg = aigenerate(:StorytellerExplainSHAP; task_context..., instance_context..., 
 ```
 
 ```plaintext
-[ Info: Tokens: 774 @ Cost: $0.0122 in 18.0 seconds
+[ Info: Tokens: 774 @ Cost: \$0.0122 in 18.0 seconds
 AIMessage("In the grand tapestry of the Titanic's voyage, the waves of fate seemed to conspire against a young man, a third-class passenger with little more than the humble fare that booked his passage. He was en route to a new life, with no siblings or spouse along for the journey, a solitary figure amongst the throng. His ticket, priced at a modest sum, suggested a man of simple means, likely overlooked amidst the wealth and splendor of the Titanic's more affluent passengers. The ship's records indicate that he embarked at Southampton, a bustling port where many souls boarded, unaware of the tragedy that lay ahead. Despite these factors that seemingly stacked the odds against his survival, the young man found a way to defy the cold arithmetic of survival on that fateful night.
 
 The prediction cast a dark shadow, suggesting the young man had perished in the disaster, overwhelmed by the unfortunate confluence of his situation. However, his resolve or perhaps serendipity led him to survive, a living testament to the unpredictability of life and the limitations of even the most finely tuned models of artificial conjecture.")
@@ -169,7 +169,7 @@ msg = aigenerate(:StorytellerExplainSHAP; task_context..., instance_context..., 
 ```
 
 ```plaintext
-[ Info: Tokens: 793 @ Cost: $0.0128 in 23.1 seconds
+[ Info: Tokens: 793 @ Cost: \$0.0128 in 23.1 seconds
 AIMessage("On a fateful night in 1912, aboard the ill-fated Titanic, a middle-aged woman made her journey across the Atlantic. Not hailing from the opulence of first class but also not confined to the cramped conditions of the third class, she traveled in second class comfort, which, on this particular voyage, turned out to be a relatively safer berth. Alone without siblings or spouse, she could decisively move and respond to the ensuing chaos that frigid night. Her gender played a pivotal role as women were prioritized during the lifeboat evacuations. The relatively modest fare she paid for her passage, and her age, while painting a picture of an average middle-class woman, surprisingly did not significantly alter her survival chances.
 
 In the end, the combination of her traveling in second class, her companionship status and the fact that she was a woman in her early 40s, tilted the scales in favor of her survival. Despite the tragedy, she was one of the fortunate to secure a place in a lifeboat and live to tell the tale. The model concluded that this passenger survived, mirroring her real-life outcome, driven mainly by her travel class and gender amidst the Titanic's tragic demise.")
@@ -184,7 +184,7 @@ msg = aigenerate(tpl; task_context..., instance_context..., model="gpt4t")
 ```
 
 ```plaintext
-[ Info: Tokens: 800 @ Cost: $0.013 in 16.6 seconds
+[ Info: Tokens: 800 @ Cost: \$0.013 in 16.6 seconds
 AIMessage("On a fateful night aboard the Titanic, amidst the cold embrace of the Atlantic, the destiny of a young man was sealed. This traveler, a male aged 30, had boarded the vessel with a third-class ticket, a choice that offered limited access to lifeboats and safety measures as the tragedy unfolded around him. His journey had commenced at Queenstown, now known as Cobh, a port indicated by a single-letter ticket stamp 'Q', marking his point of embarkation, a detail as undistinguished as the modest fare he had paid for his passage, a mere 7.75 dollars.
 
 In these desperate times, when families clung together and women and children were ushered to safety first, his solitary status, with not a sibling or spouse to claim companionship, rendered him nearly invisible in the chaos. The narrative ends with the echo of his footsteps fading into silence, the algorithm's analysis as cold and unyielding as the night, concluding his fate as one among the lost souls of the Titanic. The model, with solemn certainty, predicts his demise, a story woven from the threads of his social standing, his gender, and the austerity of his journey—a young man, alone and in third class, claimed by the sea.")
@@ -213,7 +213,7 @@ msg = aigenerate(tpl; task_context..., instance_context..., instructions="Be bri
 ```
 
 ```plaintext
-[ Info: Tokens: 766 @ Cost: $0.0111 in 19.2 seconds
+[ Info: Tokens: 766 @ Cost: \$0.0111 in 19.2 seconds
 AIMessage("In our analysis, we encountered a male passenger aged 27 who had embarked from Southampton without any siblings or spouse aboard. Traveling third class and having paid a fare far below average, he was enveloped by the perilous reputation of the most economically restrained accommodations of the Titanic. This narrative, coupled with being a young male—the archetype often expected to give precedence to women and children during life-saving procedures—cast a long shadow over his likelihood of survival. Our prediction model rendered a grim forecast, plunging the odds against his survival amidst the tragedy well-known to history.
 ```
 

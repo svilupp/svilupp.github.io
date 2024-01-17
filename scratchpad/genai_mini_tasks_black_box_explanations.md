@@ -230,6 +230,8 @@ println(conv_rendered[2].content)
 
 Combining SHAP explanations with LLM-generated stories offers a novel way to enhance the interpretability of machine learning models. This approach is particularly valuable for data scientists who need to share the explanations with non-technical stakeholders (Responsible AI!). e encourage our readers to experiment with this methodology in their own models to gain deeper insights and share their experiences and templates with the community.
 
+Note: This approach is not specific to SHAP. You can use it with any other explainability tool, eg, [CounterfactualExplanations.jl](https://github.com/JuliaTrustworthyAI/CounterfactualExplanations.jl). All you need to do is to tweak the prompt template slightly - PRs welcome :)
+
 ---
 
 ## Further Reading and Resources

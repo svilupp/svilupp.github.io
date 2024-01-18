@@ -25,7 +25,7 @@ Data deduplication can be conceptualized similarly to traditional search engines
 
 ## Setting Up the Environment
 
-We'll be using FEBRL 1 dataset from the [recordlinkage package](https://recordlinkage.readthedocs.io/en/latest/ref-datasets.html#recordlinkage.datasets.load_febrl1.) It contains a collection of 1000 records, half of which are duplicates. This dataset serves as an excellent starting point for our deduplication adventure.
+We'll be using FEBRL 1 dataset from the [recordlinkage](https://recordlinkage.readthedocs.io/en/latest/ref-datasets.html#recordlinkage.datasets.load_febrl1) package. It contains a collection of 1000 records, half of which are duplicates. This dataset serves as an excellent starting point for our deduplication adventure.
 
 ```julia
 using DataFramesMeta, CSV, Downloads
@@ -147,7 +147,7 @@ dedupe_template = [
 
             Think it through step by step.
             """)]
-            ```
+
 dupe_idxs = sortperm(dists[3, :], rev=true) |> x -> first(x, 10)
 msg = aigenerate(dedupe_template; record1=df[3, :text_blob], record2=df[dupe_idxs[2], :text_blob], model="gpt4t")
 ```

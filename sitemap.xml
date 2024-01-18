@@ -74,6 +74,12 @@
     <priority>0.5</priority>
 </url>
 <url>
+    <loc>https://siml.earth/scratchpad/genai_mini_tasks_dedupe_data/index.html</loc>
+    <lastmod>2024-01-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://siml.earth/about/index.html</loc>
     <lastmod>2024-01-18</lastmod>
     <changefreq>monthly</changefreq>

@@ -1,0 +1,80 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">Fast-Track Data Science: Classification with LLMs</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Explore innovative classification methods using Large Language Models in Julia, offering a quick &amp; dirty alternative to traditional machine learning.</p> <p><div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#the_challenge_of_quick_classification">The Challenge of Quick Classification</a><li><a href="#the_titanic_dataset">The Titanic Dataset</a><li><a href="#method_1_standard_chat_completion">Method 1: Standard Chat Completion</a><li><a href="#method_2_logit_bias_trick">Method 2: Logit Bias Trick</a><li><a href="#method_3_aiextract_structured_extraction">Method 3: aiextract Structured Extraction</a><li><a href="#extra_handling_multi-class_classification">Extra: Handling Multi-Class Classification</a><li><a href="#conclusion">Conclusion</a></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Welcome to the latest installment in our &quot;GenAI Mini-Tasks&quot; series&#33; Today&#39;s topic: harnessing the power of Large Language Models for quick and effective classification, using the well-known Titanic dataset.</p> <p>While this approach offers a fun and insightful perspective, we strongly encourage dedicating the effort to build proper machine learning models for serious, real-world applications.</p> <h2 id=the_challenge_of_quick_classification ><a href="#the_challenge_of_quick_classification" class=header-anchor >The Challenge of Quick Classification</a></h2> <p>Traditional machine learning models excel in structured, tabular data analysis but often require significant time and resources. What if you need a faster, more flexible solution? This is where LLMs shine.</p> <h2 id=the_titanic_dataset ><a href="#the_titanic_dataset" class=header-anchor >The Titanic Dataset</a></h2> <p>Let&#39;s prepare our data first. We&#39;ll use the well-known Titanic dataset, which contains information about the passengers on the Titanic, including whether they survived or not.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Downloads, DataFramesMeta, CSV
+<span class=hljs-keyword >using</span> PromptingTools
+<span class=hljs-keyword >const</span> PT = PromptingTools
+
+<span class=hljs-comment ># Download titanic dataset</span>
+Downloads.download(<span class=hljs-string >&quot;https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv&quot;</span>, <span class=hljs-string >&quot;titanic.csv&quot;</span>);
+
+<span class=hljs-comment ># Preprocessing</span>
+clean_column(s::<span class=hljs-built_in >AbstractString</span>) = strip(s) |&gt; x -&gt; replace(x, <span class=hljs-string >r&quot;\s+&quot;</span> =&gt; <span class=hljs-string >&quot;_&quot;</span>) |&gt; lowercase
+df = <span class=hljs-meta >@chain</span> CSV.File(<span class=hljs-string >&quot;titanic.csv&quot;</span>) <span class=hljs-keyword >begin</span>
+    DataFrame
+    rename(_, clean_column.(names(_)))
+    <span class=hljs-comment >## Create a text blob that captures our features</span>
+    <span class=hljs-meta >@rtransform</span> :text_blob = <span class=hljs-string >&quot;&quot;&quot;Passenger details:
+    - Sex: <span class=hljs-subst >$(:sex)</span>\n- Age: <span class=hljs-subst >$(:age)</span>\n- Number of sibblings/spouses aboard: <span class=hljs-subst >$(:sibsp)</span>\n- Number of parents/children aboard: <span class=hljs-subst >$(:parch)</span>\n- Class: <span class=hljs-subst >$(:pclass)</span>\n- Fare: <span class=hljs-subst >$(:fare)</span>\n- Cabin: <span class=hljs-subst >$(ismissing(:cabin)</span> ? &quot;-&quot; : :cabin) \n- Embarked: <span class=hljs-subst >$(:embarked)</span>
+    &quot;&quot;&quot;</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Show case an example of our text blob</span>
+df.text_blob[<span class=hljs-number >1</span>] |&gt; print
+<span class=hljs-comment ># Output:</span>
+<span class=hljs-comment ># Passenger details:</span>
+<span class=hljs-comment ># - Sex: male</span>
+<span class=hljs-comment ># - Age: 22.0</span>
+<span class=hljs-comment ># - Number of siblings/spouses aboard: 1</span>
+<span class=hljs-comment ># - Number of parents/children aboard: 0</span>
+<span class=hljs-comment ># - Class: 3</span>
+<span class=hljs-comment ># - Fare: 7.25</span>
+<span class=hljs-comment ># - Cabin: - </span>
+<span class=hljs-comment ># - Embarked: S</span></code></pre> <p>LLMs work on text, so we have combined the relevant features in a text blob that we will be sending to the LLM.</p> <h2 id=method_1_standard_chat_completion ><a href="#method_1_standard_chat_completion" class=header-anchor >Method 1: Standard Chat Completion</a></h2> <p>First up is standard chat completion. This method involves directly prompting the LLM for a classification based on text inputs.</p> <p>One of my favorite things is that prompt engineering with Julia is so easy. I can just write the string and leave placeholders in double handlebars &#40;eg, <code>&#123;&#123;placeholder&#125;&#125;</code>&#41; to be interpolated on every call.</p> <pre><code class="julia hljs">tpl = <span class=hljs-string >&quot;&quot;&quot;
+You&#x27;re a world-class expert on the Titanic voyage.
+
+Your task is to predict whether a passenger would have survived or not based on their details.
+
+Response format: `Reasoning: &lt;provide your reasoning here&gt;, Survived: true/false`
+
+### Passenger details
+
+{{passenger_details}}
+
+Think through your prediction step by step and explain your reasoning.
+&quot;&quot;&quot;</span>
+passenger_details= df.text_blob[<span class=hljs-number >1</span>]
+msg = aigenerate(tpl; passenger_details, model=<span class=hljs-string >&quot;gpt3t&quot;</span>)</code></pre> <pre><code class="plaintext hljs">[ Info: Tokens: 243 @ Cost: \$0.0003 in 4.9 seconds
+AIMessage(&quot;Based on the given passenger details, my prediction is as follows:
+
+Reasoning: The passenger is a 22-year-old male traveling alone in third class (Class 3).
+Third-class passengers were more likely to perish in the Titanic disaster, as they were at a disadvantage when it came to accessing lifeboats due to their lower priority during the evacuation. 
+Additionally, being a male may further decrease the chances of survival, as women and children were given priority for lifeboats.
+
+Survived: false&quot;)</code></pre> <p>Pretty good, huh? And that&#39;s just GPT 3.5&#33;</p> <p>And the cost? We could get 1000 predictions for &#36;3 and have it in a few minutes. Considering the labor cost of a data scientist, that&#39;s an excellent return on investment&#33;</p> <h2 id=method_2_logit_bias_trick ><a href="#method_2_logit_bias_trick" class=header-anchor >Method 2: Logit Bias Trick</a></h2> <p>The logit bias trick involves adjusting the generation probability of certain tokens, effectively &#39;biasing&#39; the model&#39;s predictions in a desired direction.</p> <p>If you&#39;re not familiar with &quot;tokens&quot;, they are usually sub-word units that the LLMs think/speak in. Check out <a href="https://platform.openai.com/tokenizer">OpenAI Tokenizer</a> and enter different texts &#40;check also the &quot;token ids&quot; tab&#41;.</p> <p>We&#39;ll use tokens: &quot;837&quot; &#40;for true&#41; and &quot;905&quot; &#40;for false&#41;. We could also introduce the option &quot;unknown&quot; &#40;9987&#41; for the model if it doesn&#39;t know the answer, but let&#39;s keep it simple.</p> <pre><code class="julia hljs"><span class=hljs-comment ># We will use the logit_bias parameter of OpenAI API to bias the model towards one of our two tokens</span>
+<span class=hljs-comment ># Notice that we set max_tokens=1 to ensure that the model only generates the one token we want</span>
+api_kwargs = (; logit_bias=<span class=hljs-built_in >Dict</span>(<span class=hljs-number >837</span> =&gt; <span class=hljs-number >100</span>, <span class=hljs-number >905</span> =&gt; <span class=hljs-number >100</span>),
+    max_tokens=<span class=hljs-number >1</span>, temperature=<span class=hljs-number >0</span>)
+<span class=hljs-comment ># We need to tell our model to first output only true/false</span>
+msg = aigenerate(tpl * <span class=hljs-string >&quot;\nFirst, predict whether the passenger survived.\n Passenger survived:&quot;</span>;
+    passenger_details, model=<span class=hljs-string >&quot;gpt3t&quot;</span>, api_kwargs)</code></pre> <pre><code class="plaintext hljs">[ Info: Tokens: 157 @ Cost: \$0.0002 in 2.0 seconds
+AIMessage(&quot;true&quot;)</code></pre> <p>Hmm, not very good, is it? That&#39;s because the model didn&#39;t have the space to think through the reasoning &#40;see the previous example&#41;. </p> <p>A solution to get this method to work would be to specifically include some survival criteria in the prompt or include examples of passengers that had survived or not.</p> <p>This is still a very powerful method and it can work surprisingly well. That&#39;s why PromptingTools wraps it for you as <code>aiclassify</code> &#40;see the docs for more details&#41;:</p> <pre><code class="julia hljs">msg = aiclassify(tpl * <span class=hljs-string >&quot;\nFirst, predict whether the passenger survived.\n Passenger survived:&quot;</span>; passenger_details, model=<span class=hljs-string >&quot;gpt3t&quot;</span>)
+<span class=hljs-comment ># not api_kwargs or token IDs specified here!</span></code></pre> <h2 id=method_3_aiextract_structured_extraction ><a href="#method_3_aiextract_structured_extraction" class=header-anchor >Method 3: aiextract Structured Extraction</a></h2> <p>Often we want to work with the predictions in a structured format, eg, a DataFrame. <code>aiextract</code> can parse and interpret structured data, making it ideal for datasets like the Titanic.</p> <pre><code class="julia hljs"><span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> SurvivalPrediction
+    reasoning::<span class=hljs-built_in >String</span>
+    survived::<span class=hljs-built_in >Bool</span>
+<span class=hljs-keyword >end</span>
+msg = aiextract(tpl; passenger_details, model=<span class=hljs-string >&quot;gpt3t&quot;</span>, return_type=SurvivalPrediction)
+msg.content</code></pre> <pre><code class="plaintext hljs">[ Info: Tokens: 260 @ Cost: \$0.0003 in 4.7 seconds
+PromptingTools.DataMessage(SurvivalPrediction)
+
+SurvivalPrediction(&quot;Based on the passenger&#x27;s details, he is a male in third class, which was the least likely to survive. Additionally, his age, being young, may have slightly increased his chances of survival, but the combination of being male and in third class leads me to predict that he did not survive. &quot;, false)</code></pre> <p>I love that in Julia we can just do <code>df_predicted &#61; DataFrame&#40;&#91;msg.content&#93;&#41;</code> and all our predictions would be in a DataFrame.</p> <h2 id=extra_handling_multi-class_classification ><a href="#extra_handling_multi-class_classification" class=header-anchor >Extra: Handling Multi-Class Classification</a></h2> <p>What if our classification problem has multiple classes &#40;outcomes&#41;? Thanks to the amazing Enum support in Julia, we can easily handle this scenario by simply adjusting the <code>return_type</code> in our previous example.</p> <pre><code class="julia hljs"><span class=hljs-comment ># Define an enum for the outcome (first element is the type name, the rest are the possible values)</span>
+<span class=hljs-meta >@enum</span> Nationality British American French German Czech
+
+<span class=hljs-comment ># Add some guidance for the model</span>
+<span class=hljs-string >&quot;Predict the most likely nationality of the passenger. `reasoning` should be a string explaining your reasoning for the predicted nationality.&quot;</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> NationalityPrediction
+    reasoning::<span class=hljs-built_in >String</span>
+    nationality::Nationality
+<span class=hljs-keyword >end</span>
+msg = aiextract(<span class=hljs-string >&quot;You have data from the Titanic voyage. Passenger details: {{passenger_details}}&quot;</span>; passenger_details, model=<span class=hljs-string >&quot;gpt3t&quot;</span>, return_type=NationalityPrediction)
+msg.content</code></pre> <pre><code class="plaintext hljs">[ Info: Tokens: 204 @ Cost: \$0.0002 in 3.8 seconds
+PromptingTools.DataMessage(NationalityPrediction)
+
+NationalityPrediction(&quot;The passenger&#x27;s class, fare, and embarkation point suggest that he is most likely British.&quot;, British)</code></pre> <h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2> <p>LLMs offer a versatile and quick alternative for classification tasks, especially when traditional ML methods are too cumbersome or slow. While they may not replace dedicated ML models in terms of precision, their flexibility and ease of use make them a valuable tool in the data scientist&#39;s arsenal.</p> <div class=page-foot > <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: January 19, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a> </div> </div> </main> <script src="/libs/vela/metisMenu.min.js"></script> <script src="/libs/vela/slideout.min.js"></script> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>

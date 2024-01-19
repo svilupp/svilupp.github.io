@@ -132,10 +132,12 @@ msg = aiclassify(tpl * "\nFirst, predict whether the passenger survived.\n Passe
 # not api_kwargs or token IDs specified here!
 ```
 
-## Method 3: aiextract Structured Extraction
+## Method 3: Structured Extraction
 
 Often we want to work with the predictions in a structured format, eg, a DataFrame.
-`aiextract` can parse and interpret structured data, making it ideal for datasets like the Titanic.
+`aiextract` can constrain your outputs and convert them to a pre-defined struct type. 
+
+Under the hood, we're using the function (/tool) calling JSON grammar of OpenAI to make this work.
 
 ```julia
 @kwdef struct SurvivalPrediction

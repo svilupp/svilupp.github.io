@@ -32,19 +32,17 @@ Pkg.add("https://github.com/svilupp/AIHelpMe.jl")
 
 using AIHelpMe # automatically some downloads pre-processed documentation
 
-aihelp"How to create a named tuple from a dictionary?"
+aihelp"In Julia, how to create a named tuple from a dictionary? Give me an example"gpt3t
 ```
 
 ````plaintext
 [ Info: Done generating response. Total cost: \$0.001
-AIMessage("To create a named tuple from a dictionary, you can use the `NamedTuple` constructor and provide the dictionary's key-value pairs as arguments using the `name=value` syntax. Here's an example:
+AIMessage("You can use the splatting operator to create a named tuple from a dictionary in Julia. Here's an example:
 
 ```julia
-d = Dict("a" => 1, "b" => 2)
-nt = NamedTuple(d)
+d = Dict(:a => 1, :b => 2)
+nt = (; d...)
 ```
-
-In this example, the dictionary `d` is converted into a named tuple `nt` using the `NamedTuple` constructor. Each key-value pair in the dictionary becomes a named field in the named tuple.")
 ````
 
 You can also ask GPT-4 Turbo to weigh in on your question (notice the "!" in `aihelp!"..."`) when you need deeper insights. For example, you can ask GPT-4 Turbo to explain the constructors for `NamedTuple`:
@@ -84,9 +82,32 @@ AIMessage("Aside from creating named tuples from pairs or a dictionary, `NamedTu
    nt = NamedTuple((:c => 3, :d => 4, existing_nt...))
    ```
 
+   <Author: this example is incorrect. See the below note>
+
 These constructors allow for flexibility in creating `NamedTuple`s programmatically or from existing data structures in Julia.")
 ````
 
+## LLMs will make mistakes...
+... and it's okay! It's usually easy to check & iterate, so the overall solution still ends up being faster / easier.
+
+The original example used the default chat model and had a mistake as pointed out by @oxinabox. We changed to "gpt3t" model for better performance. There was also a change in the prefix and suffix, but that was not required - it's just a habit of how I write prompts/questions to LLMs.
+
+Similarly, the last constructor in the examples from GPT4 Turbo throws an error. We can ask the LLM to fix it:
+```julia
+aihelp"How to fix `nt = NamedTuple((:c => 3, :d => 4, existing_nt...))`. I get error $err"gpt4t
+```
+
+````plaintext
+[ Info: Done generating response. Total cost: \$0.002
+AIMessage("You can fix the code snippet by using the `merge` function properly, to merge the `NamedTuple` with the key-value pairs:
+
+```julia
+existing_nt = (a=1, b=2)
+nt = merge(existing_nt, (c=3,), (d=4,))
+```
+
+This code merges the existing named tuple `existing_nt` with two additional key-value pairs, `(c=3,)` and `(d=4,)`. The result `nt` will be a named tuple including all four key-value pairs.")
+````
 
 ## Pre-Release Testing
 As AIHelpMe is in its early stages, we're eager for community involvement to test and refine its capabilities. 
@@ -94,3 +115,5 @@ As AIHelpMe is in its early stages, we're eager for community involvement to tes
 Is it valuable? What are its limitations?
 
 Your feedback is invaluable in shaping this tool’s future, so join us in this innovative journey!
+
+EDIT: Thanks to @oxinabox for pointing out that the original example had an error in it!

@@ -12,7 +12,7 @@ Discover the power of generative AI in data analysis with our tutorial on [LLMTe
 
 Welcome back to our "GenAI Mini-Tasks" series, where we showcase how generative AI can boost everyday tasks. Today, we're excited to introduce a powerful tool that exemplifies this series perfectly: the "Interactive Topic Explorer" using [LLMTextAnalysis.jl](https://github.com/svilupp/LLMTextAnalysis.jl).
 
-In this instalment, we're focusing on how you can quickly surface the themes at different "levels" in your text datasets (eg, the top 3 themes, sub-themes, individual texts, ...), a task that traditionally requires hours of slicing, dicing, and eventually reading the various texts. With [LLMTextAnalysis.jl](https://github.com/svilupp/LLMTextAnalysis.jl), you can now gain insights in minutes, transforming the way you interact with large text datasets.
+In this installment, we're focusing on how you can quickly surface the themes at different "levels" in your text datasets (eg, the top 3 themes, sub-themes, individual texts, ...), a task that traditionally requires hours of slicing, dicing, and eventually reading the various texts. With [LLMTextAnalysis.jl](https://github.com/svilupp/LLMTextAnalysis.jl), you can now gain insights in minutes, transforming the way you interact with large text datasets.
 
 ## Exploration with LLMTextAnalysis.jl
 

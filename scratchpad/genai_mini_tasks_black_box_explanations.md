@@ -65,7 +65,7 @@ data_shap = ShapML.shap(explain=X,
 );
 
 ```
-Let's show SHAP results of single data point:
+Let's show the SHAP results of a single data point:
 
 ```julia
 shap_ = @chain begin
@@ -215,7 +215,7 @@ msg = aigenerate(:StorytellerExplainSHAP; task_context..., instance_context..., 
 
 ```plaintext
 [ Info: Tokens: 766 @ Cost: \$0.0111 in 19.2 seconds
-AIMessage("In our analysis, we encountered a male passenger aged 27 who had embarked from Southampton without any siblings or spouse aboard. Traveling third class and having paid a fare far below average, he was enveloped by the perilous reputation of the most economically restrained accommodations of the Titanic. This narrative, coupled with being a young male—the archetype often expected to give precedence to women and children during life-saving procedures—cast a long shadow over his likelihood of survival. Our prediction model rendered a grim forecast, plunging the odds against his survival amidst the tragedy well-known to history.
+AIMessage("In our analysis, we encountered a male passenger aged 27 who had embarked from Southampton without any siblings or spouse aboard. Traveling third class and having paid a fare far below average, he was enveloped by the perilous reputation of the most economically restrained accommodations of the Titanic. This narrative, coupled with being a young male—the archetype often expected to give precedence to women and children during life-saving procedures—cast a long shadow over his likelihood of survival. Our prediction model rendered a grim forecast, plunging the odds against his survival amidst the tragedy well-known to history.")
 ```
 
 **What is being sent to the LLM?**
@@ -230,7 +230,7 @@ println(conv_rendered[2].content)
 
 Combining SHAP explanations with LLM-generated stories offers a novel way to enhance the interpretability of machine learning models. This approach is particularly valuable for data scientists who need to share the explanations with non-technical stakeholders (Responsible AI!). e encourage our readers to experiment with this methodology in their own models to gain deeper insights and share their experiences and templates with the community.
 
-Note: This approach is not specific to SHAP. You can use it with any other explainability tool, eg, [CounterfactualExplanations.jl](https://github.com/JuliaTrustworthyAI/CounterfactualExplanations.jl). All you need to do is to tweak the prompt template slightly - PRs welcome :)
+Note: This approach is not specific to SHAP. You can use it with any other explainability tool, eg, [CounterfactualExplanations.jl](https://github.com/JuliaTrustworthyAI/CounterfactualExplanations.jl). All you need to do is tweak the prompt template slightly - PromptingTools PRs welcome :)
 
 ---
 

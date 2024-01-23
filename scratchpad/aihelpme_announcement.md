@@ -1,16 +1,16 @@
-@def title = "AIHelpMe: AI-Enhanced Coding Assistance for Julia"
+@def title = "AIHelpMe.jl: AI-Enhanced Coding Assistance for Julia"
 @def published = "23 January 2024"
 @def drafted = "23 January 2024"
 @def tags = ["julia","generative-AI","genAI"]
 
 # TL;DR
-[AIHelpMe](https://github.com/svilupp/AIHelpMe.jl), a new Julia package, transforms your existing docstrings into an interactive AI-powered guide, offering personalized insights directly from your code's documentation. It's in the early stages and seeks community feedback, promising a unique, low-cost way to interact with your documentation.
+[AIHelpMe.jl](https://github.com/svilupp/AIHelpMe.jl), a new Julia package, transforms your existing docstrings into an interactive AI-powered guide, offering personalized insights directly from your code's documentation. It's in the early stages and seeks community feedback, promising a unique, low-cost way to interact with your documentation.
 
 \toc 
 
-## Announcing AIHelpMe Pre-Release
+## Announcing AIHelpMe.jl Pre-Release
 
-Welcome to [AIHelpMe](https://github.com/svilupp/AIHelpMe.jl), a new Julia package that transforms your detailed docstrings into a rich source of insights. It's not about writing code for you; rather, it's about shining a light on the valuable documentation you and others have already created. Think of it as having a chat with your code's documentation, enhanced by AI's clever touch.
+Welcome to [AIHelpMe.jl](https://github.com/svilupp/AIHelpMe.jl), a new Julia package that transforms your detailed docstrings into a rich source of insights. It's not about writing code for you; rather, it's about shining a light on the valuable documentation you and others have already created. Think of it as having a chat with your code's documentation, enhanced by AI's clever touch.
 
 ## Motivation and Value
 Why write great docstrings? AIHelpMe gives you a compelling reason, turning them into an interactive, insightful guide. It's a subtle, yet powerful way to connect your queries with tailored, documentation-driven answers.

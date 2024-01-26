@@ -468,7 +468,7 @@ end
 ![Distribution of Scores from the Auto-Judge](/assets/genai_mini_tasks_dedupe_part2/address_dedupe_boxplot.png)
 
 ## Cost-Efficiency?
-Amazingly, the entire process cost just $0.2 for 300 calls, demonstrating the method's affordability and efficiency.
+Amazingly, the entire process cost just \$0.2 for 300 calls, demonstrating the method's affordability and efficiency.
 
 ## Conclusion
 

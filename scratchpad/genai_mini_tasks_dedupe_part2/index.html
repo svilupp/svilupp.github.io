@@ -1,0 +1,349 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">Duplicate No More Pt. 2: Mastering LLM-as-a-Judge Scoring</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Explore three LLM-as-a-judge scoring techniques - additive scoring, linguistic calibration scales, and categorical scoring - applied to the art of data deduplication, enhancing accuracy and consistency in identifying duplicates in contact datasets.</p> <p><div class=franklin-toc ><ol><li><a href="#introduction">Introduction:</a><li><a href="#the_llm-as-a-judge_challenge">The LLM-as-a-Judge Challenge</a><li><a href="#setting_the_stage">Setting the Stage</a><li><a href="#temperature">Temperature </a><li><a href="#scoring_methods">Scoring Methods</a><li><a href="#method_1_additive_scoring_system">Method 1: Additive Scoring System</a><li><a href="#method_2_linguistic_calibration_scales">Method 2: Linguistic Calibration Scales</a><li><a href="#method_3_categorical_scoring">Method 3: Categorical Scoring</a><li><a href="#the_evaluation">The Evaluation</a><li><a href="#cost-efficiency">Cost-Efficiency?</a><li><a href="#conclusion">Conclusion</a></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction:</a></h2> <p>Welcome back to our journey into the world of data deduplication using Language Model &#40;LLM&#41; judges. In our last episode, we navigated the basics; now, we&#39;re diving deeper to stabilize and tune our LLM&#39;s judgment capabilities.</p> <h2 id=the_llm-as-a-judge_challenge ><a href="#the_llm-as-a-judge_challenge" class=header-anchor >The LLM-as-a-Judge Challenge</a></h2> <p>LLMs as judges are increasingly popular, yet their calibration remains a topic of hot debate. A recent <a href="https://twitter.com/aparnadhinak/status/1748368364395721128?s&#61;46&amp;t&#61;LqkQn2Q2J-NjCeYA4p2Dbg">Twitter post</a> highlighted how uncalibrated LLMs can be. In our own deduplication experiments, we faced similar challenges prompting us to seek more stable and consistent methods. In particular, GPT-3.5 struggled to provide consistent results aligned with our expectations while GPT-4 performed well, but it was still volatile across subsequent runs and scores were clumped around the same numbers &#40;instead of the full range of 0-100&#41;.</p> <h2 id=setting_the_stage ><a href="#setting_the_stage" class=header-anchor >Setting the Stage</a></h2> <p>Let&#39;s revisit the FEBRL 1 dataset. We&#39;ll continue using this as our testing ground with the same setup as in our previous episode.</p> <pre><code class="julia hljs"><span class=hljs-comment ># Load the FEBRL 1 dataset.</span>
+<span class=hljs-comment ># The Freely Extensible Biomedical Record Linkage (Febrl) package is distributed with a dataset generator and four datasets generated with the generator. This function returns the first Febrl dataset as a pandas.DataFrame.</span>
+<span class=hljs-comment ># “This data set contains 1000 records (500 original and 500 duplicates, with exactly one duplicate per original record.”</span>
+df = CSV.File(<span class=hljs-string >&quot;febrl-dataset1.csv&quot;</span>) |&gt; DataFrame |&gt; x -&gt; rename(x, strip.(names(x)))
+
+df = <span class=hljs-meta >@chain</span> df <span class=hljs-keyword >begin</span>
+    transform(_, names(_, <span class=hljs-built_in >AbstractString</span>) .=&gt; ByRow(strip), renamecols=<span class=hljs-literal >false</span>)
+    <span class=hljs-meta >@rtransform</span> :text_blob = <span class=hljs-string >&quot;Contact details: <span class=hljs-subst >$(:given_name)</span> <span class=hljs-subst >$(:surname)</span>, living at <span class=hljs-subst >$(:street_number)</span> <span class=hljs-subst >$(:address_1)</span>, <span class=hljs-subst >$(:address_2)</span>, <span class=hljs-subst >$(:suburb)</span>, Postcode: <span class=hljs-subst >$(:postcode)</span>, State: <span class=hljs-subst >$(:state)</span>&quot;</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment >## embed the texts</span>
+embs = aiembed(df.text_blob, normalize)
+embeddings = embs.content
+
+<span class=hljs-comment ># pairwise distances -- you could do it much faster with Distances.jl package</span>
+dists = <span class=hljs-keyword >let</span> embeddings = embeddings
+    dists = zeros(<span class=hljs-built_in >Float32</span>, size(embeddings, <span class=hljs-number >2</span>), size(embeddings, <span class=hljs-number >2</span>))
+    <span class=hljs-meta >@inbounds</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> axes(embeddings, <span class=hljs-number >2</span>)
+        <span class=hljs-keyword >for</span> j <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:i
+            dists[i, j] = sum(<span class=hljs-meta >@view</span>(embeddings[:, i]) .* <span class=hljs-meta >@view</span>(embeddings[:, j]))
+            dists[j, i] = dists[i, j]
+        <span class=hljs-keyword >end</span>
+    <span class=hljs-keyword >end</span>
+    dists
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># for a given record, find the top 10 closest records</span>
+<span class=hljs-keyword >let</span> i = <span class=hljs-number >3</span>
+    dupe_idxs = sortperm(dists[i, :], rev=<span class=hljs-literal >true</span>) |&gt; x -&gt; first(x, <span class=hljs-number >10</span>)
+    <span class=hljs-meta >@chain</span> <span class=hljs-keyword >begin</span>
+        df[dupe_idxs, :]
+        <span class=hljs-meta >@transform</span> :dists = dists[i, dupe_idxs]
+        select(_, :dists, :given_name, :surname, :street_number, :address_1, :address_2, :suburb, :postcode, :state)
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span></code></pre> <p>Example for record 3 and its closest &quot;candidate&quot; for a duplicate:</p> <pre><code class="plaintext hljs">&quot;Contact details: deakin sondergeld, living at 48 goldfinch circuit, kooltuo, canterbury, Postcode: 2776, State: vic&quot;
+
+&quot;Contact details: deakin sondergeld, living at 231 goldfinch circuit, kooltuo, canterbury, Postcode: 2509, State: vic&quot;</code></pre> <h2 id=temperature ><a href="#temperature" class=header-anchor >Temperature </a></h2> <p>The first lesson is small but important. The <code>temperature</code> parameter in the LLM is an important factor for most practical applications. It controls the randomness of the outputs, so a higher temperature will result in more random outputs. This is useful for creative tasks, but not for our deduplication task. We want consistent results, so we need to set the temperature to be a bit lower, eg, 0.3. We can set this in PromptingTools with <code>aigenerate&#40;...; api_kwargs &#61; &#40;;temperature &#61; 0.3&#41;&#41;</code></p> <p>Play around with the temperature and see how it affects the results.</p> <h2 id=scoring_methods ><a href="#scoring_methods" class=header-anchor >Scoring Methods</a></h2> <p>You&#39;ll notice that we rarely write our scoring system from scratch. We take an existing prompt from elsewhere and ask GPT4 to adapt it to our needs with a standard Chain-of-Thoughts &#40;CoT&#41; approach.</p> <p>We&#39;ll explore three different scoring methods today:</p> <h2 id=method_1_additive_scoring_system ><a href="#method_1_additive_scoring_system" class=header-anchor >Method 1: Additive Scoring System</a></h2> <p>Based on the <a href="https://arxiv.org/pdf/2401.10020.pdf">&quot;Self-Rewarding Language Models&quot;</a> paper, we asked GPT-4 to tailor a prompt for our deduplication task &#40;we don&#39;t show the full process here for brevity&#41;.</p> <pre><code class="julia hljs"><span class=hljs-comment >## notice that added information about the task and then simply copied the scoring system from the Appendix of the paper</span>
+prompt=<span class=hljs-string >&quot;&quot;&quot;
+You&#x27;re a professional record linkage engineer. 
+
+Your task is to design clear evaluation criteria to compare a pair of contact details and judge whether they are duplicates or not.
+Prepare an additive 0-5 points system, where more points indicate higher likelihood of being duplicates.
+
+Example contact: 
+&quot;Contact details:  james waller, living at 6 tullaroop street, willaroo, st james, Postcode: 4011, State: WA&quot;. So you can see there is a full name, address, postcode and a state.
+
+Adapt the following template criteria to match our use case of matching two contact records.
+---
+Review the user’s question and the corresponding response using the additive 5-point scoring system described below. Points are accumulated based on the satisfaction of each criterion:
+
+- Add 1 point if the response is relevant and provides some information related to the user’s inquiry, even if it is incomplete or contains some irrelevant content.
+
+- Add another point if the response addresses a substantial portion of the user’s question, but does not completely resolve the query or provide a direct answer.
+
+- Award a third point if the response answers the basic elements of the user’s question in a useful way, regardless of whether it seems to have been written by an AI Assistant or if it has elements typically found in blogs or search results.
+
+- Grant a fourth point if the response is clearly written from an AI Assistant’s perspective, addressing the user’s question directly and comprehensively, and is well-organized and helpful, even if there is slight room for improvement in clarity, conciseness or focus.
+
+- Bestow a fifth point for a response that is impeccably tailored to the user’s question by an AI Assistant, without extraneous information, reflecting expert knowledge, and demonstrating a high-quality, engaging, and insightful answer.
+
+User: &lt;INSTRUCTION_HERE&gt;
+
+&lt;response&gt;&lt;RESPONSE_HERE&gt;&lt;/response&gt;
+
+After examining the user’s instruction and the response:
+
+- Briefly justify your total score, up to 100 words.
+
+- Conclude with the score using the format: “Score: &lt;total points&gt;”
+
+Remember to assess from the AI Assistant perspective, utilizing web search knowledge as necessary. To evaluate the response in alignment with this additive scoring model, we’ll systematically attribute points based on the outlined criteria.
+---
+
+First, think through step by step how one recognizes two duplicate records, what are the situations in which two pairs of records refer to the same person but differ in various fields.
+
+Second, write a brief and concise 5-point system to evaluate a pair of contacts
+
+&quot;&quot;&quot;</span>
+<span class=hljs-comment >## remember to return the whole conversation, so you can iterate on it and improve it</span>
+conv = aigenerate(prompt; model = <span class=hljs-string >&quot;gpt4t&quot;</span>, return_all = <span class=hljs-literal >true</span>)</code></pre> <p>We ended up with the following prompt &#40;after a few inline edits&#41;:</p> <pre><code class="julia hljs">dedupe_template1 = [
+    PT.SystemMessage(
+        <span class=hljs-string >&quot;&quot;&quot;
+        You&#x27;re a world-class record linkage engineer. 
+
+        Compare two contact records and determine whether they refer to the same person using the additive 5-point scoring system described below. 
+
+        Points are accumulated based on the satisfaction of each criterion:
+
+        1. **Name Match (1 point):** Award 1 point if the names are exact matches or plausible variations/aliases of each other (e.g., &quot;Jim&quot; and &quot;James&quot;).
+
+        2. **Address Similarity (1 point):** Add +1 point if the addresses are identical or have minor discrepancies that could be typographical errors or data entry errors or formatting differences.
+
+        3. **Postcode Consistency (1 point):** Add +1 point if the postcodes are the same. Postcodes are less prone to variation, so a mismatch here could indicate different individuals.
+
+        4. **State Agreement (1 point):** Add +1 point if the state information matches. Mismatched states can be a strong indicator of different individuals unless there is evidence of a recent move.
+
+        5. **Overall Cohesion (1 point):** Add 1 point if the overall comparison of the records suggests they are referring to the same person. This includes considering any supplementary information that supports the likelihood of a match, such as similar contact numbers or email addresses.
+
+        This system allows for a maximum of 5 points, with a higher score indicating a greater likelihood that the two records are duplicates. Points cannot be deducted.
+        Each criterion should be evaluated with the understanding that real-world data can have inconsistencies and errors, requiring a balance between exact matches and reasonable allowances for differences.
+        Keep track of the accumulated points so far with each criterion.
+                &quot;&quot;&quot;</span>),
+    PT.UserMessage(<span class=hljs-string >&quot;&quot;&quot;
+&lt;record-1&gt; {{record1}} &lt;/record-1&gt;
+&lt;record-2&gt; {{record2}} &lt;/record-2&gt;
+
+After detailed examination of the two records:
+- Briefly justify your total score, up to 100 words.
+- Conclude with the total score.
+- Use the following output format: &quot;Justification: &lt;justify the total score, go criterion by criterion&gt;\n\n&lt;Score: &lt;total points&gt;”
+    
+To evaluate the response in alignment with this additive scoring model, we’ll systematically attribute points based on the outlined criteria.
+            &quot;&quot;&quot;</span>)]
+
+<span class=hljs-comment >## get the closest candidate for a duplicate</span>
+dupe_idxs = sortperm(dists[<span class=hljs-number >3</span>, :], rev=<span class=hljs-literal >true</span>)
+msg = aigenerate(dedupe_template1; 
+    record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt-3.5-turbo-1106&quot;</span>, 
+    api_kwargs=(; temperature=<span class=hljs-number >0.3</span>))
+
+<span class=hljs-comment >## GPT-3 Turbo Outputs</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## [ Info: Tokens: 644 @ Cost: \$0.0008 in 4.0 seconds</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## AIMessage(&quot;Justification: </span>
+<span class=hljs-comment >## - Name Match: The names are an exact match, so 1 point is awarded.</span>
+<span class=hljs-comment >## - Address Similarity: The addresses have a minor discrepancy in the street number, but the rest of the address is identical, so 1 point is awarded.</span>
+<span class=hljs-comment >## - Postcode Consistency: The postcodes are different, indicating a potential mismatch, so no points are awarded.</span>
+<span class=hljs-comment >## - State Agreement: The states match, so 1 point is awarded.</span>
+<span class=hljs-comment >## - Overall Cohesion: There is no additional information to support a match, so no points are awarded.</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## Score: 3&quot;)</span>
+
+msg = aigenerate(dedupe_template1; 
+    record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt4t&quot;</span>, api_kwargs=(; temperature=<span class=hljs-number >0.3</span>))
+
+<span class=hljs-comment >## GPT-4 Turbo Outputs</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## AIMessage(&quot;Justification: Starting with the Name Match, both records have the exact same name &quot;deakin sondergeld,&quot; which earns them 1 point. For Address Similarity, although both addresses are on Goldfinch Circuit in Kooltuo, Canterbury, the house numbers are significantly different (48 vs. 231), suggesting they might not be typographical errors, so no point is awarded here. The Postcode Consistency criterion is not met, as the postcodes are different (2776 vs. 2509), resulting in no point added. State Agreement is present, with both records listing &quot;vic&quot; as the state, adding 1 point. Lastly, the Overall Cohesion does not strongly suggest these are the same person due to significant address and postcode discrepancies, so no additional point is awarded.</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## Score: 2&quot;)</span></code></pre> <ul> <li><p>The system showed potential in reasoning about data similarities, offering a nuanced approach to score assignments. It grounds the model better, so the scores for different models are more consistent.</p> <li><p>However, the results were not as aligned with our duplication detection goals as hoped. From time to time, the models decided to also deduct points.</p> <li><p>This experiment underscores the importance of careful prompt design and the need for iterative testing to achieve optimal performance in complex tasks like data deduplication.</p> </ul> <h2 id=method_2_linguistic_calibration_scales ><a href="#method_2_linguistic_calibration_scales" class=header-anchor >Method 2: Linguistic Calibration Scales</a></h2> <p>Inspired by <a href="https://arxiv.org/pdf/2305.14975.pdf">&quot;Just Ask for Calibration&quot;</a> we adapted their approach using linguistic scales for better calibration.</p> <pre><code class="julia hljs"><span class=hljs-comment >## We copied the example from the Appendix and adapted it to our use case</span>
+dedupe_template2 = [
+    PT.SystemMessage(
+        <span class=hljs-string >&quot;&quot;&quot;
+        You&#x27;re a world-class record linkage engineer. 
+
+        Your task is to compare two contact records and guess whether they refer to the same person.
+
+        Provide your best guess (&quot;Duplicate&quot; vs &quot;Not duplicate&quot;) and describe how likely it is that your guess is correct as one of the following expressions: &quot;Almost Certain&quot;, &quot;Highly Likely&quot;, &quot;Likely&quot;, &quot;Probably Even&quot;, &quot;Unlikely&quot;, &quot;Highly Unlikely&quot;, &quot;Almost No Change&quot;
+
+        Give ONLY the guess and your confidence, no other words or explanation. 
+
+        For example:
+
+        Guess: &lt;most likely guess, as short as possible; not a complete sentence, just the guess!&gt;
+        Confidence: &lt;description of confidence, without any extra
+        commentary whatsoever; just a short phrase!&gt;
+                &quot;&quot;&quot;</span>),
+    PT.UserMessage(<span class=hljs-string >&quot;&quot;&quot;
+Are the following two records duplicates?
+
+# Record 1
+
+{{record1}}
+
+# Record 2
+
+{{record2}}
+            &quot;&quot;&quot;</span>)]
+msg = aigenerate(dedupe_template2; 
+record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt-3.5-turbo-1106&quot;</span>, api_kwargs=(; temperature=<span class=hljs-number >0.3</span>))
+
+<span class=hljs-comment >## GPT-3 Turbo Outputs</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## [ Info: Tokens: 269 @ Cost: \$0.0003 in 1.8 seconds</span>
+<span class=hljs-comment >## AIMessage(&quot;Guess: Not duplicate</span>
+<span class=hljs-comment >## Confidence: Likely&quot;)</span>
+
+
+msg = aigenerate(dedupe_template2; record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt4t&quot;</span>, api_kwargs=(; temperature=<span class=hljs-number >0.3</span>))
+
+<span class=hljs-comment >## GPT-4 Turbo Outputs</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## [ Info: Tokens: 268 @ Cost: \$0.0028 in 1.1 seconds</span>
+<span class=hljs-comment >## AIMessage(&quot;Guess: Duplicate</span>
+<span class=hljs-comment >## Confidence: Likely&quot;)</span></code></pre> <ul> <li><p>As always GPT-4 demonstrated a better understanding and provided more accurate responses, suggesting a stronger alignment with our deduplication requirements.</p> <li><p>Conversely, GPT-3.5 struggled with this approach, often delivering answers that deviated from our expectations. </p> <li><p>Overall, we&#39;re seeing similar results as in the original article and we don&#39;t have the reasoning trace for potential audits.</p> </ul> <p>GPT-4 performed well, but GPT-3.5 struggled, suggesting further prompt tuning might be necessary.</p> <h2 id=method_3_categorical_scoring ><a href="#method_3_categorical_scoring" class=header-anchor >Method 3: Categorical Scoring</a></h2> <p>Using a &quot;traditional&quot; categorical system where we define several categories and a point scale per category. We loosely follow the example in the <a href="https://cookbook.openai.com/examples/evaluation/how_to_eval_abstractive_summarization">OpenAI cookbook</a>. One difference is to limit the maximum points within each category - it&#39;s easier to explain and tends to bring more consistent results.</p> <p>Again, we asked GPT-4 to write the prompt for us:</p> <pre><code class="julia hljs">prompt = <span class=hljs-string >&quot;&quot;&quot;
+You&#x27;re a professional record linkage engineer. 
+
+Your task is to design clear evaluation criteria to compare a pair of contact details and judge whether they are duplicates or not.
+Prepare a scoring system with 5 categories with 0-2 points each, where more points indicate higher likelihood of being duplicates. Maximum is 10 points.
+
+Example contacts: 
+- &quot;james waller, living at 6 tullaroop street, willaroo, st james, Postcode: 4011, State: WA&quot;
+- &quot;lachlan berry, living at 69 giblin street, killarney, bittern, Postcode: 4814, State: QLD&quot;
+You can see here the available fields for the scoring system: name, address, postcode and state.
+
+First, think through step by step what is a robust method to judge two potentially duplicate records and what the situations are in which two pairs of records refer to the same person but differ in various fields. Design your system around this knowledge.
+
+Second, write a brief and concise explanation for your 10-point system.
+&quot;&quot;&quot;</span>
+<span class=hljs-comment >## remember to return the whole conversation, so you can iterate on it and improve it</span>
+conv = aigenerate(prompt; model = <span class=hljs-string >&quot;gpt4t&quot;</span>, return_all = <span class=hljs-literal >true</span>)</code></pre> <p>Ultimately, we ended up with the following prompt &#40;after a few inline edits&#41;:</p> <pre><code class="julia hljs">dedupe_template3 = [
+    PT.SystemMessage(
+        <span class=hljs-string >&quot;&quot;&quot;
+        You&#x27;re a world-class record linkage engineer. 
+
+        Your task is to compare two contact records and score whether they refer to the same person (=are a duplicate).
+
+        Apply the following scoring system to the two records.
+
+        ### Duplicate Record Scoring System (0-10 Points)
+
+**1. Name Matching:**
+   - **2 points** for exact match.
+   - **1 point** for partial match (nicknames, misspellings).
+   - **0 points** for no match.
+
+**2. Address Matching:**
+   - **2 points** for exact match.
+   - **1 point** for partial match (same street, minor errors).
+   - **0 points** for no match.
+
+**3. Postcode Matching:**
+   - **2 points** for exact match.
+   - **1 point** for first digits match.
+   - **0 points** for no match.
+
+**4. State Matching:**
+   - **2 points** for exact match.
+   - **1 point** for neighboring states or common errors.
+   - **0 points** for no match.
+
+**5. Other Fields (if available):**
+   - **2 points** for exact match in fields like phone or email.
+   - **1 point** for partial match.
+   - **0 points** for no match or not available.
+
+#### Guidelines
+- **Maximum Score:** 10 points.
+- **Higher Score:** Indicates higher likelihood of being duplicates.
+- **Consider Context:** Adjust scoring based on the context and known data quality issues.
+
+### Output Format
+
+Record 1: &lt;details of record 1&gt;
+
+Record 2: &lt;details of record 2&gt;
+
+After detailed examination of the two records:
+
+Justification: &lt;justify the total score, go criterion by criterion. 100 words max&gt;
+
+Score: &lt;total score&gt;
+                &quot;&quot;&quot;</span>),
+    PT.UserMessage(<span class=hljs-string >&quot;&quot;&quot;
+Record 1: {{record1}}
+
+Record 2: {{record2}}
+
+After detailed examination of the two records:
+
+Justification:&quot;&quot;&quot;</span>)]
+
+msg = aigenerate(dedupe_template3; 
+    record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt-3.5-turbo-1106&quot;</span>, 
+    api_kwargs=(; temperature=<span class=hljs-number >0.3</span>))
+
+<span class=hljs-comment >## GPT-3.5 Turbo Outputs</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## [ Info: Tokens: 565 @ Cost: \$0.0006 in 3.1 seconds</span>
+<span class=hljs-comment >## AIMessage(&quot;Name Matching: 2 points. The names are an exact match.</span>
+<span class=hljs-comment >## Address Matching: 1 point. The street name is similar, but the house numbers are different.</span>
+<span class=hljs-comment >## Postcode Matching: 0 points. The postcodes are completely different.</span>
+<span class=hljs-comment >## State Matching: 2 points. The states are an exact match.</span>
+<span class=hljs-comment >## Other Fields: 0 points. No other fields are available for comparison.</span>
+
+<span class=hljs-comment >## Score: 5 points&quot;)</span>
+
+msg = aigenerate(dedupe_template3; record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt4t&quot;</span>, api_kwargs=(; temperature=<span class=hljs-number >0.3</span>))
+
+<span class=hljs-comment >## GPT-4 Turbo Outputs</span>
+<span class=hljs-comment >##</span>
+<span class=hljs-comment >## [ Info: Tokens: 564 @ Cost: \$0.0073 in 7.8 seconds</span>
+<span class=hljs-comment >## AIMessage(&quot;Justification: Both records have an exact name match, earning 2 points. The addresses have a partial match since they are on the same street but have different numbers, earning 1 point. The postcodes do not match exactly or at the first digits, so they earn 0 points. The state matches exactly, earning 2 points. No other fields are provided for comparison. </span>
+
+<span class=hljs-comment >## Score: 5&quot;)</span></code></pre> <p>This is good&#33; We have a clear scoring system and the results are consistent between GPT-3.5 and GPT-4.</p> <p>Let&#39;s test it on a few more records. </p> <p>We&#39;ll use structured extraction to make it easier to work with data in the DataFrame:</p> <pre><code class="julia hljs"><span class=hljs-string >&quot;Apply the scoring system, go criterion by criterion, and justify your score. Maximum 10 points.&quot;</span>
+<span class=hljs-keyword >struct</span> DuplicateJudgement
+    justification::<span class=hljs-built_in >String</span>
+    score::<span class=hljs-built_in >Int</span>
+<span class=hljs-keyword >end</span>
+msg = aiextract(dedupe_template3; record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt-3.5-turbo-1106&quot;</span>, return_type=DuplicateJudgement, api_kwargs=(; temperature=<span class=hljs-number >0.3</span>))</code></pre> <h2 id=the_evaluation ><a href="#the_evaluation" class=header-anchor >The Evaluation</a></h2> <p>Now, let&#39;s apply Method 3 to 100 random contacts &#40;and judge always 3 closest candidates&#41;. Let&#39;s ignore the self-consistency for now &#40;eg, order of duplicate vs candidate&#41;.</p> <pre><code class="julia hljs"><span class=hljs-comment >## Utility functions</span>
+<span class=hljs-keyword >function</span> find_candidates(dists, i; top_k=<span class=hljs-number >3</span>)
+    <span class=hljs-comment >## Find the top k most similar records to the i-th record</span>
+    dupe_idxs = sortperm(<span class=hljs-meta >@view</span>(dists[i, :]), rev=<span class=hljs-literal >true</span>) |&gt; x -&gt; first(x, top_k + <span class=hljs-number >1</span>)
+    <span class=hljs-comment ># the first item is the record itself</span>
+    dupe_idxs[<span class=hljs-number >1</span> .+ (<span class=hljs-number >1</span>:top_k)]
+<span class=hljs-keyword >end</span>
+<span class=hljs-keyword >function</span> judge_duplicates(text1, text2)
+    <span class=hljs-comment >## when we make a lot of network calls, we will often get errors. Let&#x27;s make sure we handle them gracefully</span>
+    <span class=hljs-keyword >try</span>
+        msg = aiextract(dedupe_template3; record1=text1, record2=text2, verbose=<span class=hljs-literal >false</span>, model=<span class=hljs-string >&quot;gpt-3.5-turbo-1106&quot;</span>, return_type=DuplicateJudgement, api_kwargs=(; temperature=<span class=hljs-number >0.3</span>), http_kwargs=(; readtimeout=<span class=hljs-number >15</span>))
+    <span class=hljs-keyword >catch</span> e
+        <span class=hljs-meta >@warn</span> <span class=hljs-string >&quot;Failed to generate a judgement for <span class=hljs-subst >$(i)</span> and <span class=hljs-subst >$(dupe_idxs[<span class=hljs-number >1</span>+i])</span>&quot;</span>
+        <span class=hljs-literal >missing</span>
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># We&#x27;ll run our system for random 100 data points, pick the top 3 most similar records and judge them.</span>
+rand_ids = rand(Random.Xoshiro(<span class=hljs-number >123</span>), <span class=hljs-number >1</span>:size(df, <span class=hljs-number >1</span>), <span class=hljs-number >120</span>) |&gt; unique |&gt; Base.Fix2(first, <span class=hljs-number >100</span>)
+
+<span class=hljs-comment >## Let&#x27;s run the experiment -- this takes ~1-2 minutes</span>
+df_dupes = <span class=hljs-meta >@chain</span> df <span class=hljs-keyword >begin</span>
+    <span class=hljs-meta >@select</span> :text_blob :rec_id
+    <span class=hljs-meta >@rtransform</span> :idx = $eachindex
+    _[rand_ids, :]
+    <span class=hljs-comment >## find candidates</span>
+    <span class=hljs-meta >@rtransform</span> :candidate_idx = find_candidates(dists, :idx)
+    flatten(:candidate_idx)
+    <span class=hljs-comment >## bring the candidate data</span>
+    <span class=hljs-meta >@rtransform</span> :rec_id_candidate = df.rec_id[:candidate_idx] :text_blob_candidate = df.text_blob[:candidate_idx]
+    <span class=hljs-comment >## judge duplicates // we run them in parallel and just wait until they all finish</span>
+    <span class=hljs-meta >@rtransform</span> :judgement = Threads.<span class=hljs-meta >@spawn</span> judge_duplicates(:text_blob, :text_blob_candidate)
+    <span class=hljs-comment >## bring the true labels</span>
+    <span class=hljs-meta >@rtransform</span> :is_duplicate = match(<span class=hljs-string >r&quot;(\d+)&quot;</span>, :rec_id).captures[<span class=hljs-number >1</span>] == match(<span class=hljs-string >r&quot;(\d+)&quot;</span>, :rec_id_candidate).captures[<span class=hljs-number >1</span>]
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment >## Let&#x27;s check if all tasks are done</span>
+all(istaskdone, df_dupes.judgement)</code></pre> <p>Now, let&#39;s analyze the results. As a reminder, the best-case scenario would be to find a duplicate for each record, ie, 100 duplicates in total.</p> <pre><code class="julia hljs"><span class=hljs-meta >@chain</span> df_dupes <span class=hljs-keyword >begin</span>
+    <span class=hljs-meta >@rtransform</span> :judgement = fetch(:judgement)
+    dropmissing(:judgement)
+    <span class=hljs-meta >@rtransform</span> :cost = PT.call_cost(:judgement, <span class=hljs-string >&quot;gpt-3.5-turbo-1106&quot;</span>) :score = :judgement.content.score
+    <span class=hljs-meta >@aside</span> <span class=hljs-meta >@info</span> <span class=hljs-string >&quot;Number of duplicates found: <span class=hljs-subst >$(count(_.is_duplicate)</span>)/<span class=hljs-subst >$(length(rand_ids)</span>), Total cost: \$<span class=hljs-subst >$(sum(_.cost)</span>)&quot;</span>
+    <span class=hljs-meta >@by</span> :is_duplicate :score = mean(:score) :score_std = std(:score)
+<span class=hljs-keyword >end</span></code></pre> <pre><code class="plaintext hljs">[ Info: Number of duplicates found: 100/100, Total cost: \$0.193309
+2×3 DataFrame
+ Row │ is_duplicate  score    score_std 
+     │ Bool          Float64  Float64   
+─────┼──────────────────────────────────
+   1 │        false     2.23    1.76996
+   2 │         true     5.86    1.93855</code></pre> <p>We successfully identified all duplicates, clearly distinguishing them based on their scores. </p> <p>Let&#39;s visualize the distribution of scores - we can see that the scores for duplicates are higher than for non-duplicates and they are well separated.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+
+pl = <span class=hljs-meta >@chain</span> df_dupes <span class=hljs-keyword >begin</span>
+    <span class=hljs-meta >@rtransform</span> :judgement = fetch(:judgement)
+    dropmissing(:judgement)
+    <span class=hljs-meta >@rtransform</span> :score = :judgement.content.score
+    <span class=hljs-meta >@df</span> boxplot(:is_duplicate, :score, ylabel=<span class=hljs-string >&quot;Score&quot;</span>, xlabel=<span class=hljs-string >&quot;Is duplicate?&quot;</span>, title=<span class=hljs-string >&quot;Scores from the Auto-Judge&quot;</span>,
+        yformatter=x -&gt; round(<span class=hljs-built_in >Int</span>, x), legend=<span class=hljs-literal >false</span>, dpi=<span class=hljs-number >200</span>)
+    xticks!([<span class=hljs-number >0</span>, <span class=hljs-number >1</span>], [<span class=hljs-string >&quot;Not duplicate&quot;</span>, <span class=hljs-string >&quot;Duplicate&quot;</span>])
+<span class=hljs-keyword >end</span></code></pre> <p><img src="/assets/genai_mini_tasks_dedupe_part2/address_dedupe_boxplot.png" alt="Distribution of Scores from the Auto-Judge" /></p> <h2 id=cost-efficiency ><a href="#cost-efficiency" class=header-anchor >Cost-Efficiency?</a></h2> <p>Amazingly, the entire process cost just &#36;0.2 for 300 calls, demonstrating the method&#39;s affordability and efficiency.</p> <h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2> <p>Our exploration demonstrated three diverse approaches to crafting scoring criteria for LLM judges in data deduplication. While we found Method 3 most effective for our needs, you might discover that the other methods better suit your specific scenarios. This journey underscores the incredible power and versatility of the LLM-as-a-Judge pattern, opening doors to numerous practical applications in the business.</p> <div class=page-foot > <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: January 26, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a> </div> </div> </main> <script src="/libs/vela/metisMenu.min.js"></script> <script src="/libs/vela/slideout.min.js"></script> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>

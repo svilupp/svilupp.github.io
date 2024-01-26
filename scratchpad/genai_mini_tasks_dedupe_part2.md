@@ -1,20 +1,20 @@
-@def title = "Duplicate No More: Mastering LLM Judge Scoring for Contact Data Cleanup"
+@def title = "Duplicate No More Pt. 2: Mastering LLM-as-a-Judge Scoring"
 @def published = "26 January 2024"
 @def drafted = "26 January 2024"
 @def tags = ["julia","generative-AI","genAI","prompting"]
 
 # TL;DR
-Explore three LLM judge scoring techniques - additive scoring, linguistic calibration scales, and categorical scoring - applied to the art of data deduplication, enhancing accuracy and consistency in identifying duplicates in contact datasets.
+Explore three LLM-as-a-judge scoring techniques - additive scoring, linguistic calibration scales, and categorical scoring - applied to the art of data deduplication, enhancing accuracy and consistency in identifying duplicates in contact datasets.
 
 \toc 
 
 ## Introduction:
 Welcome back to our journey into the world of data deduplication using Language Model (LLM) judges. In our last episode, we navigated the basics; now, we're diving deeper to stabilize and tune our LLM's judgment capabilities.
 
-## The LLM Judge Challenge:
-LLMs as judges are increasingly popular, yet their calibration remains a topic of hot debate. A recent [Twitter post](https://twitter.com/aparnadhinak/status/1748368364395721128?s=46&t=LqkQn2Q2J-NjCeYA4p2Dbg) highlighted how uncalibrated LLMs can be. In our own deduplication experiments, we faced similar challenges prompting us to seek more stable and consistent methods. In particular, GPT-3.5 struggled to provide consistent results aligned with our expectations while GPT-4 performed well, but it was still volatile in between runs and scores were clumped around the same numbers (instead of the full range of 0-100).
+## The LLM-as-a-Judge Challenge
+LLMs as judges are increasingly popular, yet their calibration remains a topic of hot debate. A recent [Twitter post](https://twitter.com/aparnadhinak/status/1748368364395721128?s=46&t=LqkQn2Q2J-NjCeYA4p2Dbg) highlighted how uncalibrated LLMs can be. In our own deduplication experiments, we faced similar challenges prompting us to seek more stable and consistent methods. In particular, GPT-3.5 struggled to provide consistent results aligned with our expectations while GPT-4 performed well, but it was still volatile across subsequent runs and scores were clumped around the same numbers (instead of the full range of 0-100).
 
-## Setting the Stage:
+## Setting the Stage
 Let's revisit the FEBRL 1 dataset. We'll continue using this as our testing ground with the same setup as in our previous episode.
 
 ```julia
@@ -67,7 +67,7 @@ The first lesson is small but important. The `temperature` parameter in the LLM 
 
 Play around with the temperature and see how it affects the results.
 
-## Scoring Methods:
+## Scoring Methods
 
 You'll notice that we rarely write our scoring system from scratch. We take an existing prompt from elsewhere and ask GPT4 to adapt it to our needs with a standard Chain-of-Thoughts (CoT) approach.
 
@@ -81,7 +81,7 @@ Based on the ["Self-Rewarding Language Models"](https://arxiv.org/pdf/2401.10020
 prompt="""
 You're a professional record linkage engineer. 
 
-Your task is to design clear evaluation criteria to compare a pair of contact details and judge whether they are duplicate or not.
+Your task is to design clear evaluation criteria to compare a pair of contact details and judge whether they are duplicates or not.
 Prepare an additive 0-5 points system, where more points indicate higher likelihood of being duplicates.
 
 Example contact: 
@@ -262,7 +262,7 @@ Again, we asked GPT-4 to write the prompt for us:
 prompt = """
 You're a professional record linkage engineer. 
 
-Your task is to design clear evaluation criteria to compare a pair of contact details and judge whether they are duplicate or not.
+Your task is to design clear evaluation criteria to compare a pair of contact details and judge whether they are duplicates or not.
 Prepare a scoring system with 5 categories with 0-2 points each, where more points indicate higher likelihood of being duplicates. Maximum is 10 points.
 
 Example contacts: 
@@ -382,7 +382,7 @@ end
 msg = aiextract(dedupe_template3; record1=df[3, :text_blob], record2=df[dupe_idxs[2], :text_blob], model="gpt-3.5-turbo-1106", return_type=DuplicateJudgement, api_kwargs=(; temperature=0.3))
 ```
 
-## The Evaluation Test:
+## The Evaluation
 Now, let's apply Method 3 to 100 random contacts (and judge always 3 closest candidates). Let's ignore the self-consistency for now (eg, order of duplicate vs candidate).
 
 
@@ -430,7 +430,6 @@ all(istaskdone, df_dupes.judgement)
 Now, let's analyze the results. As a reminder, the best-case scenario would be to find a duplicate for each record, ie, 100 duplicates in total.
 
 ```julia
-## Analysis time
 @chain df_dupes begin
     @rtransform :judgement = fetch(:judgement)
     dropmissing(:judgement)

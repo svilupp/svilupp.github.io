@@ -18,6 +18,12 @@ LLMs as judges are increasingly popular, yet their calibration remains a topic o
 Let's revisit the FEBRL 1 dataset. We'll continue using this as our testing ground with the same setup as in our previous episode.
 
 ```julia
+using DataFramesMeta, CSV
+using LinearAlgebra: normalize, dot
+using Statistics: mean, std
+using PromptingTools
+const PT = PromptingTools
+
 # Load the FEBRL 1 dataset.
 # The Freely Extensible Biomedical Record Linkage (Febrl) package is distributed with a dataset generator and four datasets generated with the generator. This function returns the first Febrl dataset as a pandas.DataFrame.
 # “This data set contains 1000 records (500 original and 500 duplicates, with exactly one duplicate per original record.”
@@ -190,9 +196,9 @@ msg = aigenerate(dedupe_template1;
 
 ```
 
-- The system showed potential in reasoning about data similarities, offering a nuanced approach to score assignments. It grounds the model better, so the scores for different models are more consistent.
-- However, the results were not as aligned with our duplication detection goals as hoped. From time to time, the models decided to also deduct points.
-- This experiment underscores the importance of careful prompt design and the need for iterative testing to achieve optimal performance in complex tasks like data deduplication.
+The system showed potential in reasoning about data similarities, offering a nuanced approach to score assignments. It grounds the model better, so the scores for different models are more consistent.
+
+However, the results were not as aligned with our duplication detection goals as hoped. From time to time, the models decided to also deduct points.
 
 ## Method 2: Linguistic Calibration Scales
 Inspired by ["Just Ask for Calibration"](https://arxiv.org/pdf/2305.14975.pdf) we adapted their approach using linguistic scales for better calibration.
@@ -247,11 +253,12 @@ msg = aigenerate(dedupe_template2; record1=df[3, :text_blob], record2=df[dupe_id
 
 ```
 
-- As always GPT-4 demonstrated a better understanding and provided more accurate responses, suggesting a stronger alignment with our deduplication requirements.
-- Conversely, GPT-3.5 struggled with this approach, often delivering answers that deviated from our expectations. 
-- Overall, we're seeing similar results as in the original article and we don't have the reasoning trace for potential audits.
+As always GPT-4 demonstrated a better understanding and provided more accurate responses, suggesting a stronger alignment with our deduplication requirements.
 
-GPT-4 performed well, but GPT-3.5 struggled, suggesting further prompt tuning might be necessary.
+Conversely, GPT-3.5 struggled with this approach, often delivering answers that deviated from our expectations. 
+
+Overall, we're seeing similar results as in the original article and we don't have the reasoning trace for potential audits.
+
 
 ## Method 3: Categorical Scoring
 Using a "traditional" categorical system where we define several categories and a point scale per category. We loosely follow the example in the [OpenAI cookbook](https://cookbook.openai.com/examples/evaluation/how_to_eval_abstractive_summarization). One difference is to limit the maximum points within each category - it's easier to explain and tends to bring more consistent results.

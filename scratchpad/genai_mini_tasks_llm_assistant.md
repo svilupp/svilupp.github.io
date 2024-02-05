@@ -1,7 +1,7 @@
 @def title = "The Quest for Ultimate Productivity: Building an LLM-Powered Assistant"
 @def published = "5 February 2024"
 @def drafted = "5 February 2024"
-@def tags = ["julia","generative-AI","genAI","assistant"]
+@def tags = ["julia","generative-AI","genAI","llm-assistant","productivity","golem"]
 
 # TL;DR
 A quick preview of my journey in developing a proof of concept for a personalized LLM-powered assistant, aiming to streamline daily productivity tasks. You can do the same!
@@ -14,8 +14,8 @@ Hello, fellow productivity enthusiasts! 🌟 Ever find yourself drowning in a se
 
 Over the years, I've devoured productivity books and experimented with every app under the sun, from GTD to Timeboxing, and from Wunderlist to Motion. Despite my efforts, something always felt off. 📚✖️
 
-One day I saw a [tweet](https://x.com/MilesCranmer/status/1738222999063650474?s=20) from Miles Cranmer about his Notion&Langchain project.
-That's when a lightbulb went off 💡: what I need is a super "narrow" LLM-powered assistant, fine-tuned just for me! Imagine an assistant that knows only 2-3 tasks but executes them with unparalleled precision, because it knows you! 
+One day I saw a [tweet](https://x.com/MilesCranmer/status/1738222999063650474?s=20) from Miles Cranmer about his Notion & LangChain project.
+That's when a lightbulb went off 💡: I need is a super "narrow" LLM-powered assistant, fine-tuned just for me! Imagine an assistant that knows only 2-3 tasks but executes them with unparalleled precision, because it knows you! 
 
 ## 🛠️ Building the Dream Assistant
 
@@ -27,11 +27,11 @@ In the past, I encountered a few key challenges, so I wanted to address them hea
 
 3. **Realistic Boundaries**: To counteract my tendency to stretch myself too thin, the assistant now evaluates my daily capacity, scheduling only when there is space left and ensuring I set achievable goals by warning me against overloading my schedule. The duration estimation is out of my hands, hopefully, improving the quality of the estimates.
 
-Integrating these improvements, the assistant now supports a streamlined approach to productivity, focusing on what tasks are essential, when they'll be tackled, and maintaining realism in daily planning. This refined tool is all about enhancing daily productivity without the overhead, starting each day anew, and keeping ambitions in check.
+Integrating these improvements, the assistant now supports a streamlined approach to productivity, focusing on what tasks are essential, and when they'll be tackled, and maintaining realism in daily planning. This refined tool is all about enhancing daily productivity without the overhead, starting each day anew, and keeping ambitions in check.
 
 ## 🤖 Integration and Automation
 
-Connecting Notion was a no-brainer since my to-do list resides in Notion, making for a seamless transition. Now with their Calendar app, it's even stronger proposition. I rolled up my sleeves and crafted quick macros: `@tadd` for adding tasks (because who doesn’t love a good abbreviation?) and `@cadd` for calendar additions (tasks meant to be auto-scheduled). It was like giving my assistant its own language. 🗣️💬
+Connecting Notion was a no-brainer since my to-do list resides in Notion, making for a seamless transition. Now with their Calendar app, it's an even stronger proposition. I rolled up my sleeves and crafted quick macros: `@tadd` for adding tasks (because who doesn’t love a good abbreviation?) and `@cadd` for calendar additions (tasks meant to be auto-scheduled). It was like giving my assistant its own language. 🗣️💬
 
 Here’s a sneak peek of how it works: 
 ```julia
@@ -78,7 +78,7 @@ So my assistant nudged me with: “Warning: No available slot found. `overflow` 
 
 You can see that it automatically slots in the corresponding section on My Day in Notion.
 
-The best part? All of the links next to "CreatedPage" are clickable, taking me directly to the task in Notion if I want to quickly edit anything. It’s like having a personal assistant who knows exactly what I need, when I need it. 🤖👩‍💼
+The best part? All of the links next to "CreatedPage" are clickable, taking me directly to the task in Notion if I want to quickly edit anything. It’s like having a personal assistant who knows exactly what I need when I need it. 🤖👩‍💼
 
 ## Wrapping Up
 

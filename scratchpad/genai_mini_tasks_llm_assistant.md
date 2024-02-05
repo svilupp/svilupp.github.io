@@ -63,7 +63,7 @@ Here’s a sneak peek of how it works:
 ## [ Info: Tokens: 1221 @ Cost: \$0.0141 in 7.7 seconds
 ## [ Info: Scheduling task
 ## ┌ Warning: No available slot found. `overflow` will be set to `true`.
-## └ @ Main ~/Documents/Julia-training-range/prompting-tools-research/golem_scheduler/api_services.jl:181
+## └ @ Main ~/golem_scheduler/api_services.jl:181
 ## CreatedPage @ https://www.notion.so/Analyze-the-data-for-project-XYZ-2e8f182d7c454f38a02c53b330b08367
 ```
 

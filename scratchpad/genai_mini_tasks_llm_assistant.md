@@ -78,7 +78,7 @@ So my assistant nudged me with: “Warning: No available slot found. `overflow` 
 
 You can see that it automatically slots in the corresponding section on My Day in Notion.
 
-The best part? All of the links next to "CreatedPage" are clickable, taking me directly to the task in Notion if I want to quickly edit anything. It’s like having a personal assistant who knows exactly what I need when I need it. 🤖👩‍💼
+The best part? The links next to "CreatedPage" in the logs are clickable, taking me directly to the task in Notion if I want to quickly edit anything. It’s like having a personal assistant who knows exactly what I need when I need it. 🤖👩‍💼
 
 ## Wrapping Up
 

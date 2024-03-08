@@ -63,7 +63,7 @@ To be clear, you don't need to follow the "screenplay" word by word, but it's a 
 Leverage tools like GenieFramework's [Stipple.jl](https://github.com/GenieFramework/stipple.jl) to quickly develop a beautiful UI for your demo. 
 With just a few lines of code, you can create an application that not only functions well but also looks professional and engaging. 
 
-You can find a basic example of a Stipple app below - it's less than 100 lines of code (50 active lines)! Code is provided in the Appendix and you can run it from your Julia REPL to see how it looks.
+You can find a basic example of a Stipple app below - it's less than 100 lines of code (50 active lines)! Code is provided in the Appendix and you can run it from your Julia REPL.
 
 ![Stipple.jl UI Example](/assets/genai_tips_first_demo/genie-genai-demo.png)
 
@@ -73,7 +73,7 @@ In other news, the team behind GenieFramework has just launched their new no-cod
 
 Implement prompt caching to eliminate latency and ensure a fluid demo experience. This strategy involves storing and quickly retrieving responses for common queries or inputs, thus avoiding the need for real-time generation during the demo. It's not about deceiving your audience but about showcasing your GenAI solution's potential without technical hitches or delays (you would optimize the latency in production use cases anyway).
 
-There are [Memoization.jl](https://github.com/marius311/Memoization.jl) and [Memoize.jl](https://github.com/JuliaCollections/Memoize.jl), but neither of them supports caching to disk, eg, so you cannot restart your REPL.
+There are [Memoization.jl](https://github.com/marius311/Memoization.jl) and [Memoize.jl](https://github.com/JuliaCollections/Memoize.jl), but neither of them supports caching to disk, so you cannot restart your REPL.
 
 I prefer to use simple `Dict` and if-else statement: 
 
@@ -106,7 +106,7 @@ The beauty is that
 1) You can decide whether to cache the whole conversation or only the last user message (keep it simple as per Tip 3!)
 2) You can then serialize the `Dict` to disk and load it back when you restart your REPL. 
 
-## Bonus Tip: Implement Quick Actions for a Dynamic Demo
+## Bonus Tip: Implement Quick Actions
 
 To make your demo even more engaging, incorporate "quick action" buttons that guide users through predefined paths or use cases. 
 

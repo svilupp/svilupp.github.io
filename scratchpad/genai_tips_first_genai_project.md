@@ -1,7 +1,7 @@
 @def title = "Navigating Your First GenAI Project: A Blueprint for Success"
 @def published = "13 February 2024"
 @def drafted = "13 February 2024"
-@def tags = ["julia","generative-AI","genAI","prompting"]
+@def tags = ["julia","generative-AI","genAI"]
 
 # TL;DR
 Embarking on your first Generative AI project can be daunting. Avoid common pitfalls by following these five practical tips: 1) Start simple and build iteratively, 2) Start from the end, 3) Use the best model available and manage costs wisely, 4) Start with a commercial API, and 5) Prepare your "vibe" check. Each tip is designed to streamline your project’s development, ensuring efficiency and effectiveness from inception to execution.

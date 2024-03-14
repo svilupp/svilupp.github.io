@@ -78,19 +78,19 @@ Got a cool idea or breakthrough with your fine-tuning experiments? Share it in t
 ## Extra Questions
 
 1. **Is it expensive?**
-  The process of fine-tuning Cheater-7B was surprisingly affordable, costing less than half a dollar. By renting a cloud GPU from Jarvislabs.io and opting for a spot instance outside of peak hours, the entire fine-tuning operation on an RTX A5000 was completed in about an hour for just $0.39.
+    The process of fine-tuning Cheater-7B was surprisingly affordable, costing less than half a dollar. By renting a cloud GPU from Jarvislabs.io and opting for a spot instance outside of peak hours, the entire fine-tuning operation on an RTX A5000 was completed in about an hour for just $0.39.
 
 2. **How was Cheater-7b trained? Is it difficult?**
-  Training Cheater-7B was streamlined and accessible, thanks to the Axolotl tool. 
+    Training Cheater-7B was streamlined and accessible, thanks to the Axolotl tool. 
   
-  Axolotl simplifies the fine-tuning process, making it approachable even for those new to machine learning. With just a few commands in the CLI, a configuration YAML file, and the selected dataset, Cheater-7B was fine-tuned efficiently. This ease of use demystifies the process, making advanced AI techniques available to a broader audience.
+    Axolotl simplifies the fine-tuning process, making it approachable even for those new to machine learning. With just a few commands in the CLI, a configuration YAML file, and the selected dataset, Cheater-7B was fine-tuned efficiently. This ease of use demystifies the process, making advanced AI techniques available to a broader audience.
 
-  See the example configuration in the Resources section.
+    See the example configuration in the Resources section.
 
 3. **Where did you get the data?**
-  The data for fine-tuning Cheater-7B came from the Julia LLM Leaderboard, focusing on solutions that demonstrated excellence and diversity. Specifically, taking top 50 solutions that scored full points (100 points) for 11 out of the 14 test cases across different prompts were selected. 
+    The data for fine-tuning Cheater-7B came from the Julia LLM Leaderboard, focusing on solutions that demonstrated excellence and diversity. Specifically, we took the top 50 solutions that scored full points (100 points) for 11 out of the 14 test cases across different prompts. 
   
-  The associated code is available in the Resources section.
+    The associated code is available in the Resources section.
 
 4. **Did we not just memorize the results?**
 
@@ -98,7 +98,7 @@ Got a cool idea or breakthrough with your fine-tuning experiments? Share it in t
 
     We fine-tuned our model on the first 11 test cases. It has never seen any of the last 3 test cases: `q_and_a_extractor`, `pig_latinify`, and `extra_julia_code`. These are the hardest test cases in our leaderboard and you can see that even GPT4 struggles to produce "executable" code (>50 points) for these.
 
-    The 11 training cases didn't teach out model much about `pig_latinify` (requires knowledge of multi-threading and associated libraries) and `extract_julia_code` (requires large models because there can be multiple nested levels of triple backticks and strings in the inputs, which tips up most models).
+    The 11 training cases didn't teach our model much about `pig_latinify` (requires knowledge of multi-threading and associated libraries) and `extract_julia_code` (requires large models because there can be multiple nested levels of triple backticks and strings in the inputs, which tips up most models).
 
     However, the performance on `q_and_a_extractor` has increased significantly compared to both GPT4 and the base model! It's likely because the model learned how to do Regex operations in Julia and learned to navigate the return types better.
     

@@ -73,7 +73,7 @@ Got a cool idea or breakthrough with your fine-tuning experiments? Share it in t
 - Explore the Julia LLM Leaderboard: [Julia LLM Leaderboard](https://github.com/svilupp/Julia-LLM-Leaderboard)
 - Resources to Train Your Cheater-7B: [Cheater-7B experiment](https://github.com/svilupp/Julia-LLM-Leaderboard/tree/main/experiments/cheater-7b-finetune).
 - Saving Conversations with PromptingTools: [Julia Conversations folder](https://github.com/svilupp/Julia-LLM-Leaderboard/tree/main/julia_conversations).
-
+- Trained Cheater-7B Model: [Cheater-7B Model](https://huggingface.co/svilupp/cheater-7b/tree/main)
 
 ## Extra Questions
 
@@ -92,7 +92,11 @@ Got a cool idea or breakthrough with your fine-tuning experiments? Share it in t
   
     The associated code is available in the Resources section.
 
-4. **Did we not just memorize the results?**
+4. **Can I try/use the model?**
+   Yes, of course. Download the LORA adapter or the quantized version from [here](https://huggingface.co/svilupp/cheater-7b/tree/main).
+   I'd recommend using `llama.cpp` or `Llama.jl` to run it.
+
+5. **Did we not just memorize the results?**
 
     Well, partially! See below the performance of each model (and GPT4 for comparison) on various test cases.
 

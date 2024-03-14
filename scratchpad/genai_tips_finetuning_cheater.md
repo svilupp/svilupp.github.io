@@ -78,7 +78,7 @@ Got a cool idea or breakthrough with your fine-tuning experiments? Share it in t
 ## Extra Questions
 
 1. **Is it expensive?**
-    The process of fine-tuning Cheater-7B was surprisingly affordable, costing less than half a dollar. By renting a cloud GPU from Jarvislabs.io and opting for a spot instance outside of peak hours, the entire fine-tuning operation on an RTX A5000 was completed in about an hour for just $0.39.
+    The process of fine-tuning Cheater-7B was surprisingly affordable, costing less than half a dollar. By renting a cloud GPU from Jarvislabs.io and opting for a spot instance outside of peak hours, the entire fine-tuning operation on an RTX A5000 was completed in about an hour for just \$0.39.
 
 2. **How was Cheater-7b trained? Is it difficult?**
     Training Cheater-7B was streamlined and accessible, thanks to the Axolotl tool. 

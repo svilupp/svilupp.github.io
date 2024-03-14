@@ -1,6 +1,5 @@
 @def title = "A 7 Billion Parameter Model that Beats GPT-4 on Julia Code?"
 @def published = "14 March 2024"
-@def drafted = "14 March 2024"
 @def tags = ["julia","generative-AI","genAI","leaderboard","finetuning"]
 
 # TL;DR

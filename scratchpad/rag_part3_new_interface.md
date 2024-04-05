@@ -85,6 +85,7 @@ pprint(result)
 
 You immediately see that while a lot of the package names and macros look sensible, they did NOT come from our trusted knowledge base (all highlighted in magenta). In real life, we would also have clearly labeled source links that we could verify with one click.
 
+The annotation system is fully customizable (bring your own logic, styles, etc.).
 You can also obtain this information in HTML format to easily show it in your Genie apps!
 
 ## A Closer Look at the Modular Interface
@@ -251,7 +252,7 @@ You would use the same approach to build a hybrid index (semantic search + BM25)
 This approach allows `RAGTools` to accommodate a broader range of applications, from large-scale datasets to specialized indexing strategies, enhancing its utility and adaptability.
 
 ## Conclusion
-The latest enhancements in the `RAGTools` module are a leap forward in democratizing the development of RAG systems. By blending ease of use with deep customizability, we open new avenues for developers and researchers to explore AI-driven question answering's possibilities.
+The latest enhancements in the `RAGTools` module are a leap forward in democratizing the development of RAG systems. By blending ease of use with deep customizability, we open new avenues for developers and researchers to explore AI-driven question-answering possibilities.
 
 ## We Want to Hear from You!
 

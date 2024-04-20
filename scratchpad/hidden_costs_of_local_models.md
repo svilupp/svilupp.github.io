@@ -1,15 +1,16 @@
-@def title = "The Hidden Cost of Locally-Hosted Models: A Case Study"
+@def title = "The Hidden Cost of locally hosted Models: A Case Study"
 @def published = "20 April 2024"
 @def drafted = "20 April 2024"
 @def tags = ["julia","generative-AI","genAI"]
 
 # TL;DR
+locally hosted AI models may appear free, but they cost you valuable time—over 10 hours a year in our case study. Switch to a commercial API like Groq to save time, boost productivity, and gain nearly three extra days of coding annually for a dollar!
 
 \toc
 
 ## Would You Pay a Dollar to Buy 3 Extra Days This Year?
 
-Imagine you could buy time. Not in a metaphorical sense, but literally reclaim hours of your life lost to waiting. For those of us using locally-hosted models for ad-hoc productivity tasks like coding assistance, this isn't just a daydream—it's a decision we face every day.
+Imagine you could buy time. Not in a metaphorical sense, but literally reclaim hours of your life lost to waiting. For those of us using locally hosted models for ad-hoc productivity tasks like coding assistance, this isn't just a daydream—it's a decision we face every day.
 
 ## Appreciating the Open-Source AI Ecosystem
 
@@ -17,7 +18,7 @@ First, let's give credit where it's due. The thriving open-source ecosystem in g
 
 ## The Hidden Costs of Local Hosting
 
-While the price tag on locally-hosted models might read "free," the reality is anything but. These models often underperform compared to their cloud-hosted counterparts (GPU-poor) or make you wait longer—sometimes both. For example, using a locally-hosted model like Mixtral on Ollama, you might wait 20 seconds for a response that a commercial provider like Groq, Together, etc. could deliver in less than a second.
+While the price tag on locally hosted models might read "free," the reality is anything but. These models often underperform compared to their cloud-hosted counterparts (GPU-poor) or make you wait longer—sometimes both. For example, using a locally hosted model like Mixtral on Ollama, you might wait 20 seconds for a response that a commercial provider like Groq, Together, etc. could deliver in less than a second.
 
 ### Case Study: Daily Coding Assistance
 
@@ -86,4 +87,4 @@ airetry!(success_func, result, feedback_func; max_retries = 3)
 
 While the allure of "free" local hosting is strong, the hidden costs in time can be substantial. By opting for a commercial solution like Groq's API, not only do you reclaim time lost to waiting, but you also benefit from superior model performance. The investment is minimal compared to the time you buy back—time that could be spent innovating, creating, or just enjoying life. Isn't that worth considering?
 
-If you're looking to try, do it now while Groq is free!!
+If you're looking to try, do it now while Groq is free!! [Get your API key here](https://console.groq.com/keys).

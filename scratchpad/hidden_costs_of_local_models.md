@@ -56,14 +56,14 @@ using PromptingTools
 ai"In Julia, write a function `clean_names` that cleans up column names of a DataFrame"gl70
 ```
 
-```plaintext
+````plaintext
 [ Info: Tokens: 411 @ Cost: \$0.0003 in 2.7 seconds
 AIMessage("Here is a Julia function `clean_names` that cleans up column names of a DataFrame:
-````julia
+```julia
 using DataFrames
 <...continues>
-````
 ```
+````
 
 This simple setup can drastically cut down your waiting time, freeing up days for you to spend on more fulfilling activities or further innovation.
 
@@ -88,3 +88,7 @@ airetry!(success_func, result, feedback_func; max_retries = 3)
 While the allure of "free" local hosting is strong, the hidden costs in time can be substantial. By opting for a commercial solution like Groq's API, not only do you reclaim time lost to waiting, but you also benefit from superior model performance. The investment is minimal compared to the time you buy back—time that could be spent innovating, creating, or just enjoying life. Isn't that worth considering?
 
 If you're looking to try, do it now while Groq is free!! [Get your API key here](https://console.groq.com/keys).
+
+## Appendix
+
+I made a claim that Llama 3 70b is a GPT-4 level model, check out our Leaderboard [here](https://siml.earth/Julia-LLM-Leaderboard/dev/examples/summarize_results_local/#Model-Comparison) to see the results in an out-of-sample benchmark.

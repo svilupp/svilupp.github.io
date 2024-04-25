@@ -1,0 +1,69 @@
+<!doctype html> <html lang=en > <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M28VNQP');</script> <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link href="/css/franklin.css" rel=stylesheet > <link href="/css/vela.css" rel=stylesheet > <script src="/libs/vela/jquery.min.js"></script> <link rel=icon  href="/assets/favicon.png"> <title>Jan's Scratchpad</title> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M28VNQP" height=0  width=0  style="display:none;visibility:hidden"></iframe></noscript> <div class="main-nav slideout-menu slideout-menu-left" id=menu > <div class=flex-container > <span class=sidebar-brand > <h3 style='font-size: 25px'>Scratchpad</h3> </span> </div> <nav class=sidebar-nav > <ul class=metismenu  id=metismenu  > <li><a href="/index.html">Home</a> <li><a href="/scratchpad/">Posts</a> <li><a href="/about/">About</a> <li><a href="/tag/">Tags</a> <li><a href="/privacy_policy/">Privacy Policy</a> <li><a href="/cookie_policy/">Cookie Policy</a> </ul> </nav> </div> <main id=panel  class="slidout-panel slideout-panel-left"> <div class="toggle-button hamburger hamburger--spin"> <div class=hamburger-box > <div class=hamburger-inner ></div> </div> </div> <h1 class="page title">Automatically Saving Conversations with PromptingTools.jl and AIHelpMe.jl</h1> <hr> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Learn how to automatically save conversations with PromptingTools.jl. By saving conversations, you can contribute to building a dataset for fine-tuning a Julia-specific language model. This tutorial provides code examples to get you started</p> <p><div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#defining_a_custom_schema_for_saving_conversations">Defining a Custom Schema for Saving Conversations</a><ol><li><a href="#example_1_saving_conversations_with_aigenerate">Example 1: Saving Conversations with <code>aigenerate</code></a><li><a href="#example_2_registering_a_traced_model">Example 2: Registering a Traced Model</a><li><a href="#loading_conversations">Loading Conversations</a><li><a href="#exporting_conversations_in_sharegpt_format">Exporting Conversations in ShareGPT Format</a></ol><li><a href="#saving_aihelpme_conversations">Saving AIHelpMe Conversations</a><li><a href="#sharing_the_conversations">Sharing The Conversations</a><li><a href="#conclusion">Conclusion</a></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Recently, there have been exciting discussions about fine-tuning a language model for the Julia programming language &#40;see <a href="https://discourse.julialang.org/t/an-llm-fine-tuned-for-julia-call-for-comments-help/113462/8">here</a>&#41;. </p> <p>As part of this effort, we need a high-quality dataset of GOOD conversations related to Julia. One way to contribute to this effort is to start logging conversations with Large Language Models &#40;LLMs&#41; that are relevant to Julia. </p> <p>In this blog post, we will explore how to automatically save conversations using PromptingTools.jl and AIHelpMe.jl, a powerful Julia package for interacting with language models. By saving these conversations, we can build a valuable dataset for fine-tuning a Julia-specific language model.</p> <h2 id=defining_a_custom_schema_for_saving_conversations ><a href="#defining_a_custom_schema_for_saving_conversations" class=header-anchor >Defining a Custom Schema for Saving Conversations</a></h2> <p>A lesser-known feature, PromptingTools has a custom callback system that allows us to define custom schemas that will then call your arbitrary functions before and after each LLM call &#40;it&#39;s used mostly for observability&#41;.</p> <p>To save conversations, we need to define a custom schema that wraps our normal prompt schema. We can do this by creating a new struct <code>SaverSchema</code> that inherits from <code>PT.AbstractTracerSchema</code>.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Dates
+<span class=hljs-keyword >using</span> JSON3
+<span class=hljs-keyword >using</span> PromptingTools
+<span class=hljs-keyword >const</span> PT = PromptingTools
+
+<span class=hljs-keyword >const</span> SAVE_DIR = <span class=hljs-string >&quot;finetune_julia&quot;</span>
+
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> SaverSchema &lt;: PT.AbstractTracerSchema
+    schema::PT.AbstractPromptSchema
+<span class=hljs-keyword >end</span></code></pre> <p>Any call to this schema triggers a call to function <code>initialize_tracer</code> before the LLM call and to <code>finalize_tracer</code> after the LLM call.</p> <p>In our case, we want to overload the <code>finalize_tracer</code> function to save the conversation after the LLM call.</p> <pre><code class="julia hljs"><span class=hljs-keyword >function</span> PT.finalize_tracer(
+    tracer_schema::SaverSchema, 
+    tracer, 
+    msg_or_conv; 
+    tracer_kwargs=<span class=hljs-built_in >NamedTuple</span>(), 
+    model=<span class=hljs-string >&quot;&quot;</span>, 
+    kwargs...
+)
+    <span class=hljs-comment ># We already captured all kwargs, they are already in `tracer`, we can ignore tracer_kwargs in this implementation</span>
+
+    time_received = Dates.format(now(), <span class=hljs-string >&quot;YYYYmmdd_HHMMSS&quot;</span>)
+    path = joinpath(SAVE_DIR, <span class=hljs-string >&quot;conversation__<span class=hljs-subst >$(model)</span>__<span class=hljs-subst >$(time_received)</span>.json&quot;</span>)
+    conv = msg_or_conv <span class=hljs-keyword >isa</span> <span class=hljs-built_in >AbstractVector</span> ? msg_or_conv : [msg_or_conv]
+    PT.save_conversation(path, conv)
+
+    <span class=hljs-keyword >return</span> msg_or_conv
+<span class=hljs-keyword >end</span></code></pre> <h3 id=example_1_saving_conversations_with_aigenerate ><a href="#example_1_saving_conversations_with_aigenerate" class=header-anchor >Example 1: Saving Conversations with <code>aigenerate</code></a></h3> <p>Now that we have defined our custom schema, we can use it to save conversations with <code>aigenerate</code>. We need to explicitly provide the <code>SaverSchema</code> instance to <code>aigenerate</code> along with the input prompt.</p> <pre><code class="julia hljs">schema = SaverSchema(PT.OpenAISchema())
+msg = aigenerate(schema, <span class=hljs-string >&quot;Say hi&quot;</span>, model=<span class=hljs-string >&quot;gpt3t&quot;</span>, return_all=<span class=hljs-literal >true</span>)</code></pre> <p>When you call this function, it will save the conversation to the folder defined in <code>SAVE_DIR</code>.</p> <p>One gotcha, if you send multiple messages in the save convo, is that all turns will be saved in separate files. The easiest way would be to ignore it and solve it in post-processing &#40;<code>AIMessage</code> have unique IDs so it should be easy to detect&#41; Alternatively, you can save the hash of the content of the first 2-3 messages in the filename to clearly see the continued conversations.</p> <h3 id=example_2_registering_a_traced_model ><a href="#example_2_registering_a_traced_model" class=header-anchor >Example 2: Registering a Traced Model</a></h3> <p>Instead of providing the custom schema every time, we can register a traced model with the custom schema. This way, we can use the model name instead of the schema instance.</p> <pre><code class="julia hljs"><span class=hljs-comment ># Overwrite the schema for this model and define a nice alias</span>
+PT.register_model!(; name=<span class=hljs-string >&quot;gpt-3.5-turbo&quot;</span>, schema)
+PT.MODEL_ALIASES[<span class=hljs-string >&quot;gpt3t&quot;</span>] = <span class=hljs-string >&quot;gpt-3.5-turbo&quot;</span>
+
+<span class=hljs-comment ># Notice the return_all -&gt; we need to return ALL messages, it would be a useless record otherwise</span>
+msg = aigenerate(<span class=hljs-string >&quot;Say hi&quot;</span>, model=<span class=hljs-string >&quot;gpt3t&quot;</span>, return_all=<span class=hljs-literal >true</span>)</code></pre> <p>Conversation gets saved.</p> <h3 id=loading_conversations ><a href="#loading_conversations" class=header-anchor >Loading Conversations</a></h3> <p>Once we have saved conversations, we can load them back into Julia using <code>load_conversation</code>.</p> <pre><code class="julia hljs">conv = PT.load_conversation(<span class=hljs-string >&quot;finetune_julia/conversation__gpt3t__20240425_205853.json&quot;</span>)</code></pre>
+<h3 id=exporting_conversations_in_sharegpt_format ><a href="#exporting_conversations_in_sharegpt_format" class=header-anchor >Exporting Conversations in ShareGPT Format</a></h3>
+<p>Once we have enough conversation, we will want to export so our finetuning tool can use them.  I would highly recommend Axolotl &#40;see an example from <a href="https://github.com/svilupp/Julia-LLM-Leaderboard/blob/main/experiments/cheater-7b-finetune/lora.yml">my finetune</a>&#41;. </p>
+<p>Axolotl can work with instructions &#40;conversations&#41; in ShareGPT format. This is how you can export multiple conversations into the required JSONL file:</p>
+<pre><code class="julia hljs">conv1 = [PT.SystemMessage(<span class=hljs-string >&quot;System message 1&quot;</span>), 
+         PT.UserMessage(<span class=hljs-string >&quot;User message&quot;</span>), 
+         PT.AIMessage(<span class=hljs-string >&quot;AI message&quot;</span>)]
+conv2 = [PT.SystemMessage(<span class=hljs-string >&quot;System message 2&quot;</span>), 
+         PT.UserMessage(<span class=hljs-string >&quot;User message&quot;</span>), 
+         PT.AIMessage(<span class=hljs-string >&quot;AI message&quot;</span>)]
+path = joinpath(<span class=hljs-string >&quot;finetune_julia&quot;</span>, <span class=hljs-string >&quot;export_sharegpt.jsonl&quot;</span>)
+PT.save_conversations(path, [conv1, conv2])</code></pre>
+<h2 id=saving_aihelpme_conversations ><a href="#saving_aihelpme_conversations" class=header-anchor >Saving AIHelpMe Conversations</a></h2>
+<p>If you use AIHelpMe, you&#39;re also generating loads of interesting data&#33; The simplest thing for auto-logging your questions is to wrap the entry function <code>aihelp</code> and serialize the whole <code>RAGResult</code> &#40;it has all the diagnostics and underlying information&#41;</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> aih(question; kwargs...)
+    result = aihelp(question; return_all=<span class=hljs-literal >true</span>, kwargs...)
+    dt = Dates.format(now(), <span class=hljs-string >&quot;YYYYmmdd_HHMMSS&quot;</span>)
+    JSON3.write(joinpath(SAVE_DIR, <span class=hljs-string >&quot;aihelp__<span class=hljs-subst >$(dt)</span>.json&quot;</span>), result)
+    <span class=hljs-keyword >return</span> result
+<span class=hljs-keyword >end</span></code></pre>
+<p>To use it, you would replace <code>aihelp&#40;&quot;some question...&quot;&#41;</code> with <code>aih&#40;&quot;some question...&quot;&#41;</code>.</p>
+<p>The serialized RAGResult is c. 200kB, but it provides a lot of helpful detail about your question. If you want to save space, save just the individual conversations in <code>result.conversations</code>.</p>
+<h2 id=sharing_the_conversations ><a href="#sharing_the_conversations" class=header-anchor >Sharing The Conversations</a></h2>
+<p>Where to share these? To be discussed. Come join us on <a href="https://discourse.julialang.org/t/an-llm-fine-tuned-for-julia-call-for-comments-help/113462/8">Discourse</a> or on Julia Slack in #generative-ai.</p>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>In this blog post, we have seen how to automatically save conversations using PromptingTools.jl. By defining a custom schema and overloading the <code>finalize_tracer</code> function, we can save conversations to files. We can also register a traced model and use it to generate text. Finally, we can load and export conversations in ShareGPT format for finetuning. With AIHelpMe.jl, we can serialize the whole <code>RAGResult</code> with JSON3.</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: April 25, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. See the <a href="/privacy_policy/">Privacy Policy</a>
+</div>
+</div>
+  </main> 
+  <script src="/libs/vela/metisMenu.min.js"></script>
+  <script src="/libs/vela/slideout.min.js"></script>
+  
+  
+    <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

@@ -4,7 +4,7 @@
 @def tags = ["julia","generative-AI","genAI","genie"]
 
 # TL;DR
-ProToPortal streamlines your interaction with any LLM tasks on-the-go, offering customizable templates for automatic replies, direct code evaluation, and an intuitive, multi-device interface. Explore its full capabilities and enhance your productivity on [GitHub](https://github.com/svilupp/ProToPortal.jl).
+ProToPortal streamlines your interaction with any LLM tasks on the go, offering customizable templates for automatic replies, direct code evaluation, and an intuitive, multi-device interface. Explore its full capabilities and enhance your productivity on [GitHub](https://github.com/svilupp/ProToPortal.jl).
 
 \toc 
 
@@ -26,17 +26,19 @@ Ever found yourself on a leisurely walk with your dog, struck by a sudden coding
 
 ## More Handy Features:
 
-- **Editing Code Cells:** Quickly edit your code right within the chat tab—just click and modify.
-- **Deleting Code Cells:** Made a mistake? No worries! Easily remove any unwanted code snippets.
+- **Editing Code Cells:** Quickly edit any of the messages right within the chat tab—just click and modify.
+- **Deleting Code Cells:** Made a mistake? No worries! Easily remove any unwanted messages.
 - **Saving Conversations:** Keep a history of your sessions for future reference or continued experimentation.
 
 For a complete list of features, including detailed explanations and how-tos, be sure to check out [ProToPortal's Documentation](https://svilupp.github.io/ProToPortal.jl/dev).
 
 ## See It in Action:
 
-Curious to see how it works in real-time? Check out this video where I fix a piece of code using ProToPortal: [Code fixing recording](https://github.com/svilupp/ProToPortal.jl/blob/main/docs/src/videos/screen-capture-code-fixing.webm).
+Curious to see how it works in real time? 
 
-And here's another cool feature—watch how ProToPortal handles a typical coding session: ![casual conversation](https://github.com/svilupp/ProToPortal.jl/blob/main/docs/src/videos/screen-capture-plain.gif).
+Check out this video where it auto-fixes the generated code: [Code fixing recording](https://github.com/svilupp/ProToPortal.jl/blob/main/docs/src/videos/screen-capture-code-fixing.webm).
+
+And here's another cool feature—watch how ProToPortal handles editing a conversation: [Editing a conversation](https://github.com/svilupp/ProToPortal.jl/blob/main/docs/src/videos/screen-capture-plain.gif).
 
 ## Give It a Try!
 

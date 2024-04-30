@@ -77,7 +77,7 @@ AIHelpMe.load_index!([:julia,:makie,:tidier]);
 aihelp"How to set the label of a y-axis in Makie?"gpt3t # testing a weak model
 pprint(last_result())
 ```
-![Highlighted answer over Tidier docs](/assets/aihelpme_reannouncement/makie1.png)
+![Highlighted answer over Makie docs](/assets/aihelpme_reannouncement/makie2.png)
 
 Note: There can still be some issues with the quality of the answers (it's GenAI!), especially for the bronze pipeline and weaker models, but, hopefully, it's already good enough to create value for you!
 

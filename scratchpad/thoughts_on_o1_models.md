@@ -1,11 +1,9 @@
-
-
 @def title = "OpenAI's o1 Series: Initial Reactions from a Julia Developer"
 @def published = "15 September 2024"
 @def drafted = "15 September 2024"
 @def tags = ["julia","generative-AI","genAI","o1"]
 
-# TL;DR
+## TL;DR
 
 OpenAI's o1 series shows promise in code review and improvement suggestions, but its high cost and inconsistent performance across tasks make it a situational tool. It excels in thoughtful critique but may not always justify its premium over alternatives like Claude 3.5 Sonnet for coding tasks.
 
@@ -23,7 +21,7 @@ My approach was admittedly more anecdotal than scientific. I tested o1 preview, 
 - Writing code and tests
 - Improving prompts/instructions
 
-To keep things fair, I used the same prompts across all models. You can check out the full conversations around code review in these [GitHub gists](https://gist.github.com/svilupp/7ec58cd53dc5a4eb85a8b9133cc5c4cd).
+To keep things fair, I used the same prompts across all models. You can check out the full conversations around code review in these [GitHub gists](https://gist.github.com/svilupp/7ec58cd53dc5a4eb85a8b9133cc5c4cd)****.
 
 ## Highlights from the Code Review
 

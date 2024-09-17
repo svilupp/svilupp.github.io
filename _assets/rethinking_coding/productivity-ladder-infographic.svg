@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
+  <defs>
+    <style>
+      .title { font: bold 32px Arial, sans-serif; fill: #333; }
+      .step-text { font: bold 20px Arial, sans-serif; fill: #333; }
+      .multiplier { font: bold 24px Arial, sans-serif; fill: #0066cc; }
+      .ladder-line { stroke: #666; stroke-width: 6; }
+      .rung { stroke: #666; stroke-width: 4; }
+      .label { font: bold 18px Arial, sans-serif; fill: #666; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  
+  <!-- Title -->
+  <text x="300" y="60" text-anchor="middle" class="title">AI-Assisted Coding Productivity Ladder</text>
+  
+  <!-- Ladder -->
+  <g transform="translate(50, 100)">
+    <!-- Vertical lines -->
+    <line x1="0" y1="0" x2="0" y2="650" class="ladder-line" />
+    <line x1="500" y1="0" x2="500" y2="650" class="ladder-line" />
+    
+    <!-- Rungs and boxes -->
+    <g>
+      <!-- Step 1 -->
+      <rect x="0" y="520" width="500" height="130" fill="#f0f0f0" stroke="#666" stroke-width="2"/>
+      <text x="20" y="595" class="step-text">1. Basic AI-assisted coding</text>
+      <text x="480" y="595" text-anchor="end" class="multiplier">1.2x - 1.4x</text>
+      
+      <!-- Step 2 -->
+      <rect x="0" y="390" width="500" height="130" fill="#f0f0f0" stroke="#666" stroke-width="2"/>
+      <text x="20" y="465" class="step-text">2. Function-level assistance</text>
+      <text x="480" y="465" text-anchor="end" class="multiplier">2x</text>
+      
+      <!-- Step 3 -->
+      <rect x="0" y="260" width="500" height="130" fill="#f0f0f0" stroke="#666" stroke-width="2"/>
+      <text x="20" y="335" class="step-text">3. Contextual code generation</text>
+      <text x="480" y="335" text-anchor="end" class="multiplier">3x</text>
+      
+      <!-- Step 4 -->
+      <rect x="0" y="130" width="500" height="130" fill="#f0f0f0" stroke="#666" stroke-width="2"/>
+      <text x="20" y="205" class="step-text">4. High-level functionality requests</text>
+      <text x="480" y="205" text-anchor="end" class="multiplier">5x</text>
+      
+      <!-- Step 5 -->
+      <rect x="0" y="0" width="500" height="130" fill="#f0f0f0" stroke="#666" stroke-width="2"/>
+      <text x="20" y="75" class="step-text">5. AI-first development approach</text>
+      <text x="480" y="75" text-anchor="end" class="multiplier">10x?</text>
+    </g>
+  </g>
+  
+  <!-- Label -->
+  <text x="25" y="425" class="label" transform="rotate(-90 25,425)">Complexity of AI Assistance</text>
+</svg>

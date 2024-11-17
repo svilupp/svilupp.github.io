@@ -4,7 +4,16 @@
     {{insert head.html}}
 </head>
 <body>
+    <!-- Choose navigation based on current section -->
+    {{ispage /jan/*}}
+    {{insert nav_jan.html}}
+    {{end}}
+    {{ispage /ann/*}}
+    {{insert nav_ann.html}}
+    {{end}}
+    {{ispage index.html}}
     {{insert nav.html}}
+    {{end}}
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">

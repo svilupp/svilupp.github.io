@@ -23,29 +23,29 @@ title = "Welcome"
 </div>
 
 <!-- Main content section -->
-<div class="container-fluid px-4 mt-5">
-    <div class="row g-4">
-        <!-- Jan's Site Section -->
-        <div class="col-12 mb-4">
-            <a href="/jan/" class="text-decoration-none">
-                <div class="card h-100 shadow-lg hover-card">
-                    <div class="card-body text-center p-5">
-                        <img src="/assets/images/cartoon-boy.png" alt="Cartoon Boy" class="img-fluid mb-4" style="max-width: 200px;">
-                        <h2 class="card-title display-6 mb-3">Jan's Site</h2>
-                        <p class="card-text lead text-muted">Click here to continue to Jan's site</p>
+<div class="container px-4 mt-5">
+    <div class="row g-4 justify-content-center">
+        <!-- Ann's Site Section -->
+        <div class="col-12 col-md-6">
+            <a href="/ann/" class="text-decoration-none">
+                <div class="card shadow-lg hover-card">
+                    <div class="card-body text-center p-4">
+                        <img src="/assets/images/cartoon-girl.png" alt="Cartoon Girl" class="img-fluid mb-3" style="max-width: 150px;">
+                        <h2 class="card-title h3 mb-2">Ann's Site</h2>
+                        <p class="card-text text-muted">Click here to continue to Ann's site</p>
                     </div>
                 </div>
             </a>
         </div>
 
-        <!-- Ann's Site Section -->
-        <div class="col-12">
-            <a href="/ann/" class="text-decoration-none">
-                <div class="card h-100 shadow-lg hover-card">
-                    <div class="card-body text-center p-5">
-                        <img src="/assets/images/cartoon-girl.png" alt="Cartoon Girl" class="img-fluid mb-4" style="max-width: 200px;">
-                        <h2 class="card-title display-6 mb-3">Ann's Site</h2>
-                        <p class="card-text lead text-muted">Click here to continue to Ann's site</p>
+        <!-- Jan's Site Section -->
+        <div class="col-12 col-md-6">
+            <a href="/jan/" class="text-decoration-none">
+                <div class="card shadow-lg hover-card">
+                    <div class="card-body text-center p-4">
+                        <img src="/assets/images/cartoon-boy.png" alt="Cartoon Boy" class="img-fluid mb-3" style="max-width: 150px;">
+                        <h2 class="card-title h3 mb-2">Jan's Site</h2>
+                        <p class="card-text text-muted">Click here to continue to Jan's site</p>
                     </div>
                 </div>
             </a>

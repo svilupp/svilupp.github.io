@@ -8,13 +8,16 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <article class="blog-post">
-                    <div class="franklin-content markdown-content">
-                        <h1 class="display-4 mb-4">{{title}}</h1>
-                        <p class="blog-post-meta text-muted mb-4">{{published}}</p>
-                        {{{content}}}
+                <!-- Ensure proper markdown rendering with franklin-content -->
+                <div class="franklin-content">
+                    <!-- Title and metadata outside the content area -->
+                    <div class="post-header mb-5">
+                        <h1 class="display-4">{{title}}</h1>
+                        <p class="text-muted">{{published}}</p>
                     </div>
-                </article>
+                    <!-- Main content with direct markdown processing -->
+                    {{{content}}}
+                </div>
             </div>
         </div>
     </div>
@@ -31,23 +34,23 @@
         .franklin-content h2 { font-size: 2rem; }
         .franklin-content h3 { font-size: 1.75rem; }
         .franklin-content h4 { font-size: 1.5rem; }
-        .blog-post p {
+        .post-content p {
             margin-bottom: 1.25rem;
             line-height: 1.7;
         }
-        .blog-post img {
+        .post-content img {
             max-width: 100%;
             height: auto;
             margin: 1.5rem 0;
         }
-        .blog-post pre {
+        .post-content pre {
             background-color: #f8f9fa;
             padding: 1rem;
             border-radius: 0.25rem;
             margin: 1rem 0;
             overflow-x: auto;
         }
-        .blog-post code {
+        .post-content code {
             color: #e83e8c;
             word-wrap: break-word;
         }

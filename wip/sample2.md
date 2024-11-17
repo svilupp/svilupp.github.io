@@ -1,6 +1,6 @@
 +++
 title = "Work in Progress: Sample Post 2"
-published = "16 Nov 2024"
+published = "16 November 2024"
 +++
 
 # Sample WIP Post 2

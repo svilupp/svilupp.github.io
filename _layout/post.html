@@ -9,15 +9,10 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <article class="franklin-content">
-                    <!-- Let Franklin handle both page variables and markdown content -->
-                    <div class="post-header">
-                        <h1 class="post-title">{{fill title}}</h1>
-                        <p class="text-muted">Published: {{fill published}}</p>
-                        <hr class="my-4">
-                    </div>
-                    <div class="post-content">
-                        {{{content}}}
-                    </div>
+                    <!-- Let Franklin handle the content naturally -->
+                    {{{content}}}
+                    <hr class="my-4">
+                    <p class="text-muted">Published: {{fill published}}</p>
                 </article>
             </div>
         </div>
@@ -26,22 +21,19 @@
         .franklin-content {
             font-size: 1.1rem;
             line-height: 1.7;
+            max-width: 100%;
         }
-        .post-header {
-            margin-bottom: 2rem;
-        }
-        .post-title {
+        .franklin-content h1 {
             font-size: 2.5rem;
             font-weight: 500;
             color: inherit !important;
-            margin: 0 0 1rem 0 !important;
+            margin: 0 0 2rem 0 !important;
             display: block !important;
             visibility: visible !important;
+            line-height: 1.2;
         }
-        .franklin-content h1:not(.post-title),
-        .franklin-content h2,
-        .franklin-content h3,
-        .franklin-content h4 {
+        .franklin-content h2 {
+            font-size: 2rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
             font-weight: 500;
@@ -50,10 +42,20 @@
             display: block !important;
             visibility: visible !important;
         }
-        .franklin-content h1:not(.post-title) { font-size: 2.25rem; }
-        .franklin-content h2 { font-size: 2rem; }
-        .franklin-content h3 { font-size: 1.75rem; }
-        .franklin-content h4 { font-size: 1.5rem; }
+        .franklin-content h3 {
+            font-size: 1.75rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        .franklin-content h4 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
         .franklin-content p {
             margin-bottom: 1.25rem;
         }

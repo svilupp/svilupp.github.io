@@ -1,13 +1,6 @@
-+++
-title = "Work in Progress"
-hascode = true
-rss = "A collection of work-in-progress posts and drafts"
-rss_title = "Work in Progress"
-rss_pubdate = Date(2024, 1, 1)
-+++
+@def title = "Work in Progress"
+@def tags = ["housekeeping"]
 
-\begin{section}{title="Work in Progress Posts"}
+# Work in Progress
 
 {{wipposts}}
-
-\end{section}

@@ -44,6 +44,9 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     io = IOBuffer()
     write(io, "<div class=\"row g-4\">")
     for (i, post) in enumerate(list)
+        if i > 5  # Only show 5 most recent posts
+            break
+        end
         if post == "index.md"
             continue
         end
@@ -64,6 +67,7 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         write(io, "</div></div></div>")
     end
     write(io, "</div>")
+    write(io, "<div class=\"text-center mt-4\"><p class=\"text-muted\">View all posts in the <a href=\"/jan/scratchpad/\">Posts</a> section</p></div>")
     return String(take!(io))
 end
 
@@ -94,13 +98,17 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     sort!(list, by=sorter, rev=true)
 
     io = IOBuffer()
-    write(io, """<ul class="blog-posts">""")
+    write(io, "<div class=\"card shadow-sm mt-4\"><div class=\"card-body\">")
+    write(io, "<h5 class=\"card-title mb-4\">Work in Progress</h5>")
+    write(io, "<div class=\"list-group list-group-flush\">")
     for (i, post) in enumerate(list)
+        if i > 5  # Only show 5 most recent WIP posts
+            break
+        end
         if post == "index.md"
             continue
         end
         ps  = splitext(post)[1]
-        write(io, "<li><span><i>")
         url = "/wip/$ps/"
         surl = strip(url, '/')
         title = pagevar(surl, :title)
@@ -110,9 +118,14 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         else
             date    = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """$date     </i></span><a href="$url">$title</a>""")
+        write(io, """<a href="$url" class="list-group-item list-group-item-action">
+                     <div class="d-flex w-100 justify-content-between">
+                       <h6 class="mb-1">$title</h6>
+                       <small class="text-muted">$date</small>
+                     </div>
+                   </a>""")
     end
-    write(io, "</ul>")
+    write(io, "</div></div></div>")
     return String(take!(io))
 end
 

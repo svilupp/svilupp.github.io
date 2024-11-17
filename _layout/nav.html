@@ -14,16 +14,24 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <!-- Top-level navigation -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Sites
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><h6 class="dropdown-header">Choose a Site</h6></li>
               <li><a class="dropdown-item" href="/jan/">Jan's Site</a></li>
               <li><a class="dropdown-item" href="/ann/">Ann's Site</a></li>
             </ul>
           </li>
+
+          <!-- Jan's site navigation -->
           {{ispage /jan/*}}
+          <li class="nav-item"><hr class="dropdown-divider mx-2"></li>
+          <li class="nav-item">
+            <span class="navbar-text px-2 fw-bold">Jan's:</span>
+          </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/jan/">Home</a>
           </li>
@@ -46,7 +54,13 @@
             <a class="nav-link" href="/jan/cookie_policy/">Cookie Policy</a>
           </li>
           {{end}}
+
+          <!-- Ann's site navigation -->
           {{ispage /ann/*}}
+          <li class="nav-item"><hr class="dropdown-divider mx-2"></li>
+          <li class="nav-item">
+            <span class="navbar-text px-2 fw-bold">Ann's:</span>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/ann/">Under Construction</a>
           </li>

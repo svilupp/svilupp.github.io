@@ -1,0 +1,17 @@
+<!-- Custom template for blog posts listing -->
+<div class="row row-cols-1 row-cols-md-2 g-4">
+{{for post in blogposts}}
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{fill post.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{fill post.rss_pubdate}}</h6>
+                {{if haskey(post, "rss")}}
+                <p class="card-text">{{fill post.rss}}</p>
+                {{end}}
+                <a href="{{fill post.url}}" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+    </div>
+{{end}}
+</div>

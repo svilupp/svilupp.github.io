@@ -42,11 +42,8 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     sort!(list, by=sorter, rev=true)
 
     io = IOBuffer()
-    write(io, "<div class=\"row g-4\">")
+    write(io, "<div class=\"row row-cols-1 row-cols-md-3 g-4\">")
     for (i, post) in enumerate(list)
-        if i > 5  # Only show 5 most recent posts
-            break
-        end
         if post == "index.md"
             continue
         end
@@ -60,7 +57,7 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         else
             date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, "<div class=\"col-md-6\"><div class=\"card h-100 shadow-sm\"><div class=\"card-body\">")
+        write(io, "<div class=\"col\"><div class=\"card h-100 shadow-sm\"><div class=\"card-body\">")
         write(io, "<h5 class=\"card-title\">$(isnothing(title) ? ps : title)</h5>")
         write(io, "<h6 class=\"card-subtitle mb-2 text-muted\">$date</h6>")
         write(io, "<a href=\"$url\" class=\"btn btn-primary mt-2\">Read More</a>")
@@ -102,9 +99,6 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     write(io, "<h5 class=\"card-title mb-4\">Work in Progress</h5>")
     write(io, "<div class=\"list-group list-group-flush\">")
     for (i, post) in enumerate(list)
-        if i > 5  # Only show 5 most recent WIP posts
-            break
-        end
         if post == "index.md"
             continue
         end

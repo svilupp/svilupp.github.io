@@ -77,6 +77,68 @@ Source: https://github.com/abhishalya/abhishalya.github.io
 end
 
 """
+    {{recentposts}}
+
+Plug in the list of recent blog posts, limited to 6 most recent.
+"""
+@delay function hfun_recentposts()
+    today = Dates.today()
+    curyear = year(today)
+    curmonth = month(today)
+    curday = day(today)
+
+    list = readdir("jan/scratchpad")
+    filter!(f -> endswith(f, ".md"), list)
+    sorter(p) = begin
+        ps  = splitext(p)[1]
+        url = "/jan/scratchpad/$ps/"
+        surl = strip(url, '/')
+        pubdate = pagevar(surl, :published)
+        if isnothing(pubdate)
+            return Date(Dates.unix2datetime(stat("jan/scratchpad/$p").ctime))
+        end
+        return Date(pubdate, dateformat"d U Y")
+    end
+    sort!(list, by=sorter, rev=true)
+
+    io = IOBuffer()
+    # Limit to 6 most recent posts
+    list = list[1:min(6, length(list))]
+    for (i, post) in enumerate(list)
+        if post == "index.md"
+            continue
+        end
+        ps  = splitext(post)[1]
+        url = "/jan/scratchpad/$ps/"
+        surl = strip(url, '/')
+        title = pagevar(surl, :title)
+        pubdate = pagevar(surl, :published)
+        if isnothing(pubdate)
+            date = "$curyear-$curmonth-$curday"
+        else
+            date = Date(pubdate, dateformat"d U Y")
+        end
+        write(io, """
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h5 class="card-title text-center mb-2">$(isnothing(title) ? ps : title)</h5>
+                        <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
+                        <div class="text-center mt-auto">
+                            <a href="$url" class="btn btn-sm btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """)
+    end
+    return String(take!(io))
+end
+
+"""
     {{wipposts}}
 
 Plug in the list of blog posts contained in the `/wip/` folder.

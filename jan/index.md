@@ -27,18 +27,25 @@ title = "Jan's Scratchpad"
     <!-- Recent Posts Section -->
     <div class="mb-5">
         <h2 class="display-6 mb-4">Recent Posts</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {{blogposts}}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+            {{recentposts}}
+        </div>
+        <div class="text-center mt-4">
+            <a href="/jan/scratchpad/" class="btn btn-primary">View All Posts</a>
         </div>
     </div>
 
-    <!-- Two Column Layout for WIP and About -->
-    <div class="row">
-        <div class="col-lg-8">
-            <!-- WIP Posts Section -->
+    <!-- WIP Posts Section -->
+    <div class="mb-5">
+        <h2 class="display-6 mb-4">Work in Progress</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
             {{wipposts}}
         </div>
-        <div class="col-lg-4">
+    </div>
+
+    <!-- About Section -->
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">About</h5>

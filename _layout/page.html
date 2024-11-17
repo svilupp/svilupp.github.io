@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {{insert head.html}}
+</head>
+<body>
+    {{insert nav.html}}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <article class="blog-post">
+                    <h1 class="display-4 mb-4">{{title}}</h1>
+                    {{ispage posts/*}}
+                    <p class="blog-post-meta text-muted mb-4">{{published}}</p>
+                    {{end}}
+                    {{content}}
+                </article>
+            </div>
+        </div>
+    </div>
+    {{insert foot.html}}
+</body>
+</html>

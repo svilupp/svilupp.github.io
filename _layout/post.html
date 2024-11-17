@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {{insert head.html}}
+</head>
+<body>
+    {{insert nav.html}}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <article class="blog-post">
+                    <h1 class="display-4 mb-4">{{title}}</h1>
+                    <p class="blog-post-meta text-muted mb-4">{{published}}</p>
+                    <div class="blog-post-content">
+                        {{content}}
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <style>
+        .blog-post img {
+            max-width: 100%;
+            height: auto;
+            margin: 1.5rem 0;
+        }
+        .blog-post pre {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .blog-post code {
+            color: #e83e8c;
+            word-wrap: break-word;
+        }
+        .blog-post h2, .blog-post h3, .blog-post h4 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-post p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+    </style>
+    {{insert foot.html}}
+</body>
+</html>

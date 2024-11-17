@@ -57,8 +57,8 @@ Source: https://github.com/abhishalya/abhishalya.github.io
             date = Date(pubdate, dateformat"d U Y")
         end
         write(io, """
-            <div class="col-sm-12 col-md-4 mb-4">
-                <div class="card shadow-sm h-100">
+            <div class="col">
+                <div class="card h-100 shadow-sm">
                     <div class="card-body d-flex flex-column">
                         <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
                             <i class="bi bi-file-text"></i>
@@ -104,7 +104,7 @@ Source: https://github.com/abhishalya/abhishalya.github.io
 
     io = IOBuffer()
     write(io, "<h5 class=\"display-6 mb-4\">Work in Progress</h5>")
-    write(io, "<div class=\"row row-cols-1 row-cols-md-3 g-4\">")
+    write(io, "<div class=\"row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4\">")
     for (i, post) in enumerate(list)
         if post == "index.md"
             continue

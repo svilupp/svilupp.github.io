@@ -9,8 +9,8 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <article class="franklin-content">
-                    <!-- Let Franklin handle the content naturally -->
-                    {{{content}}}
+                    <!-- Use Franklin's markdown processing -->
+                    {{page_content}}
                     <hr class="my-4">
                     <p class="text-muted">Published: {{fill published}}</p>
                 </article>
@@ -22,11 +22,12 @@
             font-size: 1.1rem;
             line-height: 1.7;
             max-width: 100%;
+            padding: 0 1rem;
         }
         .franklin-content h1 {
             font-size: 2.5rem;
             font-weight: 500;
-            color: inherit !important;
+            color: #333 !important;
             margin: 0 0 2rem 0 !important;
             display: block !important;
             visibility: visible !important;
@@ -38,7 +39,7 @@
             margin-bottom: 1rem;
             font-weight: 500;
             line-height: 1.2;
-            color: inherit;
+            color: #444;
             display: block !important;
             visibility: visible !important;
         }
@@ -48,6 +49,7 @@
             margin-bottom: 1rem;
             font-weight: 500;
             line-height: 1.2;
+            color: #555;
         }
         .franklin-content h4 {
             font-size: 1.5rem;
@@ -55,9 +57,11 @@
             margin-bottom: 1rem;
             font-weight: 500;
             line-height: 1.2;
+            color: #666;
         }
         .franklin-content p {
             margin-bottom: 1.25rem;
+            color: #333;
         }
         .franklin-content img {
             max-width: 100%;

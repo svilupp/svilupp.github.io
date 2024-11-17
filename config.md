@@ -14,6 +14,9 @@ generate_rss = true
 website_title = "Jan's Scratchpad"
 website_descr = "Thoughts, ideas, complaints"
 website_url   = "https://siml.earth/"
+
+# Enable proper markdown parsing
+parse_markdown = true
 +++
 
 <!--

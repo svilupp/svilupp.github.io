@@ -42,7 +42,7 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     sort!(list, by=sorter, rev=true)
 
     io = IOBuffer()
-    write(io, """<div class="row row-cols-1 row-cols-md-2 g-4">""")
+    write(io, "<div class=\"row g-4\">")
     for (i, post) in enumerate(list)
         if post == "index.md"
             continue
@@ -57,17 +57,11 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         else
             date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">$(isnothing(title) ? ps : title)</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">$date</h6>
-                        <a href="$url" class="btn btn-primary">Read More</a>
-                    </div>
-                </div>
-            </div>
-        """)
+        write(io, "<div class=\"col-md-6\"><div class=\"card h-100 shadow-sm\"><div class=\"card-body\">")
+        write(io, "<h5 class=\"card-title\">$(isnothing(title) ? ps : title)</h5>")
+        write(io, "<h6 class=\"card-subtitle mb-2 text-muted\">$date</h6>")
+        write(io, "<a href=\"$url\" class=\"btn btn-primary mt-2\">Read More</a>")
+        write(io, "</div></div></div>")
     end
     write(io, "</div>")
     return String(take!(io))

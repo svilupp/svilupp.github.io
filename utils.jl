@@ -58,18 +58,17 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         end
         write(io, """
             <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                            <i class="bi bi-file-text"></i>
-                        </div>
-                        <h5 class="card-title text-center mb-2">$(isnothing(title) ? ps : title)</h5>
-                        <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        <div class="text-center mt-auto">
-                            <a href="$url" class="btn btn-sm btn-primary">Read More</a>
+                <a href="$url" class="text-decoration-none card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                                <i class="bi bi-file-text"></i>
+                            </div>
+                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         """)
     end
@@ -120,18 +119,17 @@ Plug in the list of recent blog posts, limited to 6 most recent.
         end
         write(io, """
             <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                            <i class="bi bi-file-text"></i>
-                        </div>
-                        <h5 class="card-title text-center mb-2">$(isnothing(title) ? ps : title)</h5>
-                        <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        <div class="text-center mt-auto">
-                            <a href="$url" class="btn btn-sm btn-primary">Read More</a>
+                <a href="$url" class="text-decoration-none card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                                <i class="bi bi-file-text"></i>
+                            </div>
+                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         """)
     end
@@ -181,18 +179,17 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         end
         write(io, """
             <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                            <i class="bi bi-file-text"></i>
-                        </div>
-                        <h5 class="card-title text-center mb-2">$(isnothing(title) ? ps : title)</h5>
-                        <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        <div class="text-center mt-auto">
-                            <a href="$url" class="btn btn-sm btn-primary">Read More</a>
+                <a href="$url" class="text-decoration-none card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                                <i class="bi bi-file-text"></i>
+                            </div>
+                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         """)
     end
@@ -243,18 +240,17 @@ Plug in the list of recent WIP posts, limited to 6 most recent.
         end
         write(io, """
             <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                            <i class="bi bi-file-text"></i>
-                        </div>
-                        <h5 class="card-title text-center mb-2">$(isnothing(title) ? ps : title)</h5>
-                        <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        <div class="text-center mt-auto">
-                            <a href="$url" class="btn btn-sm btn-primary">Read More</a>
+                <a href="$url" class="text-decoration-none card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                                <i class="bi bi-file-text"></i>
+                            </div>
+                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         """)
     end

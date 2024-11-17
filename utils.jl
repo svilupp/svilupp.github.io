@@ -31,36 +31,45 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     filter!(f -> endswith(f, ".md"), list)
     sorter(p) = begin
         ps  = splitext(p)[1]
-        url = "/scratchpad/$ps/"
+        url = "/jan/scratchpad/$ps/"
         surl = strip(url, '/')
         pubdate = pagevar(surl, :published)
         if isnothing(pubdate)
-            return Date(Dates.unix2datetime(stat(surl * ".md").ctime))
+            return Date(Dates.unix2datetime(stat("jan/scratchpad/$p").ctime))
         end
         return Date(pubdate, dateformat"d U Y")
     end
     sort!(list, by=sorter, rev=true)
 
     io = IOBuffer()
-    write(io, """<ul class="blog-posts">""")
+    write(io, """<div class="row row-cols-1 row-cols-md-2 g-4">""")
     for (i, post) in enumerate(list)
         if post == "index.md"
             continue
         end
         ps  = splitext(post)[1]
-        write(io, "<li><span><i>")
-        url = "/scratchpad/$ps/"
+        url = "/jan/scratchpad/$ps/"
         surl = strip(url, '/')
         title = pagevar(surl, :title)
         pubdate = pagevar(surl, :published)
         if isnothing(pubdate)
-            date    = "$curyear-$curmonth-$curday"
+            date = "$curyear-$curmonth-$curday"
         else
-            date    = Date(pubdate, dateformat"d U Y")
+            date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """$date     </i></span><a href="$url">$title</a>""")
+        write(io, """
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">$(isnothing(title) ? ps : title)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">$date</h6>
+                        <a href="$url" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        """)
     end
-    write(io, "</ul>")
+    write(io, "</div>")
     return String(take!(io))
 end
 

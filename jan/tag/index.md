@@ -1,1 +1,5 @@
-+++\ntitle = "Tags"\n+++\n\n{{generate_tags}}
++++
+title = "Tags"
++++
+
+{{generate_tags}}

@@ -75,7 +75,6 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         """)
     end
     write(io, "</div>")
-    write(io, "<div class=\"text-center mt-4\"><p class=\"text-muted\">View all posts in the <a href=\"/jan/scratchpad/\">Posts</a> section</p></div>")
     return String(take!(io))
 end
 

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {{insert head.html}}
+</head>
+<body>
+    <!-- Choose navigation based on current section -->
+    {{ispage /jan/*}}
+    {{insert nav_jan.html}}
+    {{end}}
+    {{ispage /ann/*}}
+    {{insert nav_ann.html}}
+    {{end}}
+    {{ispage index.html}}
+    {{insert nav.html}}
+    {{end}}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <article class="blog-post">
+                    <h1 class="display-4 mb-4">{{title}}</h1>
+                    {{ispage posts/*}}
+                    <p class="blog-post-meta text-muted mb-4">{{published}}</p>
+                    {{end}}
+                    {{content}}
+                </article>
+            </div>
+        </div>
+    </div>
+    {{insert foot.html}}
+</body>
+</html>

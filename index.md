@@ -15,7 +15,7 @@ title = "Welcome"
 <div class="container-fluid px-4">
     <div class="row g-4">
         <!-- Jan's Site Section -->
-        <div class="col-md-6">
+        <div class="col-12 col-sm-6 col-lg-4">
             <a href="/jan/" class="text-decoration-none">
                 <div class="card h-100 shadow-lg hover-card">
                     <div class="card-body text-center p-5">
@@ -28,7 +28,7 @@ title = "Welcome"
         </div>
 
         <!-- Ann's Site Section -->
-        <div class="col-md-6">
+        <div class="col-12 col-sm-6 col-lg-4">
             <a href="/ann/" class="text-decoration-none">
                 <div class="card h-100 shadow-lg hover-card">
                     <div class="card-body text-center p-5">

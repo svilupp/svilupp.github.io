@@ -42,7 +42,6 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     sort!(list, by=sorter, rev=true)
 
     io = IOBuffer()
-    write(io, "<div class=\"row row-cols-1 row-cols-md-3 g-4\">")
     for (i, post) in enumerate(list)
         if post == "index.md"
             continue
@@ -74,7 +73,6 @@ Source: https://github.com/abhishalya/abhishalya.github.io
             </div>
         """)
     end
-    write(io, "</div>")
     return String(take!(io))
 end
 

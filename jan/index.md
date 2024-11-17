@@ -27,7 +27,9 @@ title = "Jan's Scratchpad"
     <!-- Recent Posts Section -->
     <div class="mb-5">
         <h2 class="display-6 mb-4">Recent Posts</h2>
-        {{blogposts}}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {{blogposts}}
+        </div>
     </div>
 
     <!-- Two Column Layout for WIP and About -->

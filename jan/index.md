@@ -24,12 +24,15 @@ title = "Jan's Scratchpad"
 
 <!-- Content section -->
 <div class="container mt-5">
+    <!-- Recent Posts Section -->
+    <div class="mb-5">
+        <h2 class="display-6 mb-4">Recent Posts</h2>
+        {{blogposts}}
+    </div>
+
+    <!-- Two Column Layout for WIP and About -->
     <div class="row">
         <div class="col-lg-8">
-            <div class="mb-4">
-                <h2 class="display-6 mb-4">Recent Posts</h2>
-                {{blogposts}}
-            </div>
             <!-- WIP Posts Section -->
             {{wipposts}}
         </div>

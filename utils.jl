@@ -57,8 +57,8 @@ Source: https://github.com/abhishalya/abhishalya.github.io
             date = Date(pubdate, dateformat"d U Y")
         end
         write(io, """
-            <div class="col">
-                <div class="card shadow-sm">
+            <div class="col-sm-12 col-md-4">
+                <div class="card shadow-sm" style="max-width: 350px; margin: 0 auto;">
                     <div class="card-body d-flex flex-column">
                         <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
                             <i class="bi bi-file-text"></i>

@@ -39,7 +39,7 @@ title = "Jan's Scratchpad"
     <div class="mb-5">
         <h2 class="display-6 mb-4">Work in Progress</h2>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-            {{wipposts}}
+            {{recentwipposts}}
         </div>
     </div>
 

@@ -57,11 +57,22 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         else
             date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, "<div class=\"col\"><div class=\"card h-100 shadow-sm\"><div class=\"card-body\">")
-        write(io, "<h5 class=\"card-title\">$(isnothing(title) ? ps : title)</h5>")
-        write(io, "<h6 class=\"card-subtitle mb-2 text-muted\">$date</h6>")
-        write(io, "<a href=\"$url\" class=\"btn btn-primary mt-2\">Read More</a>")
-        write(io, "</div></div></div>")
+        write(io, """
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 64px; height: 64px;">
+                            <i class="bi bi-file-text fs-4"></i>
+                        </div>
+                        <h5 class="card-title text-center">$(isnothing(title) ? ps : title)</h5>
+                        <p class="card-subtitle mb-2 text-muted text-center">$date</p>
+                        <div class="text-center">
+                            <a href="$url" class="btn btn-primary mt-2">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """)
     end
     write(io, "</div>")
     write(io, "<div class=\"text-center mt-4\"><p class=\"text-muted\">View all posts in the <a href=\"/jan/scratchpad/\">Posts</a> section</p></div>")

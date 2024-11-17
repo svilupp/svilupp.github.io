@@ -27,7 +27,7 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     curmonth = month(today)
     curday = day(today)
 
-    list = readdir("scratchpad")
+    list = readdir("jan/scratchpad")
     filter!(f -> endswith(f, ".md"), list)
     sorter(p) = begin
         ps  = splitext(p)[1]

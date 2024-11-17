@@ -1,0 +1,150 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <!-- bootstrap@5.3.1 and bootstrap icon@1.10--> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel=stylesheet  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin=anonymous > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <link rel=stylesheet  href="/css/style.css"> <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"> <link data-n-head=ssr  rel=stylesheet  href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <!-- favicon generated through https://realfavicongenerator.net/--> <link rel=apple-touch-icon  sizes=180x180  href="/assets/icon/apple-touch-icon.png"> <link rel=icon  type="image/png" sizes=32x32  href="/assets/icon/favicon-32x32.png"> <link rel=icon  type="image/png" sizes=16x16  href="/assets/icon/favicon-16x16.png"> <link rel=manifest  href="/assets/icon/site.webmanifest"> <link rel=mask-icon  href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5"> <meta name=msapplication-TileColor  content="#da532c"> <meta name=theme-color  content="#ffffff"> <link rel=stylesheet  href="/_css/custom.css"> <title>GenAI Mini-Tasks: Taming Wild Table Columns - Part 1</title> <header data-bs-theme=dark > <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"> <div class=container > <a href="/" class="navbar-brand d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-journal-text me-2" viewBox="0 0 16 16"> <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/> <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/> <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/> </svg> <strong>siml.earth</strong> </a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarCollapse" aria-controls=navbarCollapse  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarCollapse > <ul class="navbar-nav me-auto mb-2 mb-md-0"> <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle fw-bold" href="#" id=navbarDropdown  role=button  data-bs-toggle=dropdown  aria-expanded=false > Sites </a> <ul class=dropdown-menu  aria-labelledby=navbarDropdown > <li><h6 class=dropdown-header >Choose a Site</h6> <li><a class=dropdown-item  href="/jan/">Jan's Site</a> <li><a class=dropdown-item  href="/ann/">Ann's Site</a> </ul> <li class=nav-item ><hr class="dropdown-divider mx-2"> <li class=nav-item > <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span> <li class=nav-item > <a class=nav-link  aria-current=page  href="/jan/">Home</a> <li class=nav-item > <a class=nav-link  href="/jan/scratchpad/">Posts</a> <li class=nav-item > <a class=nav-link  href="/jan/wip/">Work in Progress</a> <li class=nav-item > <a class=nav-link  href="/jan/about/">About</a> <li class=nav-item > <a class=nav-link  href="/jan/tags/">Tags</a> <li class=nav-item > <a class=nav-link  href="/jan/privacy_policy/">Privacy Policy</a> <li class=nav-item > <a class=nav-link  href="/jan/cookie_policy/">Cookie Policy</a> </ul> </div> </div> </nav> </header> <div class="container py-3 px-3 mx-auto"> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Transform messy data columns into clear, understandable names, making datasets like ggplot&#39;s cars or Austin&#39;s Community survey easier to manage and analyze.</p> <p><div class=franklin-toc ><ol><li><a href="#tldr">TL;DR</a><ol><li><a href="#tackling_the_tangle_of_data_tables_with_genai">Tackling the Tangle of Data Tables with GenAI</a><li><a href="#example_1_streamlining_a_cars_dataset">Example 1: Streamlining a Cars Dataset</a><li><a href="#example_2_simplifying_survey_column_names">Example 2: Simplifying Survey Column Names</a><li><a href="#notes">Notes</a><li><a href="#conclusion">Conclusion</a></ol></ol></div> </p> <h2 id=tackling_the_tangle_of_data_tables_with_genai ><a href="#tackling_the_tangle_of_data_tables_with_genai" class=header-anchor >Tackling the Tangle of Data Tables with GenAI</a></h2> <p>As a data enthusiast, you&#39;ve likely experienced the sinking feeling when opening a data file only to be greeted by a jungle of messy, unclear column names. It&#39;s a universal pain point — these unwieldy columns make everything from simple data transformations to creating plots unnecessarily complicated. But what if we could delegate this mundane task to GenAI?</p> <h2 id=example_1_streamlining_a_cars_dataset ><a href="#example_1_streamlining_a_cars_dataset" class=header-anchor >Example 1: Streamlining a Cars Dataset</a></h2> <p>Take the classic cars dataset &#40;Link: <a href="https://github.com/tidyverse/ggplot2/blob/main/data-raw/mpg.csv">ggplot mpg</a>&#41;. Its columns might be &#39;clean&#39; &#40;lowercased&#41;, but they&#39;re cryptic enough to trip you up.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> DataFramesMeta, CSV
+<span class=hljs-keyword >using</span> PromptingTools
+
+<span class=hljs-comment >## Load</span>
+df_cars = CSV.File(<span class=hljs-string >&quot;mpg.csv&quot;</span>) |&gt; DataFrame
+names(df_cars)</code></pre> <pre><code class="plaintext hljs">11-element Vector{String}:
+ &quot;manufacturer&quot;
+ &quot;model&quot;
+ &quot;displ&quot;
+ &quot;year&quot;
+ &quot;cyl&quot;
+ &quot;trans&quot;
+ &quot;drv&quot;
+ &quot;cty&quot;
+ &quot;hwy&quot;
+ &quot;fl&quot;
+ &quot;class&quot;</code></pre> <p>Normally, you&#39;d resort to regex or manual renaming, but GenAI offers a smarter solution. Using Julia&#39;s PromptingTools.jl, we asked GenAI to give these columns more intuitive names. </p> <pre><code class="julia hljs"><span class=hljs-comment ># aitemplates(&quot;Detail&quot;) # optional: check the available templates and their placeholders</span>
+
+msg = aigenerate(:DetailOrientedTask; task=<span class=hljs-string >&quot;This is a dataset about car consumptions. Make the columns more descriptive, snakecase, 2-3 words max. Return Julia vector&quot;</span>, data=names(df_cars))</code></pre> <pre><code class="plaintext hljs">[ Info: Tokens: 168 @ Cost: \$0.0003 in 1.4 seconds
+AIMessage(&quot;[&quot;car_make&quot;, &quot;car_model&quot;, &quot;engine_size&quot;, &quot;year&quot;, &quot;num_cylinders&quot;, &quot;transmission_type&quot;, &quot;drive_type&quot;, &quot;city_mpg&quot;, &quot;highway_mpg&quot;, &quot;fuel_type&quot;, &quot;vehicle_class&quot;]&quot;)</code></pre> <p>The result? It took 45 seconds end-to-end and not only did the columns become self-explanatory, but they also made the entire dataset more approachable. Concerned about the longer names? Don&#39;t be. Modern tools like autosuggest and double-click selection in the REPL make handling them a breeze &#40;as long as the words are separated by underscores&#41;.</p> <pre><code class="julia hljs">cols=[<span class=hljs-string >&quot;car_make&quot;</span>, <span class=hljs-string >&quot;car_model&quot;</span>, <span class=hljs-string >&quot;engine_size&quot;</span>, <span class=hljs-string >&quot;year&quot;</span>, <span class=hljs-string >&quot;num_cylinders&quot;</span>, <span class=hljs-string >&quot;transmission_type&quot;</span>, <span class=hljs-string >&quot;drive_type&quot;</span>, <span class=hljs-string >&quot;city_mpg&quot;</span>, <span class=hljs-string >&quot;highway_mpg&quot;</span>, <span class=hljs-string >&quot;fuel_type&quot;</span>, <span class=hljs-string >&quot;vehicle_class&quot;</span>]
+df_cars = rename(df_cars, cols)
+first(df_cars)</code></pre> <pre><code class="plaintext hljs">Row │ car_make  car_model  engine_size  year   num_cylinders  transmission_type  drive_type  city_mpg  highway_mpg  fuel_type  vehicle_class 
+     │ String15  String31   Float64      Int64  Int64          String15           String1     Int64     Int64        String1    String15      
+─────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ audi      a4                 1.8   1999              4  auto(l5)           f                 18           29  p          compact</code></pre> <p>No more &quot;fl&quot;, &quot;hwy&quot;, &quot;displ&quot;, ...</p> <h2 id=example_2_simplifying_survey_column_names ><a href="#example_2_simplifying_survey_column_names" class=header-anchor >Example 2: Simplifying Survey Column Names</a></h2> <p>Next up, let&#39;s tackle Austin&#39;s Community Survey dataset &#40;<a href="https://data.austintexas.gov/dataset/Community-Survey/s2py-ceb7/data">link</a>&#41;. Survey data is a notorious headache due to its plethora of long-form questions or statements used as column names. Also, there are &gt;250 columns like that, so it&#39;s not a task you&#39;d want to do manually.</p> <p>Let&#39;s start by scanning the column names and what we need:</p> <pre><code class="julia hljs">df_survey = CSV.File(<span class=hljs-string >&quot;Community_Survey_cItyofaustin.csv&quot;</span>) |&gt; DataFrame
+first(names(df_survey), <span class=hljs-number >8</span>)</code></pre> <pre><code class="plaintext hljs">8-element Vector{String}:
+ &quot;ID&quot;
+ &quot;Year&quot;
+ &quot;Method&quot;
+ &quot;The City of Austin as a place to live&quot;
+ &quot;The City of Austin as a place to work&quot;
+ &quot;The City of Austin as a place to raise children&quot;
+ &quot;The City of Austin as a place to retire&quot;
+ &quot;The City of Austin as a place where I feel welcome&quot;</code></pre> <p>We could use the previous method and hope that the LLM will generate all 250 columns in exactly the right order, but that&#39;s not a good idea. Instead, we&#39;ll use the <code>aiextract</code> function that allows us to specify the output format &#40;no more Regex extractions to avoid the chit-chat in the output&#33;&#41;.</p> <p>Let&#39;s define the output type &#40;which fields, types, is it optional, etc.&#41; and provide it as <code>return_type</code> kwarg. Note: you can add instructions to the docstring. </p> <p>I used two column names as examples to test the instructions &#40;&#61;prompt&#41; and tweak them. It worked well on the 3rd iteration and with the more powerful GPT-4 Turbo model &#40;aliased as <code>gpt4t</code>&#41;.</p> <pre><code class="julia hljs"><span class=hljs-keyword >struct</span> RenameColumn3 <span class=hljs-comment ># simply increment the number if you iterate the struct definition</span>
+    better_name::<span class=hljs-built_in >String</span>
+<span class=hljs-keyword >end</span>
+
+column_prompt = <span class=hljs-string >&quot;&quot;&quot;# Instructions
+You get a name of a column name from the City of Austin survey data. Create a better clean and descriptive column name.
+
+# Guidelines
+- Better Name should be brief, descriptive, snakecase, 2-3 words max. IT MUST BE LOWERCASED.
+- Do not mention its from Austin as its obvious
+- If some Question ID is included in the name (eg, &quot;Q25 Some Topic&quot;), include it in the Better Name (eg, q25_some_topic)
+
+# Old Column Name
+- {{old_column}}
+&quot;&quot;&quot;</span>
+<span class=hljs-comment ># We use double handlebar templating with {{old_column}}</span>
+
+<span class=hljs-comment ># test it on a few columns and tweak the instructions</span>
+col = <span class=hljs-string >&quot;Access to quality mental health care you can afford&quot;</span>
+col = <span class=hljs-string >&quot;Q25 - Share with the Mayor Topics&quot;</span>
+
+msg = aiextract(column_prompt; old_column=col, return_type=RenameColumn3, model=<span class=hljs-string >&quot;gpt4t&quot;</span>)
+msg.content <span class=hljs-comment ># we can access the string like this: msg.content.better_name (see the Struct above)</span>
+
+<span class=hljs-comment ># [ Info: Tokens: 184 @ Cost: \$0.002 in 0.8 seconds</span>
+<span class=hljs-comment ># PromptingTools.DataMessage(RenameColumn3)</span>
+
+<span class=hljs-comment ># RenameColumn3(&quot;q25_share_topics&quot;)</span></code></pre> <p>This works well. </p> <p>Let&#39;s run it for each column in parallel with <code>asyncmap</code> &#40;we&#39;ll also disable the logging with <code>verbose&#61;false</code> to avoid cluttering the REPL&#41;. By using <code>asyncmap</code> we call the API in parallel for all column names, so we don&#39;t have to wait long despite making 250 API calls to the &quot;slow&quot; GPT-4 Turbo model.</p> <pre><code class="julia hljs"><span class=hljs-meta >@time</span> msgs = asyncmap(col -&gt; aiextract(column_prompt; old_column=col, return_type=RenameColumn3, model=<span class=hljs-string >&quot;gpt4t&quot;</span>, verbose=<span class=hljs-literal >false</span>), names(df_survey))
+<span class=hljs-comment ># 13.061459 seconds (414.83 k allocations: 33.739 MiB, 0.54% compilation time)</span>
+<span class=hljs-comment ># 251-element Vector{PromptingTools.DataMessage{RenameColumn3}}:</span>
+<span class=hljs-comment >#  PromptingTools.DataMessage(RenameColumn3)</span>
+<span class=hljs-comment ># ...</span>
+
+<span class=hljs-comment ># Let&#x27;s sum up the cost of each message</span>
+<span class=hljs-comment ># PT.MODEL_COSTS and PT.MODEL_ALIASES are Dicts with the cost per 1K tokens and model alias to proper name mapping, respectively</span>
+cost = [sum(msg.tokens ./<span class=hljs-number >1000</span> .* PT.MODEL_COSTS[PT.MODEL_ALIASES[<span class=hljs-string >&quot;gpt4t&quot;</span>]]) <span class=hljs-keyword >for</span> msg <span class=hljs-keyword >in</span> msgs] |&gt; sum <span class=hljs-comment ># \$0.5 !!</span>
+
+<span class=hljs-comment ># Let&#x27;s define a renaming dictionary</span>
+rename_dict = <span class=hljs-built_in >Dict</span>(old_name =&gt; msg.content.better_name <span class=hljs-keyword >for</span> (msg, old_name) <span class=hljs-keyword >in</span> zip(msgs, names(df_survey)))</code></pre> <p>It looks pretty good:</p> <pre><code class="plaintext hljs">rename_dict
+Dict{String, String} with 251 entries:
+  &quot;Which THREE items in Health and Environment do you th… =&gt; &quot;top_three_health_environment_priorities&quot;
+  &quot;Overall quality of wastewater services provided by Au… =&gt; &quot;wastewater_services_quality&quot;
+  &quot;Traffic flow on major highways (IH-35, Mopac Expy, US… =&gt; &quot;major_highway_traffic_flow&quot;
+  &quot;Condition of major city streets (Congress Ave, Lamar,… =&gt; &quot;major_streets_condition&quot;</code></pre> <p>But when we try to apply it, we get an error:</p> <pre><code class="julia hljs">rename(df_survey, rename_dict)</code></pre>
+<pre><code class="plaintext hljs">ERROR: ArgumentError: Tried renaming to :affordable_housing_access multiple times.</code></pre>
+<p>Let&#39;s find the duplicate&#33;</p>
+<pre><code class="julia hljs">[k =&gt; v <span class=hljs-keyword >for</span> (k, v) <span class=hljs-keyword >in</span> pairs(rename_dict) <span class=hljs-keyword >if</span> v == <span class=hljs-string >&quot;affordable_housing_access&quot;</span>]
+<span class=hljs-comment ># 2-element Vector{Pair{String, String}}:</span>
+<span class=hljs-comment >#  &quot;Access to quality housing you can afford&quot; =&gt; &quot;affordable_housing_access&quot;</span>
+<span class=hljs-comment >#      &quot;Access to affordable quality housing&quot; =&gt; &quot;affordable_housing_access&quot;</span></code></pre>
+<p>Uff, this is hard even for a human&#33; Let&#39;s just add &quot;_2&quot; suffix to all duplicates:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >let</span> visited_values = <span class=hljs-built_in >Set</span>()
+    <span class=hljs-keyword >for</span> (k, v) <span class=hljs-keyword >in</span> pairs(rename_dict)
+        <span class=hljs-keyword >if</span> v <span class=hljs-keyword >in</span> visited_values
+            rename_dict[k] = v * <span class=hljs-string >&quot;_2&quot;</span>
+        <span class=hljs-keyword >else</span>
+            push!(visited_values, v)
+        <span class=hljs-keyword >end</span>
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Voila! It works</span>
+rename(df_survey, rename_dict)</code></pre>
+<h2 id=notes ><a href="#notes" class=header-anchor >Notes</a></h2>
+<ul>
+<li><p>Never start by making all 250 API calls at once. Pick a few tricky examples and tune the prompt/setup to work well for them. You&#39;ll save a lot of time and &#36;&#36;&#36;s that way &#40;AI engineering is all about iterating quickly and effectively&#41;</p>
+
+<li><p>Provide the output format as a Struct type via the <code>return_type</code> keyword argument</p>
+
+<li><p>The main argument of <code>aiextract</code> is the text to use for extraction. You can add some instructions there &#40;format them into markdown-style sections&#41;, eg, <code># Instructions\n\nDo ABC\n\n\n\n# Data\n\n\&lt;your_data&gt;</code></p>
+
+<li><p>You can use the docstring of the <code>return_type</code> Struct to provide additional instructions for the individual fields. Docstrings will be sent to the LLM as well</p>
+
+</ul>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>It did cost us &#36;0.5, but it was worth it. We got the results in ~5 minutes of meddling. How long would it have taken otherwise?</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >let</span> cols = names(df_survey)
+    <span class=hljs-comment ># reading speed of 900 chars/minute</span>
+    reading = length.(cols) |&gt; sum |&gt; x -&gt; x / <span class=hljs-number >900</span>
+    <span class=hljs-comment ># typing speed of 200 chars/minute (assume we type columns 3x shorter)</span>
+    typing = length.(cols) |&gt; sum |&gt; x -&gt; x / <span class=hljs-number >3</span> / <span class=hljs-number >200</span>
+    <span class=hljs-meta >@info</span> <span class=hljs-string >&quot;Reading time: <span class=hljs-subst >$(round(reading; digits=<span class=hljs-number >1</span>)</span>) minutes, typing time: <span class=hljs-subst >$(round(typing; digits=<span class=hljs-number >1</span>)</span>)&quot;</span>
+<span class=hljs-keyword >end</span>
+<span class=hljs-comment ># [ Info: Reading time: 17.6 minutes, typing time: 26.3</span></code></pre>
+<p>Simple benchmarks suggest ~45 minutes of just reading &#43; typing without any thinking time. From personal experience, I know that it would take me at least 2 hours to do it manually at a comparable quality.</p>
+<p>The best part? We didn&#39;t have to do any manual work. We can now focus on the analysis and not on the data cleaning. By making column names more intuitive and datasets more user-friendly, it&#39;s turning what was once a tedious chore into a quick, automated process. With GenAI, we&#39;re one step closer to focusing on what truly matters in our projects.</p>
+<p><strong>For the curious minds:</strong></p>
+<p>Part of the above problem with duplicates was that we sent each column name separately, so the LLM didn&#39;t see the other columns. What if we sent all the columns at once, would it be faster? Would we still have to de-duplicate them? </p>
+<p>Let&#39;s find out in part 2 of this blog&#33;</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 17, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div></div> 
+
+<footer class=container >
+  <p class=float-end ><a href="#">Back to top</a></p>
+  <div class=footer-icons >
+      <ul class=social-icons >
+          <li><strong>Follow:</strong>
+          <li><a href="https://github.com/svilupp" rel="nofollow noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-github" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg> GitHub</a>
+      </ul>
+  </div>
+  <p class=copyright >&copy; 2023- Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity=sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm  crossorigin=anonymous ></script>
+
+
+  <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>

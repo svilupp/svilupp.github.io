@@ -1,0 +1,418 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <!-- bootstrap@5.3.1 and bootstrap icon@1.10--> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel=stylesheet  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin=anonymous > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <link rel=stylesheet  href="/css/style.css"> <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"> <link data-n-head=ssr  rel=stylesheet  href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <!-- favicon generated through https://realfavicongenerator.net/--> <link rel=apple-touch-icon  sizes=180x180  href="/assets/icon/apple-touch-icon.png"> <link rel=icon  type="image/png" sizes=32x32  href="/assets/icon/favicon-32x32.png"> <link rel=icon  type="image/png" sizes=16x16  href="/assets/icon/favicon-16x16.png"> <link rel=manifest  href="/assets/icon/site.webmanifest"> <link rel=mask-icon  href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5"> <meta name=msapplication-TileColor  content="#da532c"> <meta name=theme-color  content="#ffffff"> <link rel=stylesheet  href="/_css/custom.css"> <title>Building a RAG Chatbot over DataFrames.jl Documentation - Hands-on Guide</title> <header data-bs-theme=dark > <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"> <div class=container > <a href="/" class="navbar-brand d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-journal-text me-2" viewBox="0 0 16 16"> <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/> <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/> <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/> </svg> <strong>siml.earth</strong> </a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarCollapse" aria-controls=navbarCollapse  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarCollapse > <ul class="navbar-nav me-auto mb-2 mb-md-0"> <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle fw-bold" href="#" id=navbarDropdown  role=button  data-bs-toggle=dropdown  aria-expanded=false > Sites </a> <ul class=dropdown-menu  aria-labelledby=navbarDropdown > <li><h6 class=dropdown-header >Choose a Site</h6> <li><a class=dropdown-item  href="/jan/">Jan's Site</a> <li><a class=dropdown-item  href="/ann/">Ann's Site</a> </ul> <li class=nav-item ><hr class="dropdown-divider mx-2"> <li class=nav-item > <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span> <li class=nav-item > <a class=nav-link  aria-current=page  href="/jan/">Home</a> <li class=nav-item > <a class=nav-link  href="/jan/scratchpad/">Posts</a> <li class=nav-item > <a class=nav-link  href="/jan/wip/">Work in Progress</a> <li class=nav-item > <a class=nav-link  href="/jan/about/">About</a> <li class=nav-item > <a class=nav-link  href="/jan/tags/">Tags</a> <li class=nav-item > <a class=nav-link  href="/jan/privacy_policy/">Privacy Policy</a> <li class=nav-item > <a class=nav-link  href="/jan/cookie_policy/">Cookie Policy</a> </ul> </div> </div> </nav> </header> <div class="container py-3 px-3 mx-auto"> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>In this tutorial, you&#39;ll learn how to build a sophisticated RAG chatbot in Julia, focusing on efficiently retrieving and processing information from the DataFrames.jl documentation to generate accurate and contextually relevant responses. It&#39;s a hands-on guide to understanding and implementing the key components of retrieval-augmented generation, from API interactions to response generation.</p> <p><div class=franklin-toc ><ol><li><a href="#tldr">TL;DR</a><ol><li><a href="#what_to_expect_in_part_1">What to Expect in Part 1</a><li><a href="#looking_ahead_to_part_2">Looking Ahead to Part 2</a><li><a href="#introduction">Introduction</a><li><a href="#prerequisites">Prerequisites</a><li><a href="#recap_of_retrieval_augmented_generation_rag">Recap of Retrieval Augmented Generation &#40;RAG&#41;</a><li><a href="#making_api_calls">Making API Calls</a><ol><li><a href="#script_for_api_calls">Script for API Calls</a></ol><li><a href="#create_chat_function"><code>create_chat</code> Function</a><li><a href="#building_the_rag_chatbot">Building the RAG Chatbot</a><ol><li><a href="#initial_setup">Initial Setup</a></ol><li><a href="#custom_types_and_functions">Custom Types and Functions</a><ol><li><a href="#struct_definitions">Struct Definitions</a></ol><li><a href="#utility_functions">Utility Functions</a><ol><li><a href="#render_function"><code>render</code> Function</a></ol><li><a href="#aigenerate_function"><code>aigenerate</code> Function</a><li><a href="#aiembed_function"><code>aiembed</code> Function</a><li><a href="#data_preparation_and_chunking">Data Preparation and Chunking</a><ol><li><a href="#loading_and_chunking_data">Loading and Chunking Data</a></ol><li><a href="#embedding_and_index_creation">Embedding and Index Creation</a><li><a href="#interactive_rag_example">Interactive RAG Example</a><li><a href="#end-to-end_example">End-to-End Example</a><li><a href="#conclusion">Conclusion</a><li><a href="#want_to_learn_more">Want to Learn More?</a></ol></ol></div> </p> <p>Dive into the worlds of Generative AI and Julia programming as we build a Retrieval Augmented Generation &#40;RAG&#41; chatbot, tailored to navigate and interact with the <code>DataFrames.jl</code> documentation. &quot;RAG&quot; is probably the most common and valuable pattern in Generative AI at the moment. This hands-on guide will lead you through crafting a chatbot that&#39;s not just smart, but also specialized in the intricacies of this popular data manipulation package in Julia.</p> <ul> <li><p><strong>Targeted Learning</strong>: We&#39;re focusing specifically on <code>DataFrames.jl</code>, turning the great but extensive documentation into an interactive, AI-powered guide.</p> <li><p><strong>Practical Application</strong>: This isn&#39;t just theory; it&#39;s about applying RAG concepts to create a real-world, domain-specific chatbot.</p> <li><p><strong>Hands-on Experience</strong>: We&#39;ll be building the chatbot from scratch, so you&#39;ll get a deep understanding of the inner workings of RAG. No frameworks, no shortcuts — just pure Julia code and a few core packages.</p> </ul> <p>If you&#39;re not familiar with &quot;RAG&quot;, start with <a href="https://towardsdatascience.com/add-your-own-data-to-an-llm-using-retrieval-augmented-generation-rag-b1958bf56a5a">this article</a>.</p> <h2 id=what_to_expect_in_part_1 ><a href="#what_to_expect_in_part_1" class=header-anchor >What to Expect in Part 1</a></h2> <p>In this part, we&#39;ll cover the following key areas:</p> <ol> <li><p><strong>Prerequisites</strong></p> <li><p><strong>Introduction to RAG</strong></p> <li><p><strong>Making API Calls</strong></p> <li><p><strong>Initial Setup</strong></p> <li><p><strong>Defining Custom Types and Functions</strong></p> <li><p><strong>Data Preparation and Chunking</strong></p> <li><p><strong>Embedding and Indexing for Retrieval</strong></p> <li><p><strong>Building the Interactive RAG Example</strong></p> <li><p><strong>End-to-End RAG Implementation</strong></p> <li><p><strong>Conclusion</strong></p> </ol> <p>Each section will focus on different aspects of the chatbot app. Whether you&#39;re new to Julia or an experienced programmer, this tutorial aims to enhance your skills and understanding in building the &quot;Hello World&quot; example of a RAG system.</p> <h2 id=looking_ahead_to_part_2 ><a href="#looking_ahead_to_part_2" class=header-anchor >Looking Ahead to Part 2</a></h2> <p>Stay tuned for the upcoming Part 2 of this series, where we will introduce a streamlined approach to building RAG chatbots using <code>PromptingTools.jl</code>.</p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Welcome to an in-depth tutorial on constructing a Retrieval Augmented Generation &#40;RAG&#41; chatbot using Julia. RAG combines retrieval from a database with AI-generated responses, enhancing the relevance and accuracy of interactions.</p> <h2 id=prerequisites ><a href="#prerequisites" class=header-anchor >Prerequisites</a></h2> <p>This tutorial assumes you have the following:</p> <ul> <li><p>OpenAI API Key - You can obtain it from <a href="https://platform.openai.com/docs/quickstart?context&#61;python">OpenAI&#39;s Quickstart Guide</a>.</p> <li><p>Basic knowledge of &quot;prompting&quot; - interacting with Large language models. I recommend reading <a href="https://platform.openai.com/docs/guides/prompt-engineering">OpenAI Prompt Engineering Guide</a>.</p> <li><p>Basic knowledge of RAG - I strongly recommend reading <a href="https://towardsdatascience.com/add-your-own-data-to-an-llm-using-retrieval-augmented-generation-rag-b1958bf56a5a">this article</a>.</p> <li><p>Basic knowledge of tokens and token usage - That is what you pay for. It&#39;s the &quot;language&quot; of LLMs. Check out this interactive demo: <a href="https://tiktokenizer.vercel.app/">Tiktokenizer online</a> and you&#39;ll get it.</p> <li><p>Downloaded text from at least 5 pages of <a href="https://dataframes.juliadata.org/stable/">DataFrames.jl documentation</a>. We&#39;ll use it as a source of answers for the RAG chatbot. You can simply copy-paste the text from each page into a separate text file. Ideally, delete all the noise &#40;like headers, footers, etc.&#41; and keep only the text you want to use for the chatbot. Remember, garbage in, garbage out&#33;</p> </ul> <p>Now we can get started&#33; Let&#39;s initiate our script:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> HTTP, JSON3 <span class=hljs-comment ># for making API calls</span>
+<span class=hljs-comment ># using OpenAI # for interacting with the API if you want to skip the first part of tutorial</span>
+<span class=hljs-keyword >using</span> LinearAlgebra <span class=hljs-comment ># for calculating &quot;closeness&quot; of document chunks</span>
+
+<span class=hljs-keyword >const</span> MODEL_CHAT = <span class=hljs-string >&quot;gpt-3.5-turbo&quot;</span> <span class=hljs-comment ># default model for chat, fast and &quot;cheap&quot;</span>
+<span class=hljs-keyword >const</span> MODEL_EMBEDDING = <span class=hljs-string >&quot;text-embedding-ada-002&quot;</span> <span class=hljs-comment ># default model for embedding test</span>
+<span class=hljs-keyword >const</span> API_KEY = <span class=hljs-literal >ENV</span>[<span class=hljs-string >&quot;OPENAI_API_KEY&quot;</span>];  <span class=hljs-comment ># Your API key should be kept secure - use ENV variables</span></code></pre> <h2 id=recap_of_retrieval_augmented_generation_rag ><a href="#recap_of_retrieval_augmented_generation_rag" class=header-anchor >Recap of Retrieval Augmented Generation &#40;RAG&#41;</a></h2> <p>RAG systems enhance language models by integrating a retrieval component. They first retrieve relevant information from a database &#40;or other knowledge store&#41; and then use this information to generate more informed and precise responses. </p> <p>Imagine it as a two-step process: </p> <ul> <li><p>&quot;Retrieval&quot; - finding the right information, and then, </p> <li><p>&quot;Generation&quot; - crafting a response based on that information. </p> </ul> <p>The concept is visually depicted in the following diagram: <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*WPNPxlCxh6Nw4muUyfULTQ.png" alt="RAG Diagram" /></p> <p>It comes from <a href="https://towardsdatascience.com/add-your-own-data-to-an-llm-using-retrieval-augmented-generation-rag-b1958bf56a5a">this article</a>, which I strongly recommend if you&#39;re not familiar with RAG.</p> <h2 id=making_api_calls ><a href="#making_api_calls" class=header-anchor >Making API Calls</a></h2> <p>Those not interested in API call details can skip ahead and use the <code>create_chat</code> function provided by the <code>OpenAI.jl</code> package.</p> <p>In this section, we&#39;ll learn how to make direct REST API calls, a fundamental skill for interacting with most large language models &#40;LLMs&#41; like OpenAI&#39;s GPT-3.5 or GPT-4, because very often your application will throw an error that&#39;s related to the API call.</p> <h3 id=script_for_api_calls ><a href="#script_for_api_calls" class=header-anchor >Script for API Calls</a></h3> <p>First, start with checking the <a href="https://platform.openai.com/docs/api-reference/chat/create">OpenAI API reference</a>.</p> <p>This is the example call that we will replicate:</p> <pre><code class="plaintext hljs">curl https://api.openai.com/v1/chat/completions \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Authorization: Bearer $OPENAI_API_KEY&quot; \
+  -d &#x27;{
+    &quot;model&quot;: &quot;gpt-3.5-turbo&quot;,
+    &quot;messages&quot;: [
+      {
+        &quot;role&quot;: &quot;system&quot;,
+        &quot;content&quot;: &quot;You are a helpful assistant.&quot;
+      },
+      {
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: &quot;Hello!&quot;
+      }
+    ]
+  }&#x27;</code></pre> <p>Let&#39;s try to replicate this call in Julia:</p> <ul> <li><p>it will be a POST request &#40;we&#39;re posting some data – parameter <code>d</code> in the above&#41;</p> <li><p>JSON data we provide need to contain messages &#61; array of dicts &#40;see example&#41;</p> <li><p>we need to add headers that include our API key</p> </ul> <p>This script demonstrates how to interact with the OpenAI API using Julia.</p> <pre><code class="julia hljs"><span class=hljs-comment ># we did this above:</span>
+<span class=hljs-comment ># using HTTP, JSON3 # for making API calls</span>
+<span class=hljs-comment ># MODEL_CHAT = &quot;gpt-3.5-turbo&quot;</span>
+<span class=hljs-comment ># OPENAI_API_KEY = ENV[&quot;OPENAI_API_KEY&quot;];  # Your API key should be kept secure - use ENV variables</span>
+
+<span class=hljs-comment ># Sample messages for the chat -- this is how OpenAI formats them</span>
+messages = [
+    <span class=hljs-built_in >Dict</span>(<span class=hljs-string >&quot;role&quot;</span> =&gt; <span class=hljs-string >&quot;system&quot;</span>, <span class=hljs-string >&quot;content&quot;</span> =&gt; <span class=hljs-string >&quot;You are a helpful assistant.&quot;</span>),
+    <span class=hljs-built_in >Dict</span>(<span class=hljs-string >&quot;role&quot;</span> =&gt; <span class=hljs-string >&quot;user&quot;</span>, <span class=hljs-string >&quot;content&quot;</span> =&gt; <span class=hljs-string >&quot;Say Yo!&quot;</span>)
+]
+
+<span class=hljs-comment ># API URL</span>
+url = <span class=hljs-string >&quot;https://api.openai.com/v1/chat/completions&quot;</span>
+
+<span class=hljs-comment ># Headers including API key</span>
+headers = <span class=hljs-built_in >Dict</span>(<span class=hljs-string >&quot;Authorization&quot;</span> =&gt; <span class=hljs-string >&quot;Bearer <span class=hljs-variable >$API_KEY</span>&quot;</span>, <span class=hljs-string >&quot;Content-Type&quot;</span> =&gt; <span class=hljs-string >&quot;application/json&quot;</span>)
+
+<span class=hljs-comment ># JSON-encoded body of the request</span>
+body = (; messages, model = MODEL_CHAT, max_tokens = <span class=hljs-number >7</span>) |&gt; JSON3.write
+
+<span class=hljs-comment ># Making the POST request</span>
+resp = HTTP.request(<span class=hljs-string >&quot;POST&quot;</span>, url; body, headers)
+
+<span class=hljs-comment ># This is what we get back -- Contents of `resp.body`</span>
+<span class=hljs-comment ># {</span>
+<span class=hljs-comment >#     &quot;id&quot;:&quot;chatcmpl-8KXEOkqznkayf3evH3W9yAf5K7Oj8&quot;,</span>
+<span class=hljs-comment >#     &quot;object&quot;:&quot;chat.completion&quot;,</span>
+<span class=hljs-comment >#     &quot;created&quot;:1699904992,</span>
+<span class=hljs-comment >#     &quot;model&quot;:&quot;gpt-3.5-turbo-0613&quot;,</span>
+<span class=hljs-comment >#     &quot;choices&quot;:[</span>
+<span class=hljs-comment >#         {</span>
+<span class=hljs-comment >#         &quot;index&quot;:0,</span>
+<span class=hljs-comment >#         &quot;message&quot;:{</span>
+<span class=hljs-comment >#             &quot;role&quot;:&quot;assistant&quot;,</span>
+<span class=hljs-comment >#             &quot;content&quot;:&quot;Yo! How can I assist you&quot;,</span>
+<span class=hljs-comment >#         },</span>
+<span class=hljs-comment >#         &quot;finish_reason&quot;:&quot;length&quot;,</span>
+<span class=hljs-comment >#     }</span>
+<span class=hljs-comment >#     ],</span>
+<span class=hljs-comment >#     &quot;usage&quot;:{</span>
+<span class=hljs-comment >#         &quot;prompt_tokens&quot;:20,</span>
+<span class=hljs-comment >#         &quot;completion_tokens&quot;:7,</span>
+<span class=hljs-comment >#         &quot;total_tokens&quot;:27,</span>
+<span class=hljs-comment >#     },</span>
+<span class=hljs-comment ># }</span>
+
+<span class=hljs-comment ># Parsing the response</span>
+response = JSON3.read(resp.body)[:choices][<span class=hljs-keyword >begin</span>][:message][:content]
+usage = JSON3.read(resp.body)[:usage]
+cost = usage[:prompt_tokens] * <span class=hljs-number >1e-6</span> + usage[:completion_tokens] * <span class=hljs-number >2e-6</span>
+
+<span class=hljs-meta >@info</span> <span class=hljs-string >&quot;Cost of this call: \$<span class=hljs-variable >$cost</span>&quot;</span></code></pre> <p><strong>Explanation</strong>: </p> <ul> <li><p><strong>Importing Libraries</strong>: We use <code>HTTP</code> for web requests and <code>JSON3</code> for JSON handling.</p> <li><p><strong>API Configuration</strong>: Set up the model and API key.</p> <li><p><strong>Defining Messages</strong>: These are the inputs for the chatbot.</p> <li><p><strong>Setting URL and Headers</strong>: The URL for the API and headers including the API key.</p> <li><p><strong>Request Body</strong>: The JSON-encoded data sent in the request.</p> <li><p><strong>Making the Request</strong>: A POST request to the API.</p> <li><p><strong>Response Handling</strong>: Extracting the chatbot&#39;s response and calculating the cost of the call. Notice how we call <code>JSON3.read&#40;resp.body&#41;</code> to access the information from the API.</p> </ul> <h3 id=create_chat_function ><a href="#create_chat_function" class=header-anchor ><code>create_chat</code> Function</a></h3> <p>This function wraps the API call process, simplifying future interactions:</p> <pre><code class="julia hljs"><span class=hljs-keyword >function</span> create_chat(api_key::<span class=hljs-built_in >String</span>,
+        model::<span class=hljs-built_in >String</span>,
+        messages::<span class=hljs-built_in >Vector</span>{<span class=hljs-built_in >Dict</span>{<span class=hljs-built_in >String</span>, <span class=hljs-built_in >String</span>}};
+        http_kwargs::<span class=hljs-built_in >NamedTuple</span> = <span class=hljs-built_in >NamedTuple</span>(), api_kwargs::<span class=hljs-built_in >NamedTuple</span> = <span class=hljs-built_in >NamedTuple</span>())
+    url = <span class=hljs-string >&quot;https://api.openai.com/v1/chat/completions&quot;</span>
+    headers = <span class=hljs-built_in >Dict</span>(<span class=hljs-string >&quot;Authorization&quot;</span> =&gt; <span class=hljs-string >&quot;Bearer <span class=hljs-variable >$api_key</span>&quot;</span>,
+        <span class=hljs-string >&quot;Content-Type&quot;</span> =&gt; <span class=hljs-string >&quot;application/json&quot;</span>)
+    <span class=hljs-comment ># JSON-encoded data (string)</span>
+    body = (; messages, model, api_kwargs...) |&gt; JSON3.write
+    resp = HTTP.request(<span class=hljs-string >&quot;POST&quot;</span>, url; body, headers, http_kwargs...)
+    <span class=hljs-keyword >return</span> (;
+        response = JSON3.read(resp.body),
+        status = resp.status)
+<span class=hljs-keyword >end</span></code></pre> <p><strong>Explanation</strong>: </p> <ul> <li><p><strong>Purpose</strong>: To encapsulate the API calling process, making it reusable and more manageable.</p> </ul> <p>In the next sections, we&#39;ll delve into the specifics of building and running a RAG chatbot. </p> <h2 id=building_the_rag_chatbot ><a href="#building_the_rag_chatbot" class=header-anchor >Building the RAG Chatbot</a></h2> <p>Now, let&#39;s move on to the main part of our tutorial - building the RAG Chatbot in Julia.</p> <h3 id=initial_setup ><a href="#initial_setup" class=header-anchor >Initial Setup</a></h3> <p>We start by importing necessary Julia packages and setting up configurations for our model and OpenAI API key.</p> <pre><code class="julia hljs"><span class=hljs-comment ># we already did this at the top</span>
+<span class=hljs-comment ># using OpenAI # if you skipped the previous section; we need `OpenAI.create_chat` function</span>
+<span class=hljs-comment ># using LinearAlgebra # for calculating &quot;closeness&quot; of document chunks</span>
+
+<span class=hljs-comment ># const MODEL_CHAT = &quot;gpt-3.5-turbo&quot; # what OpenAI model to use for chat</span>
+<span class=hljs-comment ># const MODEL_EMBEDDING = &quot;text-embedding-ada-002&quot; # what OpenAI model to use to translate text to numbers</span></code></pre> <p><strong>Explanation</strong>: </p> <ul> <li><p><strong>Importing Packages</strong>: <code>OpenAI</code> for API interaction &#40;if you haven&#39;t defined <code>create_chat</code> yet&#41;, <code>JSON3</code> for JSON processing, and others for various functionalities.</p> <li><p><strong>Setting Constants</strong>: Defining the model and embedding constants for ease of use throughout the script.</p> </ul> <h3 id=custom_types_and_functions ><a href="#custom_types_and_functions" class=header-anchor >Custom Types and Functions</a></h3> <h4 id=struct_definitions ><a href="#struct_definitions" class=header-anchor >Struct Definitions</a></h4> <p>We define structures &#40;<code>structs</code>&#41; for managing prompts, AI responses, and document chunks efficiently.</p> <pre><code class="julia hljs"><span class=hljs-comment ># Define shared abstract type for custom printing</span>
+<span class=hljs-keyword >abstract type</span> AbstractBuildingBlock <span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Convenience for building &quot;messages&quot; for the chatbot faster (see the standard format in the API calls section...)</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> PromptTemplate &lt;: AbstractBuildingBlock
+    system_prompt::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >String</span>, <span class=hljs-built_in >Nothing</span>} = <span class=hljs-literal >nothing</span>
+    user_prompt::<span class=hljs-built_in >String</span> = <span class=hljs-string >&quot;&quot;</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Return type for the AI model</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> AIMessage &lt;: AbstractBuildingBlock
+    content::<span class=hljs-built_in >AbstractString</span>
+    status::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >Int</span>, <span class=hljs-built_in >Nothing</span>} = <span class=hljs-literal >nothing</span>
+    tokens::<span class=hljs-built_in >Tuple</span>{<span class=hljs-built_in >Int</span>, <span class=hljs-built_in >Int</span>} = (-<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>)
+    elapsed::<span class=hljs-built_in >Float64</span> = -<span class=hljs-number >1.0</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Stores document chunks and their embeddings</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> ChunkIndex{T &lt;: <span class=hljs-built_in >AbstractString</span>} &lt;: AbstractBuildingBlock
+    id::<span class=hljs-built_in >Symbol</span> = gensym(<span class=hljs-string >&quot;ChunkIndex&quot;</span>)
+    embeddings::<span class=hljs-built_in >Matrix</span>{<span class=hljs-built_in >Float32</span>}
+    chunks::<span class=hljs-built_in >Vector</span>{T}
+    sources::<span class=hljs-built_in >Vector</span>{&lt;:<span class=hljs-built_in >AbstractString</span>}
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Structured show method for easier reading (each kwarg on a new line)</span>
+<span class=hljs-keyword >function</span> Base.show(io::<span class=hljs-built_in >IO</span>, t::AbstractBuildingBlock)
+    dump(<span class=hljs-built_in >IOContext</span>(io, :limit =&gt; <span class=hljs-literal >true</span>), t, maxdepth = <span class=hljs-number >1</span>)
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Utitity to be able to combine indices from different sources/documents easily</span>
+<span class=hljs-keyword >function</span> Base.vcat(i1::ChunkIndex{T}, i2::ChunkIndex{T}) <span class=hljs-keyword >where</span> {T &lt;: <span class=hljs-built_in >AbstractString</span>}
+    ChunkIndex(;
+        embeddings = hcat(i1.embeddings, i2.embeddings),
+        chunks = vcat(i1.chunks, i2.chunks),
+        sources = vcat(i1.sources, i2.sources))
+<span class=hljs-keyword >end</span></code></pre> <p><strong>Explanation</strong>: </p> <ul> <li><p><strong>PromptTemplate</strong>: To hold the system and user prompts for the AI.</p> <li><p><strong>AIMessage</strong>: To store the AI&#39;s response, status, token usage, and response time.</p> <li><p><strong>ChunkIndex</strong>: To manage document chunks and their embeddings, crucial for the retrieval process.</p> </ul> <p>The <code>ChunkIndex</code> struct is vital for organizing and storing the numerical embeddings of text chunks, creating an indexed database that the chatbot can efficiently search through to find the most relevant information. This indexed approach significantly speeds up the retrieval process, crucial for the chatbot&#39;s quick and accurate response generation, because we don&#39;t have to &quot;embed&quot; all documents every time we want to find the most relevant information.</p> <h4 id=utility_functions ><a href="#utility_functions" class=header-anchor >Utility Functions</a></h4> <p>These functions facilitate rendering prompts, generating AI responses, and embedding document chunks.</p> <pre><code class="julia hljs"><span class=hljs-string >&quot;Builds a history of the conversation (=messages) to provide the prompt to the API. All kwargs are passed as replacements such that `{{key}} =&gt; value` in the template.}}&quot;</span>
+<span class=hljs-keyword >function</span> render(prompt::PromptTemplate; kwargs...)
+    conversation = <span class=hljs-built_in >Dict</span>{<span class=hljs-built_in >String</span>, <span class=hljs-built_in >String</span>}[]
+    !isnothing(prompt.system_prompt) &amp;&amp;
+        push!(conversation, <span class=hljs-built_in >Dict</span>(<span class=hljs-string >&quot;role&quot;</span> =&gt; <span class=hljs-string >&quot;system&quot;</span>, <span class=hljs-string >&quot;content&quot;</span> =&gt; prompt.system_prompt))
+    <span class=hljs-comment ># Replace any handlebar-style placeholders like `{{key}}` in the user_prompt with user-provided kwargs</span>
+    user_prompt = replace(prompt.user_prompt, [<span class=hljs-string >&quot;{{<span class=hljs-subst >$(k)</span>}}&quot;</span> =&gt; v <span class=hljs-keyword >for</span> (k, v) <span class=hljs-keyword >in</span> kwargs]...)
+    push!(conversation, <span class=hljs-built_in >Dict</span>(<span class=hljs-string >&quot;role&quot;</span> =&gt; <span class=hljs-string >&quot;user&quot;</span>, <span class=hljs-string >&quot;content&quot;</span> =&gt; user_prompt))
+    <span class=hljs-keyword >return</span> conversation
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-string >&quot;Builds the request to the API and waits for the response.&quot;</span>
+<span class=hljs-keyword >function</span> aigenerate(template::PromptTemplate;
+        api_key::<span class=hljs-built_in >String</span> = API_KEY,
+        model::<span class=hljs-built_in >String</span> = MODEL_CHAT,
+        <span class=hljs-comment ># Let&#x27;s use smart defaults because OpenAI is a bit fiddly...</span>
+        http_kwargs::<span class=hljs-built_in >NamedTuple</span> = (;
+            retry_non_idempotent = <span class=hljs-literal >true</span>,
+            retries = <span class=hljs-number >10</span>,
+            readtimeout = <span class=hljs-number >30</span>), api_kwargs::<span class=hljs-built_in >NamedTuple</span> = <span class=hljs-built_in >NamedTuple</span>(),
+        kwargs...)
+    <span class=hljs-comment >##</span>
+    conversation = render(template; kwargs...)
+    time = <span class=hljs-meta >@elapsed</span> r = create_chat(api_key,
+        model,
+        conversation;
+        http_kwargs,
+        api_kwargs...)
+    <span class=hljs-keyword >return</span> AIMessage(; content = r.response[:choices][<span class=hljs-keyword >begin</span>][:message][:content] |&gt; strip,
+        status = <span class=hljs-built_in >Int</span>(r.status),
+        tokens = (r.response[:usage][:prompt_tokens],
+            r.response[:usage][:completion_tokens]),
+        elapsed = time)
+<span class=hljs-keyword >end</span>
+<span class=hljs-string >&quot;Creates embeddings for `docs` (string or array of strings) and returns a normalized matrix (column-wise)&quot;</span>
+<span class=hljs-keyword >function</span> aiembed(docs::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >AbstractString</span>, <span class=hljs-built_in >Vector</span>{&lt;:<span class=hljs-built_in >AbstractString</span>}},
+        postprocess::F = normalize;
+        api_key::<span class=hljs-built_in >String</span> = API_KEY,
+        model::<span class=hljs-built_in >String</span> = MODEL_EMBEDDING,
+        http_kwargs::<span class=hljs-built_in >NamedTuple</span> = <span class=hljs-built_in >NamedTuple</span>(), api_kwargs::<span class=hljs-built_in >NamedTuple</span> = <span class=hljs-built_in >NamedTuple</span>(),
+        kwargs...) <span class=hljs-keyword >where</span> {F &lt;: <span class=hljs-built_in >Function</span>}
+    r = create_embeddings(api_key, docs, model; http_kwargs, api_kwargs...)
+    <span class=hljs-keyword >return</span> mapreduce(x -&gt; postprocess(x[:embedding]), hcat, r.response.data)
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-string >&quot;Finds the indices of chunks (represented by embeddings in `emb`) that are closest (cosine similarity) to query embedding (`query_emb`). Returns only `top_k` closest indices.&quot;</span>
+<span class=hljs-keyword >function</span> find_closest(emb::<span class=hljs-built_in >AbstractMatrix</span>{&lt;:<span class=hljs-built_in >Real</span>},
+        query_emb::<span class=hljs-built_in >AbstractVector</span>{&lt;:<span class=hljs-built_in >Real</span>};
+        top_k::<span class=hljs-built_in >Int</span> = <span class=hljs-number >100</span>)
+    query_emb&#x27; * emb |&gt; vec |&gt; sortperm |&gt; reverse |&gt; x -&gt; first(x, top_k)
+<span class=hljs-keyword >end</span>
+<span class=hljs-keyword >function</span> find_closest(index::ChunkIndex, query_emb::<span class=hljs-built_in >AbstractVector</span>{&lt;:<span class=hljs-built_in >Real</span>}; top_k::<span class=hljs-built_in >Int</span>=<span class=hljs-number >100</span>)
+    find_closest(index.embeddings, query_emb; top_k)
+<span class=hljs-keyword >end</span></code></pre> <p><strong>Explanation</strong>: </p> <ul> <li><p><strong>render</strong>: To process and format prompts for the AI. </p> <li><p><strong>aigenerate</strong>: For generating AI responses using the provided prompt template.</p> <li><p><strong>aiembed</strong>: To create and normalize embeddings for the provided document chunks.</p> </ul> <h5 id=render_function ><a href="#render_function" class=header-anchor ><code>render</code> Function</a></h5> <p>The <code>render</code> function is essential for formatting and preparing prompts for the AI, allowing the integration of dynamic content and user inputs into the chatbot&#39;s conversation flow. For example, if we have a PromptTemplate with placeholders, render can replace these placeholders with actual user queries or context, creating a customized prompt that the AI can respond to effectively.</p> <p>Suppose you have a <code>PromptTemplate</code> defined as follows:</p> <pre><code class="julia hljs">template = PromptTemplate(system_prompt = <span class=hljs-string >&quot;You are a knowledgeable assistant.&quot;</span>, 
+                          user_prompt = <span class=hljs-string >&quot;How do I create a DataFrame with {{package}} in Julia?&quot;</span>)</code></pre> <p>Now, let&#39;s say you want to ask about performing a specific action with a specific package, like &quot;create a DataFrame with DataFrames.jl&quot;. You would use the <code>render</code> function to insert the package name into the user prompt:</p> <pre><code class="julia hljs">rendered_prompt = render(template, package = <span class=hljs-string >&quot;DataFrames.jl&quot;</span>)</code></pre>
+<p>This would result in the <code>user_prompt</code> being updated to: &quot;How do I create a DataFrame with DataFrames.jl in Julia?&quot;, which is then ready to be used as a part of the chatbot&#39;s conversation flow. Moreover, it would be already in the correct &quot;message&quot; format for OpenAI API:</p>
+<pre><code class="plaintext hljs">2-element Vector{Dict{String, String}}:
+ Dict(&quot;role&quot; =&gt; &quot;system&quot;, &quot;content&quot; =&gt; &quot;You are a knowledgeable assistant.&quot;)
+ Dict(&quot;role&quot; =&gt; &quot;user&quot;, &quot;content&quot; =&gt; &quot;How do I create a DataFrame with DataFrames.jl in Julia?&quot;)</code></pre>
+<h5 id=aigenerate_function ><a href="#aigenerate_function" class=header-anchor ><code>aigenerate</code> Function</a></h5>
+<p>The <code>aigenerate</code> function is pivotal in our RAG setup as it interfaces with the AI model to generate responses based on the provided prompts, effectively turning the retrieved and formatted information into coherent and contextually relevant answers. It acts as the bridge between the retrieval phase of relevant information and the generation of an appropriate response, ensuring the chatbot&#39;s interactions are both informative and context-sensitive.</p>
+<pre><code class="julia hljs">msg = aigenerate(PromptTemplate(;user_prompt=<span class=hljs-string >&quot;Say hi five times.&quot;</span>))
+println(msg.content)
+<span class=hljs-comment ># Output: Hi! Hi! Hi! Hi! Hi!</span></code></pre>
+<h5 id=aiembed_function ><a href="#aiembed_function" class=header-anchor ><code>aiembed</code> Function</a></h5>
+<p>The <code>aiembed</code> function converts text into numerical embeddings, allowing the system to measure the relevance of different text chunks. This numerical transformation is crucial for identifying the most relevant content to provide as context in response generation, ensuring accuracy and context-awareness in the chatbot&#39;s replies.</p>
+<pre><code class="julia hljs">emb = aiembed(<span class=hljs-string >&quot;Turn me into numbers.&quot;</span>)
+<span class=hljs-comment ># Output:</span>
+<span class=hljs-comment ># 1536-element Vector{Float64}:</span>
+<span class=hljs-comment >#  -0.03651317710545448</span>
+<span class=hljs-comment >#  -0.027319023827096944</span>
+<span class=hljs-comment >#   0.010491611317638715</span>
+<span class=hljs-comment >#  -0.009615663291118957</span>
+<span class=hljs-comment >#  -0.008002076242266813</span>
+<span class=hljs-comment >#   0.009846176298097852</span>
+<span class=hljs-comment >#   ⋮</span>
+<span class=hljs-comment >#   0.013593650411554484</span>
+<span class=hljs-comment >#  -0.0029900763905260403</span>
+<span class=hljs-comment >#  -0.008403826754430006</span>
+<span class=hljs-comment >#   0.007824252236883102</span>
+<span class=hljs-comment >#   0.0004231550728112289</span>
+<span class=hljs-comment >#  -0.02734536782789452</span></code></pre>
+<p>This is great. Now we can compare the &quot;similarity&quot; of text by simply multiplying and summing these vectors:</p>
+<pre><code class="julia hljs">sum(emb .* emb) == <span class=hljs-number >1.0</span> <span class=hljs-comment ># similarity to itself is exact, so it should be 1.0</span>
+<span class=hljs-comment ># it&#x27;s the same as dot(emb, emb), because the above is just a &quot;dot product&quot;</span></code></pre>
+<p>Let&#39;s try a different sentence:</p>
+<pre><code class="julia hljs">emb2 = aiembed(<span class=hljs-string >&quot;I like Cauliflower, but it must be grilled.&quot;</span>)
+
+<span class=hljs-comment ># similarity between two different texts</span>
+sum(emb .* emb2) <span class=hljs-comment ># 0.73 --&gt; smaller than 1.0 because it&#x27;s less similar</span></code></pre>
+<p>Try a few different sentences to see how the similarity changes. This is effectively what the function <code>find_closest</code> does across the ChunkIndex - it finds the closest chunks to the query.</p>
+<h3 id=data_preparation_and_chunking ><a href="#data_preparation_and_chunking" class=header-anchor >Data Preparation and Chunking</a></h3>
+<p>This assumes you&#39;ve already downloaded several pages &#40;eg, 5?&#41; from the <a href="https://dataframes.juliadata.org/stable/">DataFrames.jl documentation</a> and saved them as separate text files in a folder <code>documents/</code>. If you haven&#39;t, do it now&#33; Remember, garbage in, garbage out&#33;</p>
+<h4 id=loading_and_chunking_data ><a href="#loading_and_chunking_data" class=header-anchor >Loading and Chunking Data</a></h4>
+<p>We load text data and split it into manageable chunks for efficient processing.</p>
+<pre><code class="julia hljs"><span class=hljs-string >&quot;Splits `doc` into text chunks of size at most `max_size` (in characters), ie, it accumulates smaller chunks to match the desired size&quot;</span>
+<span class=hljs-keyword >function</span> build_chunks(doc::<span class=hljs-built_in >AbstractString</span>;
+        max_size::<span class=hljs-built_in >Int</span> = <span class=hljs-number >128</span>,
+        split_pattern::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >String</span>, <span class=hljs-built_in >Regex</span>} = <span class=hljs-string >r&quot;\n|\. &quot;</span>,
+        join_key::<span class=hljs-built_in >String</span> = <span class=hljs-string >&quot;\n&quot;</span>)
+    <span class=hljs-comment >## shortcut if doc is too short</span>
+    length(doc) &lt; max_size &amp;&amp; <span class=hljs-keyword >return</span> [doc]
+    <span class=hljs-comment >## proceed</span>
+    texts = split(doc, split_pattern)
+    doc_chunks = <span class=hljs-built_in >Vector</span>{eltype(texts)}()
+    start, counter = <span class=hljs-number >1</span>, <span class=hljs-number >0</span>
+    <span class=hljs-comment ># accumulate chunks until we reach the max size</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> eachindex(texts)
+        l = length(texts[i])
+        <span class=hljs-comment ># if it doesn&#x27;t fit, we push all preceeding docs, reset the counter and start a new chunk</span>
+        <span class=hljs-keyword >if</span> l == <span class=hljs-number >0</span> || (counter + l &gt;= max_size)
+            push!(doc_chunks, join(texts[start:max(i - <span class=hljs-number >1</span>, <span class=hljs-number >1</span>)], join_key))
+            start = i <span class=hljs-comment ># current text becomes the next chunk</span>
+            counter = <span class=hljs-number >0</span>
+        <span class=hljs-keyword >end</span>
+        counter += l
+    <span class=hljs-keyword >end</span>
+    <span class=hljs-comment ># last chunk is never pushed in, so we need to do it manually</span>
+    push!(doc_chunks, join(texts[start:<span class=hljs-keyword >end</span>], join_key))
+    <span class=hljs-keyword >return</span> doc_chunks
+<span class=hljs-keyword >end</span></code></pre>
+<p><strong>Explanation</strong>: </p>
+<ul>
+<li><p><strong>build_chunks</strong>: Splits the document into smaller text chunks, essential for effective retrieval and embedding. </p>
+
+</ul>
+<p>The <code>build_chunks</code> function is crucial because it breaks down full documents into smaller, manageable pieces, ensuring that each piece fits within the model&#39;s &quot;context window.&quot; Without this function, entire documents might overwhelm the model with too much information, exceeding its capacity to process and interpret effectively.</p>
+<p>A quick demonstration of how it works:</p>
+<pre><code class="julia hljs">doc = <span class=hljs-string >&quot;&quot;&quot;
+One wisdom.
+
+
+Second wisdom.
+
+
+Third wisdom.
+&quot;&quot;&quot;</span>
+build_chunks(doc; max_size = <span class=hljs-number >20</span>)
+<span class=hljs-comment ># Output:</span>
+<span class=hljs-comment ># 6-element Vector{SubString{String}}:</span>
+<span class=hljs-comment >#  &quot;One wisdom.&quot;</span>
+<span class=hljs-comment >#  &quot;&quot;</span>
+<span class=hljs-comment >#  &quot;\nSecond wisdom.&quot;</span>
+<span class=hljs-comment >#  &quot;&quot;</span>
+<span class=hljs-comment >#  &quot;\nThird wisdom.&quot;</span>
+<span class=hljs-comment >#  &quot;&quot;</span></code></pre>
+<p>We just split a larger document into 3 chunks, each of which is at most 20 characters long.</p>
+<h4 id=embedding_and_index_creation ><a href="#embedding_and_index_creation" class=header-anchor >Embedding and Index Creation</a></h4>
+<p>Here, we &quot;embed&quot; the chunks and create a <code>ChunkIndex</code> for retrieval purposes. See the <code>aiembed</code> section above to understand what it does.</p>
+<pre><code class="julia hljs">dir = joinpath(<span class=hljs-string >&quot;documents&quot;</span>) <span class=hljs-comment ># this is where the files are saved</span>
+files = [<span class=hljs-string >&quot;comparison_with_python.txt&quot;</span>, <span class=hljs-string >&quot;database_style_joins.txt&quot;</span>, <span class=hljs-string >&quot;what_is_dataframes.txt&quot;</span>]
+labels = [<span class=hljs-string >&quot;DataFrames-Python&quot;</span>, <span class=hljs-string >&quot;DataFrames-Joins&quot;</span>, <span class=hljs-string >&quot;DataFrames-WhatIs&quot;</span>]
+
+indices = ChunkIndex[]
+<span class=hljs-keyword >for</span> (fn, lbl) <span class=hljs-keyword >in</span> zip(files, labels)
+    doc_raw = load_text_doc(joinpath(dir, fn))
+    <span class=hljs-comment ># split into chunks, if you want to start simple - just do `split(text,&quot;\n\n&quot;)`</span>
+    doc_chunks = build_chunks(doc_raw; max_size = <span class=hljs-number >256</span>, split_pattern = <span class=hljs-string >&quot;\n\n&quot;</span>) |&gt;
+                 texts -&gt; mapreduce(x -&gt; build_chunks(x;
+            max_size = <span class=hljs-number >256</span>,
+            split_pattern = <span class=hljs-string >r&quot;\n|\. &quot;</span>),
+        vcat,
+        texts)
+    <span class=hljs-comment ># Notice that we embed all doc_chunks at once, not one by one</span>
+    <span class=hljs-comment ># OpenAI supports embedding multiple documents if they are short enough, ie, it&#x27;s only because the documentation pages are small</span>
+    embeddings = aiembed(doc_chunks) .|&gt; <span class=hljs-built_in >Float32</span>
+    index = ChunkIndex(;
+        embeddings,
+        chunks = doc_chunks,
+        sources = fill(lbl, length(doc_chunks)))
+    push!(indices, index)
+<span class=hljs-keyword >end</span>
+index = reduce(vcat, indices) <span class=hljs-comment ># combine it across several documents</span></code></pre>
+<p><strong>Explanation</strong>: </p>
+<ul>
+<li><p><strong>Loop Over Documents</strong>: For each document, it loads the text, breaks it into chunks, and computes embeddings.</p>
+
+<li><p><strong>ChunkIndex Creation</strong>: Forms a structured index of these chunks along with their embeddings for later retrieval.</p>
+
+</ul>
+<h3 id=interactive_rag_example ><a href="#interactive_rag_example" class=header-anchor >Interactive RAG Example</a></h3>
+<p>Setting up a template for AI responses and demonstrating retrieval and generation process:</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># Define a template for our RAG system</span>
+rag_template = PromptTemplate(;
+    system_prompt = <span class=hljs-string >&quot;Act as a world-class AI assistant and an expert in Julia language. Answer the question based only on the provided context. Be brief and concise.&quot;</span>,
+    user_prompt = <span class=hljs-string >&quot;&quot;&quot;
+      # Context
+
+      {{context}}
+
+      # Question
+
+      {{question}}
+
+      # Answer
+      &quot;&quot;&quot;</span>)
+
+<span class=hljs-comment ># user question</span>
+question = <span class=hljs-string >&quot;I like dplyr, what is the equivalent in Julia?&quot;</span>
+question_emb = aiembed(question)
+
+<span class=hljs-comment ># Build the context of similar docs -- take the top 3 closest chunks</span>
+idxs = find_closest(index, question_emb; top_k = <span class=hljs-number >3</span>)
+
+<span class=hljs-comment ># We add 2 chunks before and after each of the closest chunk</span>
+close_chunks = [join(index.chunks[max(<span class=hljs-keyword >begin</span>, i - <span class=hljs-number >2</span>):min(<span class=hljs-keyword >end</span>, i + <span class=hljs-number >2</span>)], <span class=hljs-string >&quot;\n&quot;</span>)
+                <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> idxs]
+answer = aigenerate(rag_template;
+    question,
+    context = join(close_chunks, <span class=hljs-string >&quot;\n\n&quot;</span>))
+println(answer.content)</code></pre>
+<p>In this section, we&#39;re putting together the RAG chatbot&#39;s response generation process using the previously defined components.</p>
+<p><strong>Explanation</strong>: </p>
+<ul>
+<li><p><strong>Setting Up the Prompt Template</strong>: <code>rag_template</code> is created with a specific instruction for the AI to act as an expert in the Julia language, ensuring responses are focused and relevant. It includes placeholders for dynamic context and the user&#39;s question.</p>
+
+<li><p><strong>Processing the User Question</strong>: The user&#39;s question, &quot;I like dplyr, what is the equivalent in Julia?&quot;, is converted into an embedding using <code>aiembed</code>. This numerical representation is used to find relevant information.</p>
+
+<li><p><strong>Retrieving Relevant Context</strong>: The <code>find_closest</code> function calculates the closeness of each chunk in our indexed database &#40;created using <code>ChunkIndex</code>&#41; to the question embedding. We select the indices &#40;<code>idxs</code>&#41; of the top 3 closest chunks.</p>
+
+<li><p><strong>Building Contextual Information</strong>: For each of the top chunks, we expand the context by also including two preceding and following chunks. This enriches the context, making the AI&#39;s response more informed.</p>
+
+<li><p><strong>Generating the Answer</strong>: The <code>aigenerate</code> function then takes this context, along with the user&#39;s question, to generate a response. The <code>rag_template</code> guides the response format.</p>
+
+<li><p><strong>Outputting the Response</strong>: Finally, the generated response &#40;<code>answer.content</code>&#41; is printed out, providing an informed and contextually relevant answer to the user&#39;s question based on the <code>DataFrames.jl</code> documentation. </p>
+
+</ul>
+<p>Try a few different questions to see how the chatbot responds. Inspect all the intermediate variables.</p>
+<h3 id=end-to-end_example ><a href="#end-to-end_example" class=header-anchor >End-to-End Example</a></h3>
+<p>Here we demonstrate a complete process for asking a specific question and obtaining an answer through the RAG system.</p>
+<p>First, let&#39;s wrap the whole process into a function:</p>
+<pre><code class="julia hljs"><span class=hljs-string >&quot;RAG wrapper that answers the given question and inject the context if needed from `index`&quot;</span>
+<span class=hljs-keyword >function</span> airag(index::ChunkIndex, rag_template::PromptTemplate;
+        question::<span class=hljs-built_in >AbstractString</span>, top_k::<span class=hljs-built_in >Int</span> = <span class=hljs-number >3</span>, kwargs...)
+    question_emb = aiembed(question;)
+
+    idxs = find_closest(index, question_emb; top_k)
+    <span class=hljs-comment ># We add 2 chunks before and after each of the closest chunk</span>
+    close_chunks = [join(index.chunks[max(<span class=hljs-keyword >begin</span>, i - <span class=hljs-number >2</span>):min(<span class=hljs-keyword >end</span>, i + <span class=hljs-number >2</span>)], <span class=hljs-string >&quot;\n&quot;</span>)
+                    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> idxs]
+    <span class=hljs-keyword >return</span> aigenerate(rag_template;
+        question,
+        context = join(close_chunks, <span class=hljs-string >&quot;\n\n&quot;</span>),
+        kwargs...)
+<span class=hljs-keyword >end</span></code></pre>
+<p>Now, we can use it to ask a question:</p>
+<pre><code class="julia hljs">question = <span class=hljs-string >&quot;I like dplyr, what is the equivalent in Julia?&quot;</span>
+answer = airag(index, rag_template; question)</code></pre>
+<p>Yay&#33; We got an answer&#33; Let&#39;s see what it is:</p>
+<pre><code class="plaintext hljs">The equivalent package in Julia for dplyr in R is DataFramesMeta.jl. It provides convenience syntax similar to dplyr for advanced data transformations.</code></pre>
+<p>Success&#33;</p>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>Through this tutorial, you&#39;ve learned how to build a RAG chatbot in Julia, starting from making direct API calls to constructing the full chatbot system. This approach emphasizes the significance of retrieval in enhancing the performance of generative models and highlights the importance of systematic evaluation and improvement. Now, you&#39;re equipped to experiment with and refine your own RAG chatbot, tailoring it to your specific needs and data.</p>
+<p>That was long&#33; If you made it this far, congratulations&#33; You&#39;re now ready to build your own RAG chatbot in Julia. Stay tuned for Part 2 of this tutorial, where we&#39;ll explore a more streamlined approach to building RAG chatbots using <code>PromptingTools.jl</code>.</p>
+<p>If you don&#39;t want to copy &amp; paste all the code, you can get it all at once from this <a href="https://gist.github.com/svilupp/8f7d364e37650ba7520f9b4783482cb2">gist</a>.</p>
+<h2 id=want_to_learn_more ><a href="#want_to_learn_more" class=header-anchor >Want to Learn More?</a></h2>
+<ul>
+<li><p>For any serious RAG system, you must first prepare an evaluation set of reference questions &amp; answers &#40;at least 50&#41;. You&#39;ll use them later for every change and decision &#40;eg, “how big should my chunk size be”&#41;</p>
+
+<li><p>Great tutorials and tips for building production-ready RAG: <a href="https://www.anyscale.com/blog/a-comprehensive-guide-for-building-rag-based-llm-applications-part-1">here</a> and <a href="https://docs.llamaindex.ai/en/stable/optimizing/production_rag.html">here</a>. It will teach you about things like query rephrasing, re-ranking, etc.</p>
+
+<li><p>In practice, we would probably want to scrape all DataFrames.jl documentation automatically &#40;to make it easy to update with future releases&#41; and to serialize the ChunkIndex/embeddings to persist them in between REPL sessions.</p>
+
+</ul>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 17, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div></div> 
+
+<footer class=container >
+  <p class=float-end ><a href="#">Back to top</a></p>
+  <div class=footer-icons >
+      <ul class=social-icons >
+          <li><strong>Follow:</strong>
+          <li><a href="https://github.com/svilupp" rel="nofollow noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-github" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg> GitHub</a>
+      </ul>
+  </div>
+  <p class=copyright >&copy; 2023- Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity=sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm  crossorigin=anonymous ></script>
+
+
+  <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>

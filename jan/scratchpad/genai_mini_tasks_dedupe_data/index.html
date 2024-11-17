@@ -1,0 +1,161 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <!-- bootstrap@5.3.1 and bootstrap icon@1.10--> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel=stylesheet  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin=anonymous > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <link rel=stylesheet  href="/css/style.css"> <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"> <link data-n-head=ssr  rel=stylesheet  href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <!-- favicon generated through https://realfavicongenerator.net/--> <link rel=apple-touch-icon  sizes=180x180  href="/assets/icon/apple-touch-icon.png"> <link rel=icon  type="image/png" sizes=32x32  href="/assets/icon/favicon-32x32.png"> <link rel=icon  type="image/png" sizes=16x16  href="/assets/icon/favicon-16x16.png"> <link rel=manifest  href="/assets/icon/site.webmanifest"> <link rel=mask-icon  href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5"> <meta name=msapplication-TileColor  content="#da532c"> <meta name=theme-color  content="#ffffff"> <link rel=stylesheet  href="/_css/custom.css"> <title>Duplicate No More: Clean up the Contact Data in Minutes with LLMs</title> <header data-bs-theme=dark > <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"> <div class=container > <a href="/" class="navbar-brand d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-journal-text me-2" viewBox="0 0 16 16"> <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/> <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/> <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/> </svg> <strong>siml.earth</strong> </a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarCollapse" aria-controls=navbarCollapse  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarCollapse > <ul class="navbar-nav me-auto mb-2 mb-md-0"> <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle fw-bold" href="#" id=navbarDropdown  role=button  data-bs-toggle=dropdown  aria-expanded=false > Sites </a> <ul class=dropdown-menu  aria-labelledby=navbarDropdown > <li><h6 class=dropdown-header >Choose a Site</h6> <li><a class=dropdown-item  href="/jan/">Jan's Site</a> <li><a class=dropdown-item  href="/ann/">Ann's Site</a> </ul> <li class=nav-item ><hr class="dropdown-divider mx-2"> <li class=nav-item > <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span> <li class=nav-item > <a class=nav-link  aria-current=page  href="/jan/">Home</a> <li class=nav-item > <a class=nav-link  href="/jan/scratchpad/">Posts</a> <li class=nav-item > <a class=nav-link  href="/jan/wip/">Work in Progress</a> <li class=nav-item > <a class=nav-link  href="/jan/about/">About</a> <li class=nav-item > <a class=nav-link  href="/jan/tags/">Tags</a> <li class=nav-item > <a class=nav-link  href="/jan/privacy_policy/">Privacy Policy</a> <li class=nav-item > <a class=nav-link  href="/jan/cookie_policy/">Cookie Policy</a> </ul> </div> </div> </nav> </header> <div class="container py-3 px-3 mx-auto"> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Discover how to transform the once daunting task of contact data deduplication into a swift, simple process using Julia and the FEBRL 1 dataset, all within five minutes with PromptingTools.jl</p> <p><div class=franklin-toc ><ol><li><a href="#tldr">TL;DR</a><ol><li><a href="#introduction_the_evolution_of_data_deduplication">Introduction: The Evolution of Data Deduplication</a><li><a href="#understanding_the_challenge">Understanding the Challenge</a><li><a href="#setting_up_the_environment">Setting Up the Environment</a><li><a href="#retrieving_duplicates_with_embeddings">Retrieving Duplicates with Embeddings</a><li><a href="#ranking_with_machine_learning">Ranking with Machine Learning</a><li><a href="#structured_extraction_for_databases">Structured Extraction for Databases</a><li><a href="#wrapping_up_data_deduplication_reimagined">Wrapping Up: Data Deduplication Reimagined</a></ol></ol></div> </p> <h2 id=introduction_the_evolution_of_data_deduplication ><a href="#introduction_the_evolution_of_data_deduplication" class=header-anchor >Introduction: The Evolution of Data Deduplication</a></h2> <p>In the world of data management, deduplication stands as a crucial, yet often challenging task, vital for maintaining the integrity and quality of contact datasets. Traditionally, this process required extensive labor and time. </p> <p>With LLMs, you can now deduplicate your data in a matter of minutes &#40;only the first pass though&#33; You need strong data governance and supporting processes to reach the gold quality and maintain it&#33;&#41;</p> <h2 id=understanding_the_challenge ><a href="#understanding_the_challenge" class=header-anchor >Understanding the Challenge</a></h2> <p>Data deduplication can be conceptualized similarly to traditional search engines and Retrieval-Augmented Generation &#40;RAG&#41; models. Here&#39;s a brief breakdown:</p> <ul> <li><p><strong>Preprocessing:</strong> Clean and enrich data for consistency and accuracy.</p> <li><p><strong>Retriever:</strong> Identify similar records, akin to a search engine finding relevant documents.</p> <li><p><strong>Ranker:</strong> Use machine learning to prioritize and confirm duplicates, similar to ranking search results.</p> <li><p><strong>Output:</strong> Deliver clean, deduplicated data ready for database use, so it can verified further or acted upon.</p> </ul> <h2 id=setting_up_the_environment ><a href="#setting_up_the_environment" class=header-anchor >Setting Up the Environment</a></h2> <p>We&#39;ll be using FEBRL 1 dataset from the <a href="https://recordlinkage.readthedocs.io/en/latest/ref-datasets.html#recordlinkage.datasets.load_febrl1">recordlinkage</a> package. It contains a collection of 1000 records, half of which are duplicates. This dataset serves as an excellent starting point for our deduplication adventure.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> DataFramesMeta, CSV, Downloads
+<span class=hljs-keyword >using</span> LinearAlgebra: normalize, dot
+<span class=hljs-keyword >using</span> PromptingTools
+<span class=hljs-keyword >const</span> PT = PromptingTools
+
+<span class=hljs-comment ># Download the dataset</span>
+Downloads.download(<span class=hljs-string >&quot;# https://github.com/J535D165/recordlinkage/tree/master/recordlinkage/datasets/febrl&quot;</span>,
+    <span class=hljs-string >&quot;febrl-dataset1.csv&quot;</span>);
+
+<span class=hljs-comment ># process the data</span>
+df = <span class=hljs-meta >@chain</span> <span class=hljs-keyword >begin</span>
+    CSV.File(<span class=hljs-string >&quot;febrl-dataset1.csv&quot;</span>)
+    DataFrame
+    rename(_, strip.(names(_)))
+    transform(_, names(_, <span class=hljs-built_in >AbstractString</span>) .=&gt; ByRow(strip), renamecols=<span class=hljs-literal >false</span>)
+    <span class=hljs-comment ># Create more descriptive text blurb -- play with the format</span>
+    <span class=hljs-meta >@rtransform</span> :text_blob = <span class=hljs-string >&quot;Contact details: <span class=hljs-subst >$(:given_name)</span> <span class=hljs-subst >$(:surname)</span>, living at <span class=hljs-subst >$(:street_number)</span> <span class=hljs-subst >$(:address_1)</span>, <span class=hljs-subst >$(:address_2)</span>, <span class=hljs-subst >$(:suburb)</span>, Postcode: <span class=hljs-subst >$(:postcode)</span>, State: <span class=hljs-subst >$(:state)</span>&quot;</span>
+<span class=hljs-keyword >end</span>;</code></pre> <h2 id=retrieving_duplicates_with_embeddings ><a href="#retrieving_duplicates_with_embeddings" class=header-anchor >Retrieving Duplicates with Embeddings</a></h2> <p>We use embeddings to convert contact details into numerical formats, making it easier to identify similar records, such as those sharing a ZIP code.</p> <pre><code class="julia hljs">embeddings = aiembed(df.text_blob, normalize).content
+<span class=hljs-comment ># [ Info: Tokens: 35386 @ Cost: $0.0035 in 5.5 seconds</span>
+<span class=hljs-comment ># PromptingTools.DataMessage(Matrix{Float64} of size (1536, 1000))</span>
+
+<span class=hljs-comment ># pairwise distances -- you could do it much faster with Distances.jl package</span>
+dists = <span class=hljs-keyword >let</span> embeddings = embeddings
+    dists = zeros(<span class=hljs-built_in >Float32</span>, size(embeddings, <span class=hljs-number >2</span>), size(embeddings, <span class=hljs-number >2</span>))
+    <span class=hljs-meta >@inbounds</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> axes(embeddings, <span class=hljs-number >2</span>)
+        <span class=hljs-keyword >for</span> j <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:i
+            dists[i, j] = sum(<span class=hljs-meta >@view</span>(embeddings[:, i]) .* <span class=hljs-meta >@view</span>(embeddings[:, j]))
+            dists[j, i] = dists[i, j]
+        <span class=hljs-keyword >end</span>
+    <span class=hljs-keyword >end</span>
+    dists
+<span class=hljs-keyword >end</span></code></pre> <p>Voila&#33; A few seconds and less than a cent later, we have our retriever.</p> <p>Let&#39;s explore candidate duplicates for item 3:</p> <pre><code class="julia hljs"><span class=hljs-keyword >let</span> i = <span class=hljs-number >3</span>
+    dupe_idxs = sortperm(dists[i, :], rev=<span class=hljs-literal >true</span>) |&gt; x -&gt; first(x, <span class=hljs-number >10</span>)
+    <span class=hljs-meta >@chain</span> <span class=hljs-keyword >begin</span>
+        df[dupe_idxs, :]
+        <span class=hljs-meta >@transform</span> :dists = dists[i, dupe_idxs]
+        select(_, :dists, :given_name, :surname, :street_number, :address_1, :address_2, :suburb, :postcode, :state)
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span></code></pre> <pre><code class="plaintext hljs">10×9 DataFrame
+ Row │ dists     given_name  surname     street_number  address_1           address_2               suburb          postcode  state   
+     │ Float32   String31    String31    String7        SubStrin…           SubStrin…               String31        Int64     String7 
+─────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ 1.0       deakin      sondergeld  48             goldfinch circuit   kooltuo                 canterbury          2776  vic
+   2 │ 0.99449   deakin      sondergeld  231            goldfinch circuit   kooltuo                 canterbury          2509  vic
+   3 │ 0.866091  timothy     zaluski     94             fraser court        coolibah                mount melville      3095  vic
+   4 │ 0.865136  timothy     coffey      23             bacchus circuit     frankston caravan park  werrington          2450  vic
+   5 │ 0.863814  eriaz       keacny      6              nicklin cre scent   char lstown             longeach            2706  vic
+   6 │ 0.862886  mathilde    delvendiep  66             giliruk crescent                            ivanhoe east        3011  qld
+   7 │ 0.860956  jayde       van keulen  4              macgregor street    glendower               cremorne            3566  vic
+   8 │ 0.860592  jayde       grosser     41             gundaroo road                               baringhup           3173  vic
+   9 │ 0.860432  finley      haeusler    27             noarlunga crescent  sprin g ridge           namnour             3180  vic
+  10 │ 0.85976   jayde       grosser     55             gundaroo road                               baringhup           3173  vic</code></pre> <p>Nice&#33; Clearly, there is a sharp drop-off in the distance, so we could probably set a threshold to filter out the non-duplicates.</p> <p>You can experiment with different address permutations to check how the distance behaves:</p> <pre><code class="julia hljs"><span class=hljs-comment ># &quot;Contact details:  deakin  sondergeld, living at  48  goldfinch circuit,  kooltuo,  canterbury, Postcode: 2776, State:  vic&quot;</span>
+e1 = aiembed(<span class=hljs-string >&quot;Contact details:  deakin  sondergeld, kooltuo,  canterbury, Postcode: 2776, State:  vic&quot;</span>, normalize).content
+dot(embeddings[:, <span class=hljs-number >3</span>], e1) <span class=hljs-comment ># 0.9738679742013003</span>
+e2 = aiembed(<span class=hljs-string >&quot;Contact details:  deakin  sondergeld, living at goldfinch,  kooltuo,  canterbury, Postcode: 2776, State:  vic&quot;</span>, normalize).content
+dot(embeddings[:, <span class=hljs-number >3</span>], e2) <span class=hljs-comment ># 0.9935216848792419</span>
+e3 = aiembed(<span class=hljs-string >&quot;Contact details:  d. m. p. sondergeld, living at goldfinch circuit,  kooltuo,  canterbury, Postcode: , State:  vic&quot;</span>, normalize).content
+dot(embeddings[:, <span class=hljs-number >3</span>], e3) <span class=hljs-comment ># 0.9525012240822797</span>
+e4 = aiembed(<span class=hljs-string >&quot;Contact details:  deakin  sondergeld, living at  231  goldfinch,  kooltuo,  canterbury, Postcode: 2509, State:  ny&quot;</span>, normalize).content
+dot(embeddings[:, <span class=hljs-number >3</span>], e4) <span class=hljs-comment ># 0.9830825248399336</span></code></pre> <h2 id=ranking_with_machine_learning ><a href="#ranking_with_machine_learning" class=header-anchor >Ranking with Machine Learning</a></h2> <p>Now let&#39;s proceed to the ranking model. A ranking model then evaluates these potential duplicates, efficiently identifying the true matches.</p> <p>Let&#39;s define our prompt template. Notice the use of <code>&#123;&#123;record1&#125;&#125;</code> and <code>&#123;&#123;record2&#125;&#125;</code> placeholders. These will be replaced with the actual records during the ranking process.</p> <pre><code class="julia hljs"><span class=hljs-comment ># Simple PromptingTools.jl template. Save it with `PT.save_template`</span>
+dedupe_template = [
+    PT.SystemMessage(
+        <span class=hljs-string >&quot;&quot;&quot;
+        You&#x27;re a world-class record linkage engineer. 
+
+        Your task is to compare two records and determine whether they refer to the same person.
+
+        **Instructions**
+        - You&#x27;re given two records, each of which contains a name and address.
+        - You must return a judgement on whether they are duplicates or not.
+        - You must also return a confidence score, which is a number between 0 and 100 that indicates how confident you are that the two records refer to the same person. 
+            If you&#x27;re not confident, you must return a confidence score of 0. If you&#x27;re very confident, you must return a confidence score of 100.
+        - Consider that people can move house and change an address, so you should not assume that the addresses must match exactly for the records to be duplicates.
+        - Output format: `Rationale: &lt;provide your reasoning&gt;\nDuplicate: true/false\nConfidence: 0-100`
+        &quot;&quot;&quot;</span>), PT.UserMessage(<span class=hljs-string >&quot;&quot;&quot;
+            # Record 1
+
+            {{record1}}
+
+            # Record 2
+
+            {{record2}}
+
+            Think it through step by step.
+            &quot;&quot;&quot;</span>)]
+
+dupe_idxs = sortperm(dists[<span class=hljs-number >3</span>, :], rev=<span class=hljs-literal >true</span>) |&gt; x -&gt; first(x, <span class=hljs-number >10</span>)
+msg = aigenerate(dedupe_template; record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt4t&quot;</span>)</code></pre> <pre><code class="plaintext hljs">[ Info: Tokens: 573 @ Cost: \$0.012 in 10.9 seconds
+AIMessage(&quot;Rationale: The records indicate that the individual has the same unique name, &quot;deakin sondergeld.&quot; 
+This increases the likelihood that the records refer to the same individual because the name is uncommon. However, the addresses listed have different house numbers and postcodes, which suggests a discrepancy in the details provided. 
+Given that &quot;Goldfinch Circuit&quot; is a part of both addresses and the locations, &quot;Kooltuo, Canterbury&quot; and the state &quot;Vic&quot; match, it&#x27;s possible that one of the records has a typo or outdated information. Human error in data entry or changes in residence without updating all records could explain the difference in house number and postcode.
+
+Despite the similarities in name, location, and the unusual circumstance that two individuals with an uncommon name would live on the same street, we must account for the possibility of a data entry error or an outdated address in one of the records. 
+An update to a person&#x27;s address may lead to slight discrepancies in databases that are not synchronized. The difference in postcodes also suggests the potential for such an error as the entire street is unlikely to have multiple postcodes unless it is extremely long and the municipality has assigned different postcodes to different segments.~
+
+Duplicate: true
+Confidence: 75
+
+Given the information, we have a reasonably high level of confidence that these records refer to the same person. The confidence is not at 100 due to the variations in house number and postcode which introduce some uncertainty. It&#x27;s worth investigating further to reconcile the discrepancies and confirm the records&#x27; accuracy.&quot;)</code></pre> <p>Thanks to PromptingTools.jl, we can try several different models:</p> <pre><code class="julia hljs">msg = aigenerate(dedupe_template; record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], model=<span class=hljs-string >&quot;gpt3t&quot;</span>)</code></pre>
+<pre><code class="plaintext hljs">[ Info: Tokens: 411 @ Cost: \$0.0006 in 5.8 seconds
+AIMessage(&quot;First, let&#x27;s compare the names in both records. The name &quot;deakin sondergeld&quot; is an exact match in both records.
+
+Next, we can compare the addresses. The street names in the addresses are different; one is &quot;48 goldfinch circuit&quot; and the other is &quot;231 goldfinch circuit.&quot; However, the suburb and state are the same.
+
+Based on the differences in the street numbers, there is a low confidence that these two records refer to the same person. 
+
+Rationale: The names match, but the street numbers in the addresses are different. While the suburb and state are the same, the difference in street numbers reduces the confidence that these records are duplicates.
+Duplicate: false
+Confidence: 20&quot;)</code></pre>
+<p>That&#39;s clearly a miss&#33; But technically, we have been very vague in our criteria for duplicates. Could the records be from different years? Could the person have moved? We need to be more specific in our criteria for duplicates. A few-shot prompt would improve the results.</p>
+<p>Even better, we could run 1000 examples through GPT-4 and then fine-tune GPT-3.5 or some open-source model on the generated examples to get the best of both worlds.</p>
+<h2 id=structured_extraction_for_databases ><a href="#structured_extraction_for_databases" class=header-anchor >Structured Extraction for Databases</a></h2>
+<p>We often need to work with the data we get from the LLM. Let&#39;s use structured extraction for easy integration into your databases, enhancing overall data management.</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># Give some tips to the model (because the field names differ from the template we provide)</span>
+<span class=hljs-string >&quot;&quot;&quot;
+Walk through your reasoning step by step in `rationale` field. 
+`duplicate` is a boolean indicating whether the records are duplicates. 
+`confidence` is an integer between 0 and 100 indicating how confident you are that the records are duplicates.
+&quot;&quot;&quot;</span>
+<span class=hljs-meta >@kwdef</span> <span class=hljs-keyword >struct</span> DedupeDecision
+    rationale::<span class=hljs-built_in >String</span>
+    duplicate::<span class=hljs-built_in >Bool</span>
+    confidence::<span class=hljs-built_in >Int</span>
+<span class=hljs-keyword >end</span>
+decision = aiextract(dedupe_template; record1=df[<span class=hljs-number >3</span>, :text_blob], record2=df[dupe_idxs[<span class=hljs-number >2</span>], :text_blob], return_type=DedupeDecision, model=<span class=hljs-string >&quot;gpt3t&quot;</span>)
+decision.content</code></pre>
+<pre><code class="plaintext hljs">[ Info: Tokens: 497 @ Cost: \$0.0005 in 2.1 seconds
+DedupeDecision(&quot;The names and addresses are similar, but the postcodes are different. The confidence is low because the names are common and the addresses are similar, but the postcodes differ significantly.&quot;, false, 20)</code></pre>
+<p>The result is now in our custom Struct, so we can easily integrate it into our database or a data processing pipeline.</p>
+<h2 id=wrapping_up_data_deduplication_reimagined ><a href="#wrapping_up_data_deduplication_reimagined" class=header-anchor >Wrapping Up: Data Deduplication Reimagined</a></h2>
+<p>Deduplication is now a breeze, not a chore. Clean, compare, rank, and voila - your data is crisp and duplicate-free &#40;ish&#41;. Keep playing with these tools and watch your data worries vanish - like a magician with a data wand&#33; 🪄✨</p>
+<hr />
+<p>Looking for a bigger challenge? Try this approach on the <a href="https://github.com/chris1610/pbpython/blob/master/data/hospital_account_info.csv">Medicare Hospital dataset</a> from Practical Business Python <a href="https://pbpython.com/record-linking.html">blog</a>.</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 17, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div></div> 
+
+<footer class=container >
+  <p class=float-end ><a href="#">Back to top</a></p>
+  <div class=footer-icons >
+      <ul class=social-icons >
+          <li><strong>Follow:</strong>
+          <li><a href="https://github.com/svilupp" rel="nofollow noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-github" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg> GitHub</a>
+      </ul>
+  </div>
+  <p class=copyright >&copy; 2023- Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity=sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm  crossorigin=anonymous ></script>
+
+
+  <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>

@@ -1,0 +1,92 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <!-- bootstrap@5.3.1 and bootstrap icon@1.10--> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel=stylesheet  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin=anonymous > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <link rel=stylesheet  href="/css/style.css"> <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"> <link data-n-head=ssr  rel=stylesheet  href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <!-- favicon generated through https://realfavicongenerator.net/--> <link rel=apple-touch-icon  sizes=180x180  href="/assets/icon/apple-touch-icon.png"> <link rel=icon  type="image/png" sizes=32x32  href="/assets/icon/favicon-32x32.png"> <link rel=icon  type="image/png" sizes=16x16  href="/assets/icon/favicon-16x16.png"> <link rel=manifest  href="/assets/icon/site.webmanifest"> <link rel=mask-icon  href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5"> <meta name=msapplication-TileColor  content="#da532c"> <meta name=theme-color  content="#ffffff"> <link rel=stylesheet  href="/_css/custom.css"> <title>AIHelpMe.jl: AI-Enhanced Coding Assistance for Julia</title> <header data-bs-theme=dark > <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"> <div class=container > <a href="/" class="navbar-brand d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-journal-text me-2" viewBox="0 0 16 16"> <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/> <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/> <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/> </svg> <strong>siml.earth</strong> </a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarCollapse" aria-controls=navbarCollapse  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarCollapse > <ul class="navbar-nav me-auto mb-2 mb-md-0"> <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle fw-bold" href="#" id=navbarDropdown  role=button  data-bs-toggle=dropdown  aria-expanded=false > Sites </a> <ul class=dropdown-menu  aria-labelledby=navbarDropdown > <li><h6 class=dropdown-header >Choose a Site</h6> <li><a class=dropdown-item  href="/jan/">Jan's Site</a> <li><a class=dropdown-item  href="/ann/">Ann's Site</a> </ul> <li class=nav-item ><hr class="dropdown-divider mx-2"> <li class=nav-item > <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span> <li class=nav-item > <a class=nav-link  aria-current=page  href="/jan/">Home</a> <li class=nav-item > <a class=nav-link  href="/jan/scratchpad/">Posts</a> <li class=nav-item > <a class=nav-link  href="/jan/wip/">Work in Progress</a> <li class=nav-item > <a class=nav-link  href="/jan/about/">About</a> <li class=nav-item > <a class=nav-link  href="/jan/tags/">Tags</a> <li class=nav-item > <a class=nav-link  href="/jan/privacy_policy/">Privacy Policy</a> <li class=nav-item > <a class=nav-link  href="/jan/cookie_policy/">Cookie Policy</a> </ul> </div> </div> </nav> </header> <div class="container py-3 px-3 mx-auto"> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p><a href="https://github.com/svilupp/AIHelpMe.jl">AIHelpMe.jl</a>, a new Julia package, transforms your existing docstrings into an interactive AI-powered guide, offering personalized insights directly from your code&#39;s documentation. It&#39;s in the early stages and seeks community feedback, promising a unique, low-cost way to interact with your documentation.</p> <p><div class=franklin-toc ><ol><li><a href="#tldr">TL;DR</a><ol><li><a href="#announcing_aihelpmejl_pre-release">Announcing AIHelpMe.jl Pre-Release</a><li><a href="#motivation_and_value">Motivation and Value</a><li><a href="#getting_started">Getting Started</a><li><a href="#llms_will_make_mistakes">LLMs will make mistakes...</a><li><a href="#pre-release_testing">Pre-Release Testing</a></ol></ol></div> </p> <h2 id=announcing_aihelpmejl_pre-release ><a href="#announcing_aihelpmejl_pre-release" class=header-anchor >Announcing AIHelpMe.jl Pre-Release</a></h2> <p>Welcome to <a href="https://github.com/svilupp/AIHelpMe.jl">AIHelpMe.jl</a>, a new Julia package that transforms your detailed docstrings into a rich source of insights. It&#39;s not about writing code for you; rather, it&#39;s about shining a light on the valuable documentation you and others have already created. Think of it as having a chat with your code&#39;s documentation, enhanced by AI&#39;s clever touch.</p> <h2 id=motivation_and_value ><a href="#motivation_and_value" class=header-anchor >Motivation and Value</a></h2> <p>Why write great docstrings? AIHelpMe gives you a compelling reason, turning them into an interactive, insightful guide. It&#39;s a subtle, yet powerful way to connect your queries with tailored, documentation-driven answers.</p> <p>There are a few things that set this package apart from generic chatbots:</p> <p><strong>Direct Access to Your Work</strong>: AIHelpMe uniquely utilizes the latest information and modules directly from your laptop, ensuring up-to-date and relevant assistance.</p> <p><strong>Full Control Over Searches</strong>: Tailor your search scope and methods with AIHelpMe, aligning AI insights precisely with your needs.</p> <p><strong>Contextual Understanding</strong>: Go beyond typical chatbot responses; AIHelpMe offers deep insights, revealing the sources behind each answer, so you can continue your research 🧠📚</p> <h2 id=getting_started ><a href="#getting_started" class=header-anchor >Getting Started</a></h2> <p>Simply add AIHelpMe to your Julia environment &#40;not registered yet&#41; and get ready to interact with your code&#39;s documentation in a whole new way. Remember, API keys from Cohere and OpenAI are required, but the cost per query is just a tiny fraction of a cent.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Pkg
+Pkg.add(<span class=hljs-string >&quot;https://github.com/svilupp/AIHelpMe.jl&quot;</span>)
+
+<span class=hljs-keyword >using</span> AIHelpMe <span class=hljs-comment ># automatically some downloads pre-processed documentation</span>
+
+<span class=hljs-string >aihelp&quot;In Julia, how to create a named tuple from a dictionary? Give me an example&quot;gpt3t</span></code></pre> <pre><code class="plaintext hljs">[ Info: Done generating response. Total cost: \$0.001
+AIMessage(&quot;You can use the splatting operator to create a named tuple from a dictionary in Julia. Here&#x27;s an example:
+
+```julia
+d = Dict(:a =&gt; 1, :b =&gt; 2)
+nt = (; d...)
+```</code></pre> <p>You can also ask GPT-4 Turbo to weigh in on your question &#40;notice the &quot;&#33;&quot; in <code>aihelp&#33;&quot;...&quot;</code>&#41; when you need deeper insights. For example, you can ask GPT-4 Turbo to explain the constructors for <code>NamedTuple</code>:</p> <pre><code class="julia hljs">aihelp!<span class=hljs-string >&quot;What other constructors does NamedTuple have?&quot;gpt4t</span></code></pre>
+<pre><code class="plaintext hljs">[ Info: Tokens: 1023 @ Cost: \$0.0154 in 30.7 seconds
+AIMessage(&quot;Aside from creating named tuples from pairs or a dictionary, `NamedTuple` offers other constructors as well:
+
+1. **Tuple literal with keys**:
+   ```julia
+   nt = (a=1, b=2)
+   ```
+
+2. **Tuple literal with semicolon**:
+   ```julia
+   nt = (; a=1, b=2)
+   ```
+
+3. **Using `NamedTuple` type as constructor**:
+   ```julia
+   nt = NamedTuple{(:a, :b)}((1, 2))
+   ```
+
+4. **With specified types**:
+   ```julia
+   nt = NamedTuple{(:a, :b), Tuple{Int, Int}}((1, 2))
+   ```
+
+5. **From another named tuple or iterable**:
+   You can create a new named tuple by splatting an existing named tuple or any iterable of pairs:
+   ```julia
+   existing_nt = (a=1, b=2)
+   nt = NamedTuple((:c =&gt; 3, :d =&gt; 4, existing_nt...))
+   ```
+
+   &lt;Author: this example is incorrect. See the below note&gt;
+
+These constructors allow for flexibility in creating `NamedTuple`s programmatically or from existing data structures in Julia.&quot;)</code></pre>
+<h2 id=llms_will_make_mistakes ><a href="#llms_will_make_mistakes" class=header-anchor >LLMs will make mistakes...</a></h2>
+<p>... and it&#39;s okay&#33; It&#39;s usually easy to check &amp; iterate, so the overall solution still ends up being faster / easier.</p>
+<p>The original example used the default chat model and had a mistake as pointed out by @oxinabox. We changed to &quot;gpt3t&quot; model for better performance. There was also a change in the prefix and suffix, but that was not required - it&#39;s just a habit of how I write prompts/questions to LLMs.</p>
+<p>Similarly, the last constructor in the examples from GPT4 Turbo throws an error. We can ask the LLM to fix it:</p>
+<pre><code class="julia hljs"><span class=hljs-string >aihelp&quot;How to fix `nt = NamedTuple((:c =&gt; 3, :d =&gt; 4, existing_nt...))`. I get error <span class=hljs-variable >$err</span>&quot;gpt4t</span></code></pre>
+<pre><code class="plaintext hljs">[ Info: Done generating response. Total cost: \$0.002
+AIMessage(&quot;You can fix the code snippet by using the `merge` function properly, to merge the `NamedTuple` with the key-value pairs:
+
+```julia
+existing_nt = (a=1, b=2)
+nt = merge(existing_nt, (c=3,), (d=4,))
+```
+
+This code merges the existing named tuple `existing_nt` with two additional key-value pairs, `(c=3,)` and `(d=4,)`. The result `nt` will be a named tuple including all four key-value pairs.&quot;)</code></pre>
+<h2 id=pre-release_testing ><a href="#pre-release_testing" class=header-anchor >Pre-Release Testing</a></h2>
+<p>As AIHelpMe is in its early stages, we&#39;re eager for community involvement to test and refine its capabilities. </p>
+<p>Is it valuable? What are its limitations?</p>
+<p>Your feedback is invaluable in shaping this tool’s future, so join us in this innovative journey&#33;</p>
+<p>EDIT: Thanks to @oxinabox for pointing out that the original example had an error in it&#33;</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 17, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div></div> 
+
+<footer class=container >
+  <p class=float-end ><a href="#">Back to top</a></p>
+  <div class=footer-icons >
+      <ul class=social-icons >
+          <li><strong>Follow:</strong>
+          <li><a href="https://github.com/svilupp" rel="nofollow noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-github" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg> GitHub</a>
+      </ul>
+  </div>
+  <p class=copyright >&copy; 2023- Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity=sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm  crossorigin=anonymous ></script>
+
+
+  <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>

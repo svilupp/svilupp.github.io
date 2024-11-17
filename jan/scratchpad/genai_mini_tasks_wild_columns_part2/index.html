@@ -1,0 +1,113 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <!-- bootstrap@5.3.1 and bootstrap icon@1.10--> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel=stylesheet  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin=anonymous > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <link rel=stylesheet  href="/css/style.css"> <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"> <link data-n-head=ssr  rel=stylesheet  href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <!-- favicon generated through https://realfavicongenerator.net/--> <link rel=apple-touch-icon  sizes=180x180  href="/assets/icon/apple-touch-icon.png"> <link rel=icon  type="image/png" sizes=32x32  href="/assets/icon/favicon-32x32.png"> <link rel=icon  type="image/png" sizes=16x16  href="/assets/icon/favicon-16x16.png"> <link rel=manifest  href="/assets/icon/site.webmanifest"> <link rel=mask-icon  href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5"> <meta name=msapplication-TileColor  content="#da532c"> <meta name=theme-color  content="#ffffff"> <link rel=stylesheet  href="/_css/custom.css"> <title>GenAI Mini-Tasks: Taming Wild Table Columns - Part 2</title> <header data-bs-theme=dark > <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"> <div class=container > <a href="/" class="navbar-brand d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-journal-text me-2" viewBox="0 0 16 16"> <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/> <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/> <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/> </svg> <strong>siml.earth</strong> </a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarCollapse" aria-controls=navbarCollapse  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarCollapse > <ul class="navbar-nav me-auto mb-2 mb-md-0"> <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle fw-bold" href="#" id=navbarDropdown  role=button  data-bs-toggle=dropdown  aria-expanded=false > Sites </a> <ul class=dropdown-menu  aria-labelledby=navbarDropdown > <li><h6 class=dropdown-header >Choose a Site</h6> <li><a class=dropdown-item  href="/jan/">Jan's Site</a> <li><a class=dropdown-item  href="/ann/">Ann's Site</a> </ul> <li class=nav-item ><hr class="dropdown-divider mx-2"> <li class=nav-item > <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span> <li class=nav-item > <a class=nav-link  aria-current=page  href="/jan/">Home</a> <li class=nav-item > <a class=nav-link  href="/jan/scratchpad/">Posts</a> <li class=nav-item > <a class=nav-link  href="/jan/wip/">Work in Progress</a> <li class=nav-item > <a class=nav-link  href="/jan/about/">About</a> <li class=nav-item > <a class=nav-link  href="/jan/tags/">Tags</a> <li class=nav-item > <a class=nav-link  href="/jan/privacy_policy/">Privacy Policy</a> <li class=nav-item > <a class=nav-link  href="/jan/cookie_policy/">Cookie Policy</a> </ul> </div> </div> </nav> </header> <div class="container py-3 px-3 mx-auto"> <div class=franklin-content ><h1 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h1> <p>Transform messy data columns into clear, understandable names, making survey data easier to manage and analyze.</p> <p><div class=franklin-toc ><ol><li><a href="#tldr">TL;DR</a><ol><li><a href="#introduction">Introduction</a><li><a href="#notes">Notes</a><li><a href="#conclusion">Conclusion</a></ol></ol></div> </p> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>This is a follow-up to the first part of the blog: <a href="https://svilupp.github.io/scratchpad/genai_mini_tasks_wild_columns_part1/">GenAI Mini-Tasks: Taming Wild Table Columns Part1</a>, where we cleaned up columns in the City of Austin&#39;s community survey data by sending the column names one-by-one in separate <code>aiextract</code> calls.</p> <p>Quick reminder, we have &gt;250 quite verbose columns that we want to clean up. Let&#39;s show a few:</p> <pre><code class="julia hljs">df_survey = CSV.File(<span class=hljs-string >&quot;Community_Survey_cItyofaustin.csv&quot;</span>) |&gt; DataFrame
+last(names(df_survey), <span class=hljs-number >10</span>)</code></pre> <pre><code class="plaintext hljs">10-element Vector{String}:
+ &quot;Q25 - If there was one thing yo&quot; ⋯ 77 bytes ⋯ &quot;stion, etc.), what would it be?&quot;
+ &quot;Q25 - One thing to share with Mayor Topics&quot;
+ &quot;Quality of Life Topics&quot;
+ &quot;Economic Opportunity and Affordability Topics&quot;
+ &quot;Mobility Topics&quot;
+ &quot;Health and the Environment Topics&quot;
+ &quot;Safety Topics&quot;
+ &quot;Government That Works for All Topics&quot;
+ &quot;Culture and Lifelong Learning Topics&quot;
+ &quot;Share with the Mayor Topics&quot;</code></pre> <h2>Sending All Columns at Once</h2> <p>Let&#39;s re-use the previous return type <code>RenameColumn</code> and the prompt, but we&#39;ll make a few tweaks.</p> <ol> <li><p>Add more fields to <code>RenameColumn4</code> to capture the old column name and the question ID &#40;if available&#41;. It&#39;s nicer to have it together because you cannot control in what order will the new column names be generated</p> <li><p>Add a docstring for <code>RenameColumn4</code> to provide instructions for the <code>question_id</code> field and set it as optional &#40;by allowing <code>Nothing</code> type&#41;</p> <li><p>Create a wrapper type <code>RenameColumnList</code> which is simply a vector of <code>RenameColumn4</code> -&gt; this way LLM knows to extract many columns</p> <li><p>Add an extra instruction to the prompt that we want the new column names to be unique &#40;and to add a suffix _2 if they are not&#41;</p> <li><p>Lastly, we&#39;ll make the API call asynchronous to not have to wait for it to finish &#40;big tasks can take several minutes&#41;</p> </ol> <pre><code class="julia hljs"><span class=hljs-string >&quot;question_id is optional and should be extracted from the old_name where available (example: \&quot;q25\&quot;)&quot;</span>
+<span class=hljs-keyword >struct</span> RenameColumn4
+    question_id::<span class=hljs-built_in >Union</span>{<span class=hljs-built_in >Nothing</span>,<span class=hljs-built_in >String</span>} <span class=hljs-comment ># optional</span>
+    old_name::<span class=hljs-built_in >String</span>
+    better_name::<span class=hljs-built_in >String</span>
+<span class=hljs-keyword >end</span>
+<span class=hljs-string >&quot;Vector of RenameColumn4 holding the old and new column names&quot;</span>
+<span class=hljs-keyword >struct</span> RenameColumnsList
+    better_names::<span class=hljs-built_in >Vector</span>{RenameColumn4} <span class=hljs-comment ># extract all columns at once and return it as a vector</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># updated prompt</span>
+multicolumn_prompt = <span class=hljs-string >&quot;&quot;&quot;# Instructions
+You get list of column names from the City of Austin survey data. Define a better clean and descriptive column name for each of them.
+
+# Guidelines
+- Better Name should be brief, descriptive, snakecase, 2-3 words max. IT MUST BE LOWERCASED.
+- Do not mention its from Austin as its obvious
+- If some Question ID is included in the name (eg, &quot;Q25 Some Topic&quot;), extract it into the field `question_id` and in the better name (eg, q25_some_topic)
+- All Better Names MUST BE UNIQUE. If there is a duplicate Better Name used already, use suffix _2, _3, etc.
+
+# Old Column Names
+{{old_columns}}
+&quot;&quot;&quot;</span>
+
+<span class=hljs-comment ># we take a subset to demonstrate the approach</span>
+sample_cols = last(names(df_survey), <span class=hljs-number >10</span>)
+
+<span class=hljs-comment ># format the data as bullet points</span>
+old_columns = [<span class=hljs-string >&quot; - ID: <span class=hljs-variable >$idx</span>, Column: <span class=hljs-variable >$col</span>\n&quot;</span> <span class=hljs-keyword >for</span> (idx, col) <span class=hljs-keyword >in</span> enumerate(sample_cols)] |&gt; join
+
+<span class=hljs-comment ># use Threads.@spawn to send the message asynchronously to not have to wait for it to finish</span>
+<span class=hljs-comment ># long readtimeout to allow more time for longer generation task and a slow model like GPT4</span>
+task = Threads.<span class=hljs-meta >@spawn</span> aiextract(multicolumn_prompt; old_columns, return_type=RenameColumnsList, http_kwargs=(; readtimeout=<span class=hljs-number >500</span>), model=<span class=hljs-string >&quot;gpt4t&quot;</span>)</code></pre> <p>This is an asynchronous &#40;non-blocking&#41; call, so we can keep working. When it&#39;s ready, we&#39;ll see the usual INFO log:</p> <pre><code class="plaintext hljs">[ Info: Tokens: 754 @ Cost: \$0.014 in 30.8 seconds</code></pre>
+<p>Let&#39;s review the results:</p>
+<pre><code class="julia hljs">msg = fetch(task)
+msg.content.better_names
+<span class=hljs-comment >#  RenameColumn4(&quot;q25&quot;, &quot;Q25 - If there was one thing you could share with the Mayor regarding the City of Austin (any comment, suggestion, etc.), what would it be?&quot;, &quot;mayor_feedback&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(&quot;q25&quot;, &quot;Q25 - One thing to share with Mayor Topics&quot;, &quot;mayor_feedback_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Quality of Life Topics&quot;, &quot;quality_life_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Economic Opportunity and Affordability Topics&quot;, &quot;economic_affordability_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Mobility Topics&quot;, &quot;mobility_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Health and the Environment Topics&quot;, &quot;health_environment_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Safety Topics&quot;, &quot;safety_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Government That Works for All Topics&quot;, &quot;government_works_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Culture and Lifelong Learning Topics&quot;, &quot;culture_learning_topics&quot;)</span>
+<span class=hljs-comment >#  RenameColumn4(nothing, &quot;Share with the Mayor Topics&quot;, &quot;mayor_shared_topics_2&quot;)</span></code></pre>
+<p>Awesome&#33; It worked well. We got the old names, the parent question IDs &#40;where relevant&#41; and the new column names that are unique &#40;notice the <code>_2</code> suffix&#41;.</p>
+<p>All we have to do now is to rename our columns:</p>
+<pre><code class="julia hljs">rename_dict = <span class=hljs-built_in >Dict</span>(cols.old_name =&gt; cols.better_name <span class=hljs-keyword >for</span> cols <span class=hljs-keyword >in</span> msg.content.better_names)
+
+rename(df_survey, rename_dict) <span class=hljs-comment ># No error this time!</span></code></pre>
+<p>And we&#39;re done&#33; It was only 10 columns, so if we did all 250, it would take a few minutes and cost around &#36;0.3 - 0.5, but that&#39;s still nothing compared to the time and mental energy it would take to do it manually.</p>
+<p>Imagine all the other things you can do&#33; In the past, I&#39;ve also sent a sample of a few unique responses in each column to make column names more reflective of the actual data.</p>
+<h2 id=notes ><a href="#notes" class=header-anchor >Notes</a></h2>
+<p>A few things to note:</p>
+<ul>
+<li><p>Our return type must be always a struct, but we can define wrappers like <code>RenameColumnsList</code>, if we want to extract several objects at once. It&#39;s very easy&#33;</p>
+
+<li><p><code>question_id</code> field had some nuanced logic, so to keep it closer to the field itself, we&#39;ve described it in the docstring and it has passed to the LLM. Moreover, this field was marked as optional by allowing <code>Nothing</code> type</p>
+
+<li><p>We have updated the instructions slightly for the different task</p>
+
+<li><p>Notice that we increased the <code>readtimeout</code> &#40;HTTP.jl keyword argument&#41; to 500 seconds to allow for really long outputs. That&#39;s because the longer the generated text &#40;eg, 250 columns&#41;, the longer it takes and we don&#39;t want to time out&#33;</p>
+
+<li><p>Since we knew it would take a long time, we sent the message asynchronously to not have to wait for it &#40;<code>Threads.@spawn ai...</code>&#41;. This way we can keep working while it runs in the background and we&#39;ll be notified when it finishes by the usual INFO log</p>
+
+</ul>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>There are pros and cons to both approaches. Let&#39;s summarize them:</p>
+<p><strong>Pros:</strong> You can see that this was much easier in terms of using the results. We didn&#39;t have to clean up the resulting dictionary, deduplicate the names, etc. It was also slightly cheaper &#40;the prompt tokens are sent only once VS in each one of the 250 API calls&#41;.</p>
+<p><strong>Cons:</strong> It required an extra step to set up the prompt and the return type. Also, the feedback loop was much longer &#40;eg, waiting a few minutes for results&#41;, so if made some mistakes, it would always take a few minutes to find out and try again.</p>
+<p>You can see that choosing the right approach requires some experience and skill, it&#39;s just something you&#39;ll learn over time. It&#39;s similar to how we all had to learn to Google.</p>
+<p>Until next time&#33;</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 17, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div></div> 
+
+<footer class=container >
+  <p class=float-end ><a href="#">Back to top</a></p>
+  <div class=footer-icons >
+      <ul class=social-icons >
+          <li><strong>Follow:</strong>
+          <li><a href="https://github.com/svilupp" rel="nofollow noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-github" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg> GitHub</a>
+      </ul>
+  </div>
+  <p class=copyright >&copy; 2023- Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity=sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm  crossorigin=anonymous ></script>
+
+
+  <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>

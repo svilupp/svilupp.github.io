@@ -1,0 +1,144 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <!-- bootstrap@5.3.1 and bootstrap icon@1.10--> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel=stylesheet  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin=anonymous > <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <link rel=stylesheet  href="/css/style.css"> <link rel=stylesheet  href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"> <link data-n-head=ssr  rel=stylesheet  href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin=anonymous  referrerpolicy=no-referrer  /> <!-- favicon generated through https://realfavicongenerator.net/--> <link rel=apple-touch-icon  sizes=180x180  href="/assets/icon/apple-touch-icon.png"> <link rel=icon  type="image/png" sizes=32x32  href="/assets/icon/favicon-32x32.png"> <link rel=icon  type="image/png" sizes=16x16  href="/assets/icon/favicon-16x16.png"> <link rel=manifest  href="/assets/icon/site.webmanifest"> <link rel=mask-icon  href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5"> <meta name=msapplication-TileColor  content="#da532c"> <meta name=theme-color  content="#ffffff"> <link rel=stylesheet  href="/_css/custom.css"> <title>OpenAI's o1 Series: Initial Reactions from a Julia Developer</title> <header data-bs-theme=dark > <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"> <div class=container > <a href="/" class="navbar-brand d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-journal-text me-2" viewBox="0 0 16 16"> <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/> <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/> <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/> </svg> <strong>siml.earth</strong> </a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarCollapse" aria-controls=navbarCollapse  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarCollapse > <ul class="navbar-nav me-auto mb-2 mb-md-0"> <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle fw-bold" href="#" id=navbarDropdown  role=button  data-bs-toggle=dropdown  aria-expanded=false > Sites </a> <ul class=dropdown-menu  aria-labelledby=navbarDropdown > <li><h6 class=dropdown-header >Choose a Site</h6> <li><a class=dropdown-item  href="/jan/">Jan's Site</a> <li><a class=dropdown-item  href="/ann/">Ann's Site</a> </ul> <li class=nav-item ><hr class="dropdown-divider mx-2"> <li class=nav-item > <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span> <li class=nav-item > <a class=nav-link  aria-current=page  href="/jan/">Home</a> <li class=nav-item > <a class=nav-link  href="/jan/scratchpad/">Posts</a> <li class=nav-item > <a class=nav-link  href="/jan/wip/">Work in Progress</a> <li class=nav-item > <a class=nav-link  href="/jan/about/">About</a> <li class=nav-item > <a class=nav-link  href="/jan/tags/">Tags</a> <li class=nav-item > <a class=nav-link  href="/jan/privacy_policy/">Privacy Policy</a> <li class=nav-item > <a class=nav-link  href="/jan/cookie_policy/">Cookie Policy</a> </ul> </div> </div> </nav> </header> <div class="container py-3 px-3 mx-auto"> <div class=franklin-content ><h2 id=tldr ><a href="#tldr" class=header-anchor >TL;DR</a></h2> <p>OpenAI&#39;s o1 series shows promise in code review and improvement suggestions, but its high cost and inconsistent performance across tasks make it a situational tool. It excels in thoughtful critique but may not always justify its premium over alternatives like Claude 3.5 Sonnet for coding tasks.</p> <div class=franklin-toc ><ol><li><a href="#tldr">TL;DR</a><li><a href="#introduction">Introduction</a><li><a href="#methodology">Methodology</a><li><a href="#highlights_from_the_code_review">Highlights from the Code Review</a><li><a href="#downsides">Downsides</a><li><a href="#conclusion">Conclusion</a></ol></div> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>As a Julia enthusiast, I couldn&#39;t resist putting OpenAI&#39;s new o1 series through its paces. With pricing at &#36;15/60 USD per million tokens for input/output compared to Claude 3.5 Sonnet&#39;s &#36;3/15, I was curious to see if the performance boost could justify the cost. Let&#39;s dive into my initial impressions and see where this new model shines - and where it might need some polishing.</p> <h2 id=methodology ><a href="#methodology" class=header-anchor >Methodology</a></h2> <p>My approach was admittedly more anecdotal than scientific. I tested o1 preview, o1 mini, GPT-4o, and Anthropic&#39;s Sonnet 3.5 on various tasks:</p> <ul> <li><p>Code critique</p> <li><p>Writing code and tests</p> <li><p>Improving prompts/instructions</p> </ul> <p>To keep things fair, I used the same prompts across all models. You can check out the full conversations around code review in these <a href="https://gist.github.com/svilupp/7ec58cd53dc5a4eb85a8b9133cc5c4cd">GitHub gists</a>****.</p> <h2 id=highlights_from_the_code_review ><a href="#highlights_from_the_code_review" class=header-anchor >Highlights from the Code Review</a></h2> <p>Where o1 really flexed its muscles was in code review and constructive criticism. It caught nuances that other models missed, providing thoughtful and comprehensive feedback.</p> <p>One standout moment was when o1 flagged an impossible dispatch on a Bool value:</p> <p>Original code:</p> <pre><code class="julia hljs"><span class=hljs-keyword >function</span> format2str(obj, style::FormatStyle=DefaultStyle(); kwargs...)
+    format2str(obj, style, Tables.istable(obj); kwargs...)
+<span class=hljs-keyword >end</span>
+
+format2str(obj, ::FormatStyle, ::<span class=hljs-built_in >Bool</span>; kwargs...) = string(obj)</code></pre> <pre><code class="plaintext hljs">Observation: The current implementation uses dispatch on Bool values, which is non-idiomatic in Julia.</code></pre>
+<p>This level of insight into Julia&#39;s type system was impressive. O1 also added a recommendation and a clear snippet for how to fix it:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> format2str(obj, style::FormatStyle=DefaultStyle(); kwargs...)
+    <span class=hljs-keyword >if</span> Tables.istable(obj)
+        <span class=hljs-keyword >return</span> format_table(obj, style; kwargs...)
+    <span class=hljs-keyword >else</span>
+        <span class=hljs-keyword >return</span> format_non_table(obj, style; kwargs...)
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span></code></pre>
+<p>There were a few other interesting observations. The suggestion to use conditional dependencies for PrettyTables.jl showed a deep understanding of package management best practices &#40;if only it knew about the least weak deps&#33;&#41;</p>
+<pre><code class="plaintext hljs">Observation: The code uses PrettyTables.jl, which might not be essential for all users.
+
+Recommendation: 
+1) Make Dependencies Optional:
+Use Requires.jl to load optional dependencies.
+
+```julia
+@require PrettyTables=&quot;08abe8d2-0d0c-5749-adfa-8a2ac140af0d&quot; begin
+    # Code that uses PrettyTables
+end
+```
+
+2) Specify Dependencies in Project.toml:
+Ensure that all dependencies are correctly listed with version bounds.</code></pre>
+<p>Other notable highlights included:</p>
+<ul>
+<li><p>Encouraging more use of multiple dispatch to drive different behaviors</p>
+
+<li><p>Suggesting a modular code structure and splitting the code into several files &#40;Sonnet 3.5 also made this suggestion&#41;</p>
+
+<li><p>Recommending customization options for handling Missing and Nothing types, like allowing users to specify how they would like these values represented</p>
+
+<li><p>Providing performance tips with practical code snippets, eg, not concatenating strings but using <code>IOBuffer</code> instead</p>
+
+</ul>
+<h2 id=downsides ><a href="#downsides" class=header-anchor >Downsides</a></h2>
+<p>While o1&#39;s review capabilities are impressive, they come with some drawbacks:</p>
+<ol>
+<li><p>Higher price point, especially for hobby projects or frequent use &#40;it might still be worth it though&#33;&#41;</p>
+
+<li><p>Long waiting times for responses, which can disrupt coding flow</p>
+
+<li><p>Inconsistent performance in actual coding tasks &#40;or rather not as impressive as the code review&#41;</p>
+
+</ol>
+<p>Interestingly, when it came to writing code, the difference between o1 and other models wasn&#39;t as pronounced as I&#39;d hoped. In some cases, I even preferred the code style and solutions provided by Sonnet 3.5:</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># Generated by OpenAI&#x27;s o1 preview</span>
+<span class=hljs-keyword >function</span> format_table(rows, column_names, ::MarkdownStyle; max_rows=<span class=hljs-number >100</span>, truncation=<span class=hljs-string >&quot;...&quot;</span>)
+    io = <span class=hljs-built_in >IOBuffer</span>()
+    print(io, <span class=hljs-string >&quot;| &quot;</span>, join(column_names, <span class=hljs-string >&quot; | &quot;</span>), <span class=hljs-string >&quot; |\n&quot;</span>)
+    print(io, <span class=hljs-string >&quot;|&quot;</span>, join(repeat([<span class=hljs-string >&quot;---&quot;</span>], length(column_names)), <span class=hljs-string >&quot;|&quot;</span>), <span class=hljs-string >&quot;\n&quot;</span>)
+
+    <span class=hljs-keyword >for</span> (i, row) <span class=hljs-keyword >in</span> enumerate(rows)
+        <span class=hljs-keyword >if</span> i &gt; max_rows
+            print(io, <span class=hljs-string >&quot;| &quot;</span>, truncation, <span class=hljs-string >&quot; |\n&quot;</span>)
+            <span class=hljs-keyword >break</span>
+        <span class=hljs-keyword >end</span>
+        values = [format2str(getproperty(row, col)) <span class=hljs-keyword >for</span> col <span class=hljs-keyword >in</span> column_names]
+        print(io, <span class=hljs-string >&quot;| &quot;</span>, join(values, <span class=hljs-string >&quot; | &quot;</span>), <span class=hljs-string >&quot; |\n&quot;</span>)
+    <span class=hljs-keyword >end</span>
+
+    <span class=hljs-keyword >return</span> <span class=hljs-built_in >String</span>(take!(io))
+<span class=hljs-keyword >end</span></code></pre>
+<p>Notice how Sonnet 3.5 handles the potential missingness of values in the table:</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># Generated by Anthropic&#x27;s Claude 3.5 Sonnet</span>
+<span class=hljs-keyword >function</span> format_table(rows, column_names, ::MarkdownStyle; max_rows::<span class=hljs-built_in >Int</span>=<span class=hljs-number >100</span>, truncation::<span class=hljs-built_in >String</span>=<span class=hljs-string >&quot;...&quot;</span>)
+    io = <span class=hljs-built_in >IOBuffer</span>()
+    println(io, <span class=hljs-string >&quot;| &quot;</span>, join(column_names, <span class=hljs-string >&quot; | &quot;</span>), <span class=hljs-string >&quot; |&quot;</span>)
+    println(io, <span class=hljs-string >&quot;| &quot;</span>, join(repeat([<span class=hljs-string >&quot;-&quot;</span>], length(column_names)), <span class=hljs-string >&quot; | &quot;</span>), <span class=hljs-string >&quot; |&quot;</span>)
+    
+    <span class=hljs-keyword >for</span> (i, row) <span class=hljs-keyword >in</span> enumerate(rows)
+        <span class=hljs-keyword >if</span> i &gt; max_rows
+            println(io, <span class=hljs-string >&quot;| &quot;</span>, truncation, <span class=hljs-string >&quot; |&quot;</span>)
+            <span class=hljs-keyword >break</span>
+        <span class=hljs-keyword >end</span>
+        println(io, <span class=hljs-string >&quot;| &quot;</span>, join([get(row, col, <span class=hljs-literal >missing</span>) <span class=hljs-keyword >for</span> col <span class=hljs-keyword >in</span> column_names], <span class=hljs-string >&quot; | &quot;</span>), <span class=hljs-string >&quot; |&quot;</span>)
+    <span class=hljs-keyword >end</span>
+    
+    <span class=hljs-built_in >String</span>(take!(io))
+<span class=hljs-keyword >end</span></code></pre>
+<p>It was a bit disappointing that o1 didn&#39;t follow its own advice on handling missing values and allowing user customization &#40;perhaps it was due to my response to keep it simple at first?&#41;.</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># Generated by OpenAI&#x27;s o1 preview</span>
+<span class=hljs-comment ># Missing value formatting</span>
+<span class=hljs-keyword >function</span> format2str(::<span class=hljs-built_in >Missing</span>, ::FormatStyle; kwargs...)
+    <span class=hljs-keyword >return</span> <span class=hljs-string >&quot;missing&quot;</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># Nothing value formatting</span>
+<span class=hljs-keyword >function</span> format2str(::<span class=hljs-built_in >Nothing</span>, ::FormatStyle; kwargs...)
+    <span class=hljs-keyword >return</span> <span class=hljs-string >&quot;nothing&quot;</span>
+<span class=hljs-keyword >end</span></code></pre>
+<p>I did like Sonnet&#39;s conciseness:</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># Generated by Anthropic&#x27;s Claude 3.5 Sonnet</span>
+format2str(x::<span class=hljs-built_in >Missing</span>, ::FormatStyle; kwargs...) = <span class=hljs-string >&quot;missing&quot;</span>
+format2str(x::<span class=hljs-built_in >Nothing</span>, ::FormatStyle; kwargs...) = <span class=hljs-string >&quot;nothing&quot;</span></code></pre>
+<p>However, o1 did have moments of unexpected brilliance&#33;</p>
+<p>When asked to write unit tests, it not only provided comprehensive tests but also told me how to run the tests and suggested adding new dependencies to my Project.toml &#91;extras&#93;, because it added some downstream behavior tests for DataFrames.jl - a package not even used in the original code&#33;</p>
+<pre><code class="plaintext hljs"># snippet of suggested Project.toml
+
+[extras]
+Test = &quot;8dfed614-57bb-5a28-81f9-0d6897e040b8&quot;
+DataFrames = &quot;a93c6f00-3ec4-538f-9b9a-9b6c0d9decc9&quot;
+
+[targets]
+test = [&quot;Test&quot;, &quot;DataFrames&quot;]</code></pre>
+<p>Of course, the UUIDs were wrong&#33; :-&#41; But at least the suggestion was crystal clear.</p>
+<h2 id=conclusion ><a href="#conclusion" class=header-anchor >Conclusion</a></h2>
+<p>After my whirlwind tour of the o1 series, I&#39;m left with mixed feelings. It&#39;s clear that o1 represents a step forward in certain areas, particularly in its ability to provide constructive critique and suggest improvements to existing code or text. The depth and thoughtfulness of its reviews are truly impressive.</p>
+<p>However, the question remains: is it worth 4-5 times more than alternatives like Sonnet 3.5? For now, my answer is: it depends. I&#39;ll likely use o1 for challenging critique, review, editing, validation, or judgment tasks, but probably only for that initial step before continuing with other models.</p>
+<p>The ideal workflow might be using o1 for planning and final validation, with Sonnet 3.5 handling the bulk of the execution. This approach could leverage o1&#39;s strengths while mitigating its cost.</p>
+<p>It&#39;s not always easy to predict where o1 will excel, which adds to the challenge of deciding when to use it. However, for tasks requiring thoughtful analysis and improvement suggestions, it&#39;s definitely worth considering.</p>
+<p>Looking ahead, I&#39;m excited to see how o1 evolves. If OpenAI can maintain this level of insight while improving speed and reducing costs, it could become a game-changer for developers. For now, it&#39;s a powerful but niche tool in my development arsenal, best used strategically for maximum benefit.</p>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Jan Siml. Last modified: November 17, 2024.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div></div> 
+
+<footer class=container >
+  <p class=float-end ><a href="#">Back to top</a></p>
+  <div class=footer-icons >
+      <ul class=social-icons >
+          <li><strong>Follow:</strong>
+          <li><a href="https://github.com/svilupp" rel="nofollow noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width=16  height=16  fill=currentColor  class="bi bi-github" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg> GitHub</a>
+      </ul>
+  </div>
+  <p class=copyright >&copy; 2023- Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity=sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm  crossorigin=anonymous ></script>
+
+
+  <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>

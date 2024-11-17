@@ -106,9 +106,8 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     sort!(list, by=sorter, rev=true)
 
     io = IOBuffer()
-    write(io, "<div class=\"card shadow-sm mt-4\"><div class=\"card-body\">")
-    write(io, "<h5 class=\"card-title mb-4\">Work in Progress</h5>")
-    write(io, "<div class=\"list-group list-group-flush\">")
+    write(io, "<h5 class=\"display-6 mb-4\">Work in Progress</h5>")
+    write(io, "<div class=\"row row-cols-1 row-cols-md-3 g-4\">")
     for (i, post) in enumerate(list)
         if post == "index.md"
             continue
@@ -119,18 +118,28 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         title = pagevar(surl, :title)
         pubdate = pagevar(surl, :published)
         if isnothing(pubdate)
-            date    = "$curyear-$curmonth-$curday"
+            date = "$curyear-$curmonth-$curday"
         else
-            date    = Date(pubdate, dateformat"d U Y")
+            date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """<a href="$url" class="list-group-item list-group-item-action">
-                     <div class="d-flex w-100 justify-content-between">
-                       <h6 class="mb-1">$title</h6>
-                       <small class="text-muted">$date</small>
-                     </div>
-                   </a>""")
+        write(io, """
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 64px; height: 64px;">
+                            <i class="bi bi-file-text fs-4"></i>
+                        </div>
+                        <h5 class="card-title text-center">$(isnothing(title) ? ps : title)</h5>
+                        <p class="card-subtitle mb-2 text-muted text-center">$date</p>
+                        <div class="text-center">
+                            <a href="$url" class="btn btn-primary mt-2">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """)
     end
-    write(io, "</div></div></div>")
+    write(io, "</div>")
     return String(take!(io))
 end
 

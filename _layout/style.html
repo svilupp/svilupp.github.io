@@ -45,9 +45,22 @@ body {
     box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
 }
 
-.card:hover {
+/* Landing page card styles */
+.hover-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hover-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+/* Make cards full-width on mobile */
+@media (max-width: 768px) {
+    .container-fluid .row .col-md-6 {
+        padding: 0 1rem;
+    }
 }
 
 .card-title {

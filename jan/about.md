@@ -1,26 +1,16 @@
-@def title = "About"
-@def tags = ["housekeeping"]
++++
+title = "About"
++++
 
-# About me
+# About Me
 
-I'm Jan Siml and this is my personal website.
+Welcome to my digital space! I'm Jan, and this is where I share my thoughts, experiments, and learnings about technology, data science, and programming.
 
-I'm currently Head of Data and Product Insight at [LexisNexis](https://lexisnexis.com/), but any opinions expressed on this site are my own.
+## What I Do
 
-# Interests
-Arguably too many! I wish I could learn it all...
+I'm passionate about:
+- Data Science & Analytics
+- Programming & Software Development
+- Technology & Innovation
 
-For the past few years, I've been interested in Bayesian and Causal Inference, because the world is an uncertain place ready to be intervened on!
-
-In the past year, I've been exploring the Julia language and the more I know, the more I love it! You might read it about it here...
-
-When I'm out of office, I love to chase the waves and the wind with my :kite: avoiding :shark::shark::shark:.
-
-# Experience
-Once a management consultant at McKinsey&Company, then an investor in African Private Equity Fund, then a corporate strategy manager, then a head of a product analytics function, and, lastly, a lead of the data science team at LexisNexis.
-
-# Getting in Touch
-If you want to get in touch, the best ways are:
-- [LinkedIn](https://www.linkedin.com/in/jan-siml-360a3858/)
-- Julia Language Slack (@svilupp)
-- Learning Bayes Stats Slack (@JS)
+Feel free to explore my posts and reach out if you'd like to connect!

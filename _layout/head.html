@@ -32,9 +32,13 @@
       display: flex !important;
       flex-wrap: wrap !important;
     }
-    .col-md-6 {
+    .row-cols-md-3 > * {
       flex: 0 0 auto !important;
-      width: 50% !important;
+      width: 33.333333% !important;
+    }
+    .row-cols-1 > * {
+      flex: 0 0 auto !important;
+      width: 100% !important;
     }
   </style>
   {{insert style.html}}

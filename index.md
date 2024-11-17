@@ -4,8 +4,6 @@ title = "Welcome"
 
 # Welcome to Our Site
 
-Please choose your destination:
-
 ~~~
 <div class="container mt-5">
     <div class="row">

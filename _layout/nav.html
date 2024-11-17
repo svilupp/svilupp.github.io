@@ -1,28 +1,39 @@
-<div class="main-nav slideout-menu slideout-menu-left" id="menu">
-  <div class="flex-container">
-    <span class="sidebar-brand">
-        <h3 style='font-size: 25px'>Scratchpad</h3>
-    </span>
-  </div> <!-- class="flex-container" -->
+<header data-bs-theme="dark">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-5-circle" viewBox="0 0 16 16">
+          <path d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm15 0A8 8 0 1 0 0 8a8 8 0 0 0 16 0Zm-8.006 4.158c-1.57 0-2.654-.902-2.719-2.115h1.237c.14.72.832 1.031 1.529 1.031.791 0 1.57-.597 1.57-1.681 0-.967-.732-1.57-1.582-1.57-.767 0-1.242.45-1.435.808H5.445L5.791 4h4.705v1.103H6.875l-.193 2.343h.064c.17-.258.715-.68 1.611-.68 1.383 0 2.561.944 2.561 2.585 0 1.687-1.184 2.806-2.924 2.806Z"/>
+        </svg>
+        <strong>YOUR SITE</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/franklin/">Franklin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/menu1/">Code blocks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/menu2/">More Goodies</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/menu3/">Tags</a>
+          </li>
 
-  <nav class="sidebar-nav">
-    <ul class="metismenu"  id="metismenu" >
-      <li><a href="/index.html">Home</a></li>
-      <li><a href="/scratchpad/">Posts</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/tag/">Tags</a></li>
-      <li><a href="/privacy_policy/">Privacy Policy</a></li>
-      <li><a href="/cookie_policy/">Cookie Policy</a></li>
-
-    </ul>
-  </nav>
-</div> <!-- main nav menu -->
-
-<main id="panel" class="slidout-panel slideout-panel-left">
-  <div class="toggle-button hamburger hamburger--spin">
-    <div class="hamburger-box">
-      <div class="hamburger-inner"></div>
+        </ul>
+        <!-- <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
+      </div>
     </div>
-  </div>
-  <h1 class="page title">{{isdef title}}{{fill title}}{{end}}</h1>
-  <hr>
+  </nav>
+</header>

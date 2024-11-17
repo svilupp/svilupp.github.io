@@ -23,11 +23,11 @@ title = "Jan's Scratchpad"
 </div>
 
 <!-- Content section -->
-<div class="container mt-5">
+<div class="container px-4 mt-5">
     <!-- Recent Posts Section -->
     <div class="mb-5">
         <h2 class="display-6 mb-4">Recent Posts</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4 mx-0">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             {{blogposts}}
         </div>
     </div>

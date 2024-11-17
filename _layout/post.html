@@ -8,33 +8,39 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <div class="franklin-content">
-                    <!-- Use Franklin's fill command for page variables -->
-                    <h1 class="post-title">{{fill title}}</h1>
-                    <p class="text-muted">{{fill published}}</p>
+                <article class="franklin-content">
+                    <h1>{{fill title}}</h1>
+                    <p class="text-muted">Published: {{fill published}}</p>
                     <hr class="my-4">
-                    <!-- Main content with direct markdown processing -->
+                    <!-- Let Franklin handle markdown content -->
                     {{{content}}}
-                </div>
+                </article>
             </div>
         </div>
     </div>
     <style>
+        .franklin-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
         .franklin-content h1, .franklin-content h2, .franklin-content h3, .franklin-content h4 {
             margin-top: 2rem;
             margin-bottom: 1rem;
             font-weight: 500;
             line-height: 1.2;
             color: inherit;
-            display: block;
+            display: block !important;
+            visibility: visible !important;
         }
-        .franklin-content h1 { font-size: 2.5rem; }
+        .franklin-content h1 {
+            font-size: 2.5rem;
+            margin-top: 0 !important;
+        }
         .franklin-content h2 { font-size: 2rem; }
         .franklin-content h3 { font-size: 1.75rem; }
         .franklin-content h4 { font-size: 1.5rem; }
         .franklin-content p {
             margin-bottom: 1.25rem;
-            line-height: 1.7;
         }
         .franklin-content img {
             max-width: 100%;
@@ -51,12 +57,6 @@
         .franklin-content code {
             color: #e83e8c;
             word-wrap: break-word;
-        }
-        .post-title {
-            margin-top: 0 !important;
-            margin-bottom: 1rem;
-            font-size: 2.5rem;
-            font-weight: 500;
         }
     </style>
     {{insert foot.html}}

@@ -1,109 +1,81 @@
-+++
-title = "Devin: Initial Observations"
-published = "2024-11-24"
-tags = ["AI", "Devin", "Software Development", "AI Agents"]
-rss = "Real-world observations and insights from extensive usage of Devin, the AI software engineer"
-+++
+@def title = "Devin: Initial Observations"
+@def published = "2024-11-24"
+@def tags = ["Agents", "Devin", "Software Development",]
 
-# Devin: Initial Observations
+# TL;DR
+After putting Devin through its paces, it's great for coding on-the-go, debugging APIs, and Git stuff. You need to keep it on a short leash though - it's not faster than coding yourself, but it can take some weight off your shoulders for certain tasks.
 
-After 30+ hours of runtime working with Devin across various projects, I've gathered significant insights into its capabilities, limitations, and optimal usage patterns. This post shares my journey from initial skepticism to finding an effective workflow that leverages Devin's strengths.
+\toc 
 
-## What is Devin?
+# Devin: What's the Deal?
 
-Devin is an AI system designed to function as a software engineer, but it's important to understand what that really means. It's not just one agent, but rather multiple parallel and hierarchical processes working together. The conversation interface is independent of the problem-solving engine, and they sync up regularly when the execution engine "yields". The planning and progress tracking is highly hierarchical, organized around a master plan while solving current steps within that framework.
+After spending 50+ hours with Devin across various projects (20+ PRs, 1000+ commits), here's what I've learned about what it can and can't do. While I've had access for several months, I never really invested the time to learn how to use it effectively until I was on vacation without my laptop - necessity turned out to be the mother of adoption!
 
-## Key Value Proposition
+## What's Devin Anyway?
 
-While Devin might not make you more productive if you can sit at your computer and use an LLM-powered workflow (e.g., Cursor), it shines in specific scenarios:
-- Perfect for making small contained changes while on the move
-- Excellent for patches in open source libraries
-- Extraordinary at workflow management and Git operations
-- Powerful for API debugging and analysis
+Think of Devin as a team of AI processes working together, not just one bot. It's got a chat interface that syncs up with its coding engine, and it loves making detailed plans for everything it does. It has an excellent UI with tonne of tools to make the development experience easier to supervise and intervene when necessary.
 
-## Case Study: Building ChromeDevTools.jl
+TODO: add screenshots of editor etc.
 
-Let me illustrate Devin's capabilities through a real project - developing a Chrome DevTools Protocol package for Julia. This journey showcases both Devin's strengths and the importance of proper task structuring:
+## Where It Really Shines
 
-1. **Initial Approach**
-   - Started with simple specifications
-   - Let Devin work for 24 hours with an iterative example-by-example approach
-   - Result: Built something close to Playwright's scope - too complex
+While Devin won't necessarily speed up your coding if you're already using tools like Cursor, it's awesome for:
+- Making quick fixes while you're out and about
+- Patching open source libraries
+- Managing Git stuff like a pro
+- Digging into API issues
 
-2. **Course Correction**
-   - Simplified the approach
-   - Struggled with WebSocket implementation
-   - Launched separate HTTP-only version to evaluate trade-offs
+## Real Talk: Building ChromeDevTools.jl
 
-3. **Final Solution**
-   - Used Claude to understand CDP and Playwright's approach
-   - Passed minimal example to Devin
-   - Successfully implemented and verified examples one by one
+Here's a real example of working with Devin:
 
-This project demonstrated how Devin works best with gradual, iterative development rather than attempting complete solutions in one go.
+1. **First Try**
+   - Started simple
+   - Let it run wild for 24 hours
+   - Result: Way too complicated!
 
-## Key Observations
+2. **Take Two**
+   - Scaled back our goals
+   - Hit some roadblocks with WebSockets
+   - Tried a simpler HTTP version first
 
-1. **Problem Solving**
-   - Excellent at workflow and Git operations
-   - Strong problem-solving capabilities but tends to overcomplicate solutions
-   - Struggles with abstracting and reusing functionality without explicit interface definitions
-   - Produces a lot of dead code during iterations
+3. **Third Time's the Charm**
+   - Used Claude to get the basics straight
+   - Gave Devin a simple example
+   - Built it up piece by piece - much better!
 
-2. **Code Quality**
-   - Can "drift" during long sessions, especially when fixing test failures
-   - May create spaghetti code in desperate attempts to fix errors
-   - Often writes more code than needed
-   - Can be stubborn about making requested changes
+## The Good, The Bad, and The Quirky
 
-3. **Testing and Verification**
-   - Sometimes misreports test success
-   - May fix tests by changing them rather than fixing the underlying issue
-   - Excellent at API debugging with comprehensive logging and analysis
+**What Works:**
+- Git operations are smooth as butter
+- Great at solving problems (though sometimes overthinks them)
+- Killer at API debugging
+- Awesome progress tracking
 
-4. **Context Management**
-   - Loses some history/context after about 10 minutes
-   - Planning feature is excellent but can fail by adding new requests at the wrong point
-   - Works best with regular check-ins and course corrections
+**What's Tricky:**
+- Loses its memory after ~10 minutes
+- Can write messy code when stuck
+- Sometimes "fixes" tests by changing them instead of the actual code
+- Writes more code than needed
+- Can be stubborn about changes
 
-## Productivity Impact
+**The Bottom Line:**
+- Not necessarily faster than coding yourself
+- Needs babysitting
+- Great for reducing mental load
+- Makes mobile development actually doable
+- More fun than traditional coding
 
-While I've generated 20+ PRs, 5 new packages, and thousands of commits over 50+ hours of interaction, the productivity equation isn't straightforward:
-- Not necessarily faster than direct coding
-- Requires significant oversight and course correction
-- Value comes from reduced cognitive load and ability to work while mobile
-- More enjoyable and effortless experience overall
+## Current Quirks and Limits
 
-## UI and Interaction
+- Gets lost in big refactoring jobs
+- Creates random helper files you don't need
+- Can change your code's interface without telling you
+- Mobile interface could use some work
+- UI occasionally bugs out
 
-1. **Strengths**
-   - Excellent progress tracking
-   - Helpful file diff viewing
-   - VS Code extension available
-   - Good PR integration
+## The Verdict
 
-2. **Pain Points**
-   - Knowledge snippets management is cumbersome
-   - Mobile interface limitations
-   - Occasional UI bugs (disappearing conversation tab, progress viewing issues)
-   - Sometimes requires window refresh to restore functionality
+Devin's a game-changer for coding on the move and specific tasks like API work or quick patches. While it might not make you code faster, it makes the whole process more flexible and enjoyable. The key is knowing when to use it and how to keep it on track.
 
-## Current Limitations
-
-1. **Workflow Issues**
-   - Code restructuring is challenging
-   - Can create unnecessary helper files
-   - May submit temporary files in PRs
-   - Struggles with large-scale refactoring
-
-2. **Development Challenges**
-   - Can change interface types without notice
-   - Creates unnecessary constructs
-   - Can be stubborn about requested changes
-   - Parallel processing potential remains unexplored
-
-## Conclusion
-
-Devin represents a significant step forward in AI-assisted development, particularly for mobile work and specific tasks like API debugging or patch development. While it may not always increase raw productivity, it offers a more flexible and enjoyable development experience. Success with Devin comes from understanding its strengths and limitations, and structuring work accordingly.
-
-[Note: These observations are based on extensive usage of Devin Lite; more powerful paid versions may offer different capabilities]
+Note: This is based on Devin Lite - the paid versions might be different.

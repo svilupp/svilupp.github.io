@@ -152,6 +152,12 @@
     <priority>0.5</priority>
 </url>
 <url>
+    <loc>https://siml.earth/jan/scratchpad/data_gen_for_experiments/index.html</loc>
+    <lastmod>2024-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://siml.earth/jan/wip/business_case_for_julia_adoption/index.html</loc>
     <lastmod>2024-11-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -207,6 +213,12 @@
 </url>
 <url>
     <loc>https://siml.earth/jan/scratchpad/genai_tips_finetuning_cheater/index.html</loc>
+    <lastmod>2024-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://siml.earth/jan/scratchpad/rag_dedupe/index.html</loc>
     <lastmod>2024-11-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -285,12 +297,6 @@
 </url>
 <url>
     <loc>https://siml.earth/jan/tag/index.html</loc>
-    <lastmod>2024-11-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://siml.earth/jan/wip/data_gen_for_experiments/index.html</loc>
     <lastmod>2024-11-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

@@ -23,35 +23,33 @@ title = "Jan's Scratchpad"
 </div>
 
 <!-- Content section -->
-<div class="container px-4 mt-5">
+<div class="container mx-auto px-4 mt-5">
     <!-- Recent Posts Section -->
     <div class="mb-5">
-        <h2 class="display-6 mb-4">Recent Posts</h2>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        <h2 class="text-3xl font-bold mb-4">Recent Posts</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {{recentposts}}
         </div>
         <div class="text-center mt-4">
-            <a href="/jan/scratchpad/" class="btn btn-primary">View All Posts</a>
+            <a href="/jan/scratchpad/" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">View All Posts</a>
         </div>
     </div>
 
     <!-- WIP Posts Section -->
     <div class="mb-5">
-        <h2 class="display-6 mb-4">Work in Progress</h2>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        <h2 class="text-3xl font-bold mb-4">Work in Progress</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {{recentwipposts}}
         </div>
     </div>
 
     <!-- About Section -->
-    <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">About</h5>
-                    <p class="card-text">Welcome to my personal site where I share thoughts, ideas, and insights about technology, data science, and more.</p>
-                    <a href="/jan/about/" class="btn btn-primary">Learn More</a>
-                </div>
+    <div class="flex justify-center">
+        <div class="w-full lg:w-2/3">
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <h5 class="text-xl font-bold mb-2">About</h5>
+                <p class="mb-4">Welcome to my personal site where I share thoughts, ideas, and insights about technology, data science, and more.</p>
+                <a href="/jan/about/" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Learn More</a>
             </div>
         </div>
     </div>

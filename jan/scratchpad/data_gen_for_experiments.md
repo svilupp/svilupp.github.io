@@ -1,19 +1,20 @@
-@def title = "Generating Structured Test Data with LLMs: A Quick Guide in Julia"
-@def drafted = "27 November 2024"
-@def tags = ["julia", "llm", "testing", "data-generation"]
+@def title = "Stop Waiting for Test Data: Accelerate Your Experiments with LLM-Generated Datasets"
+@def drafted = "26 November 2024"
+@def published = "26 November 2024"
+@def tags = ["julia", "generative-AI","genAI", "structured-outputs"]
 
-# TL;DR
+## TL;DR
 Ever had a brilliant idea but got stuck waiting for test data? Learn how to generate high-quality, realistic test data in just 5-10 minutes using LLMs and Julia. We'll walk through a complete example of generating customer records for fuzzy matching experiments.
 
 \toc
 
-# The Challenge of Test Data
+## The Challenge of Test Data
 
-Recently, I wanted to experiment with fuzzy matching in databases using RAG (Retrieval-Augmented Generation). While RAG is famous for powering knowledge chatbots, I saw potential for matching similar records across databases. Think finding "John Smith" across systems where he might be listed as "J. Smith" or "Johnny Smith."
+Recently, I wanted to experiment with fuzzy matching entities in databases using RAG (Retrieval-Augmented Generation). While RAG is famous for powering knowledge chatbots, I saw potential for matching similar records across databases. Think finding "John Smith" across systems where he might be listed as "J. Smith" or "Johnny Smith."
 
 Traditional approaches like random data generators often create unrealistic data, while manual creation takes forever. What we need is data that looks and feels real, with natural variations and inconsistencies.
 
-# LLMs to the Rescue
+## LLMs to the Rescue
 
 This is where LLMs shine. Unlike traditional random generators, LLMs understand context and can generate realistic variations. Using Julia and the PromptingTools package, we can go from idea to usable test data in minutes.
 
@@ -24,21 +25,24 @@ The key advantages of LLM-generated data:
 - Coherent relationships between fields
 
 
-# Implementing the Generation
+## Implementing the Generation
 
 All you need is to have a clarity on the data you need for your task. Eg, for a fuzzy matching of contacts, you could have:
 ```julia
-Base.@kwdef struct Contact
+Base.@kwdef struct ContactInfo
     full_name::String
     address::String
     city::String
-    state::String
+    state::String = "NY"
     email::String
     phone::String
 end
 ```
+
 And to have some labeled data to test various approaches, you could have:
 ```julia
+@enum JudgementType DUPLICATE NOTDUPLICATE
+@enum Difficulty EASY MEDIUM HARD
 Base.@kwdef struct ContactVariation
     reasoning::String
     type::JudgementType
@@ -46,7 +50,7 @@ Base.@kwdef struct ContactVariation
     full_name::String
     address::String
     city::String
-    state::String
+    state::String = "NY"
     email::String
     phone::String
 end
@@ -54,66 +58,53 @@ end
 
 The best part is that all this can be dictated to your IDE that will efficiently generate the first draft of this flow for you.
 
-Process diagram: 
-![Data Generation Process](/assets/data_gen_for_experiments/diagram.png)
+~~~
+<img src="/assets/data_gen_for_experiments/diagram.jpeg" width="500" alt="Data Generation Process">
+~~~
 
+## Smart Generation Strategies
+Here are a few tips to get the most out of LLM data generation:
 
-# Smart Generation Strategies
-Here's where things get interesting! To get the most out of LLM data generation:
-
-1. **One-Shot Generation**: Always generate all your data in one go. Multiple calls often lead to repetitive data. You'll hit a natural limit of what models will output (asking for 1000 items might only get you a tiny fraction). If you need more than 50, look for seeding strategies.
+1. **One-Shot Generation**: Always generate all your data in one go. Multiple calls often lead to repetitive data. You'll hit a natural limit of how many tokens models want to output (asking for 1000 items will get you only a tiny fraction). If you need more than 50, look for seeding strategies.
 
 2. **Smart Seeding**: Need more variety? Instead of asking for 1000 random profiles, try this:
    - Generate 10 different careers
    - Generate 10 different hobbies
    - Generate 10 different locations
    Now you have 1000 unique combinations to seed your generations!
+   Create a prompt that uses these seeds as placeholders and generate the corresponding data points.
 
-3. **Temperature Control**: 
-   - If you need multiple generations, vary the temperature slightly (by 0.001) between calls to avoid hitting the prompt cache
-   - Higher temperatures (0.7-0.9) generally work better for diverse data
-   - Each call should use a slightly different temperature for maximum variety
+3. **Cache and Temperature**: 
+   - If you need multiple generations, vary the temperature slightly (by 0.001) between calls to avoid hitting the prompt cache. Or use multi-sampling (API kwarg `n` in OpenAI API).
+   - In general, higher temperatures (0.7-0.9) generally work better for diverse data and varying temperature can enhance diversity.
 
 4. **Scale Up**: 
-   - Need even more data? Use billion personas datasets as seed material
+   - Need even more data? Use [billion personas dataset](https://huggingface.co/papers/2406.20094) as seed material
    - Break your generation into themed chunks: "generate 50 tech professionals", "generate 50 healthcare workers", etc.
-   - Reuse past generations as seeds for new variations
+   - Reuse past generations as seeds for new generations/variations
 
-5. **Types First**: Always define your data structures before generation. It helps the LLM understand exactly what you need and makes validation easier.
-
-6. **IDE Integration**: 
-   - Use your IDE's AI capabilities with PromptingTools cheatsheet
+5. **Let Your IDE Help**: 
+   - Use your IDE's AI capabilities with PromptingTools cheatsheet (see the repo, folder `llm-cheatsheets/`)
    - Dictate your requirements to generate base data and task-specific variations
    - Let the LLM generate the initial code, then make minor edits
 
-# Quick Start Guide
-Want to try this yourself? Here's the 5-minute path to generating test data:
+You will have your data in no time!
 
-1. Define your data structures clearly
-2. Use your IDE's AI capabilities with PromptingTools
-3. Generate diverse base data first
-4. Add task-specific variations with proper labels
-5. Make minor edits to the generated code
-6. Run and get your experiment data!
+## Quick Start Guide
+Want to try this yourself? Here's the 5-minute path to generating test data using PromptingTools.jl:
 
-# Implementation Details
-
-For those interested in the technical implementation, here's a complete example using PromptingTools.jl:
+File `types_and_utils.jl`
+Helpful types to steer the generation. We save them into a separate file to be able to lead them in our work later on.
 
 ```julia
-using PromptingTools
-const PT = PromptingTools
-using JSON3
-using Dates
-
-# Define the structures for contact information
+## Key types
 Base.@kwdef struct ContactInfo
     full_name::String
     address::String
     city::String
     state::String = "NY"
     email::String
-    telephone::String
+    phone::String
 end
 
 @enum JudgementType DUPLICATE NOTDUPLICATE
@@ -129,6 +120,30 @@ Base.@kwdef struct ContactVariation
     email::String
     phone::String
 end
+
+
+Base.show(io::IO, contact::Union{ContactInfo,ContactVariation}) = dump(io, contact; maxdepth=1)
+
+
+## Utility functions
+"Converts a ContactInfo or ContactVariation to a string to pass to a LLM"
+function format_contact(contact)
+    "Contact: $(contact.full_name)\nAddress: $(contact.address)\nCity: $(contact.city)\nState: $(contact.state)\nEmail: $(contact.email)\nPhone: $(contact.phone)"
+end
+```
+
+
+File: `generate_contacts.jl`
+
+Now, let's generate some contacts:
+
+```julia
+uusing PromptingTools
+const PT = PromptingTools
+using JSON3
+using Dates
+
+include("types_and_utils.jl")
 
 # Function to generate diverse contact details
 function generate_contacts(n::Int)
@@ -185,7 +200,7 @@ contacts = generate_contacts(50)
 JSON3.write("rag_dedupe/contacts.json", unique(contacts))
 
 ## Pick one contact and generate variations for it
-contact_idx = 1
+contact_idx = 1 # use more for testing!
 selected_contact = contacts[contact_idx]
 variations = generate_variations(selected_contact, n_duplicates=10, n_similar=10)
 JSON3.write("rag_dedupe/contact_variations.json", variations)

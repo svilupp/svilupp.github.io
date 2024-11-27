@@ -1,0 +1,50 @@
+<header class="bg-gray-800 fixed w-full top-0 z-50">
+  <nav class="mx-auto max-w-7xl px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="/" class="flex items-center">
+        <!-- SVG icon -->
+        <strong class="text-white ml-2">siml.earth</strong>
+      </a>
+      
+      <!-- Mobile menu button -->
+      <button type="button" class="md:hidden text-gray-400 hover:text-white">
+        <span class="sr-only">Open menu</span>
+        <!-- Add hamburger icon -->
+      </button>
+
+      <!-- Navigation items -->
+      <div class="hidden md:block">
+        <div class="flex items-center space-x-4">
+          <div class="relative group">
+            <button class="text-gray-300 hover:text-white px-3 py-2">Sites</button>
+            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block">
+              <div class="py-1">
+                <a href="/jan/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Jan's Site</a>
+                <a href="/ann/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Ann's Site</a>
+              </div>
+            </div>
+          </div>
+
+          {{ispage /jan/*}}
+          <div class="border-l border-gray-700 h-6"></div>
+          <span class="text-gray-300">Jan's:</span>
+          <a href="/jan/" class="text-gray-300 hover:text-white px-3 py-2">Home</a>
+          <a href="/jan/scratchpad/" class="text-gray-300 hover:text-white px-3 py-2">Posts</a>
+          <a href="/jan/wip/" class="text-gray-300 hover:text-white px-3 py-2">Work in Progress</a>
+          <a href="/jan/about/" class="text-gray-300 hover:text-white px-3 py-2">About</a>
+          <a href="/jan/tags/" class="text-gray-300 hover:text-white px-3 py-2">Tags</a>
+          {{end}}
+
+          {{ispage /ann/*}}
+          <div class="border-l border-gray-700 h-6"></div>
+          <span class="text-gray-300">Ann's:</span>
+          <a href="/ann/" class="text-gray-300 hover:text-white px-3 py-2">Under Construction</a>
+          {{end}}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Add padding to body to account for fixed header -->
+<div class="h-16"></div> 

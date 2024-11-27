@@ -23,33 +23,29 @@ title = "Welcome"
 </div>
 
 <!-- Main content section -->
-<div class="container px-4 mt-5">
-    <div class="row g-4 justify-content-center">
+<div class="max-w-7xl mx-auto px-4 mt-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Ann's Site Section -->
-        <div class="col-12 col-md-6">
-            <a href="/ann/" class="text-decoration-none">
-                <div class="card shadow-lg hover-card">
-                    <div class="card-body text-center p-4">
-                        <img src="/assets/images/cartoon-girl.png" alt="Cartoon Girl" class="img-fluid mb-3" style="max-width: 150px;">
-                        <h2 class="card-title h3 mb-2">Ann's Site</h2>
-                        <p class="card-text text-muted">Click here to continue to Ann's site</p>
-                    </div>
+        <a href="/ann/" class="block">
+            <div class="card bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="p-6 text-center">
+                    <img src="/assets/images/cartoon-girl.png" alt="Cartoon Girl" class="mx-auto h-32 w-auto mb-4">
+                    <h2 class="text-xl font-bold mb-2">Ann's Site</h2>
+                    <p class="text-gray-600">Click here to continue to Ann's site</p>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
 
         <!-- Jan's Site Section -->
-        <div class="col-12 col-md-6">
-            <a href="/jan/" class="text-decoration-none">
-                <div class="card shadow-lg hover-card">
-                    <div class="card-body text-center p-4">
-                        <img src="/assets/images/cartoon-boy.png" alt="Cartoon Boy" class="img-fluid mb-3" style="max-width: 150px;">
-                        <h2 class="card-title h3 mb-2">Jan's Site</h2>
-                        <p class="card-text text-muted">Click here to continue to Jan's site</p>
-                    </div>
+        <a href="/jan/" class="block">
+            <div class="card bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="p-6 text-center">
+                    <img src="/assets/images/cartoon-boy.png" alt="Cartoon Boy" class="mx-auto h-32 w-auto mb-4">
+                    <h2 class="text-xl font-bold mb-2">Jan's Site</h2>
+                    <p class="text-gray-600">Click here to continue to Jan's site</p>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
 </div>
 ~~~

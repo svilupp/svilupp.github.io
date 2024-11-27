@@ -1,18 +1,18 @@
 function hfun_bar(vname)
-  val = Meta.parse(vname[1])
-  return round(sqrt(val), digits=2)
+    val = Meta.parse(vname[1])
+    return round(sqrt(val), digits=2)
 end
 
 function hfun_m1fill(vname)
-  var = vname[1]
-  return pagevar("index", var)
+    var = vname[1]
+    return pagevar("index", var)
 end
 
 function lx_baz(com, _)
-  # keep this first line
-  brace_content = Franklin.content(com.braces[1]) # input string
-  # do whatever you want here
-  return uppercase(brace_content)
+    # keep this first line
+    brace_content = Franklin.content(com.braces[1]) # input string
+    # do whatever you want here
+    return uppercase(brace_content)
 end
 
 """
@@ -30,7 +30,7 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     list = readdir("jan/scratchpad")
     filter!(f -> endswith(f, ".md"), list)
     sorter(p) = begin
-        ps  = splitext(p)[1]
+        ps = splitext(p)[1]
         url = "/jan/scratchpad/$ps/"
         surl = strip(url, '/')
         pubdate = pagevar(surl, :published)
@@ -46,7 +46,7 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         if post == "index.md"
             continue
         end
-        ps  = splitext(post)[1]
+        ps = splitext(post)[1]
         url = "/jan/scratchpad/$ps/"
         surl = strip(url, '/')
         title = pagevar(surl, :title)
@@ -56,21 +56,24 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         else
             date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """
-            <div class="col">
-                <a href="$url" class="text-decoration-none card-link">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                                <i class="bi bi-file-text"></i>
-                            </div>
-                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        """)
+        write(
+            io,
+            """
+      <div class="col">
+          <a href="$url" class="text-decoration-none card-link">
+              <div class="card h-100 shadow-sm">
+                  <div class="card-body d-flex flex-column">
+                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                          <i class="bi bi-file-text"></i>
+                      </div>
+                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
+                  </div>
+              </div>
+          </a>
+      </div>
+  """
+        )
     end
     return String(take!(io))
 end
@@ -89,7 +92,7 @@ Plug in the list of recent blog posts, limited to 6 most recent.
     list = readdir("jan/scratchpad")
     filter!(f -> endswith(f, ".md"), list)
     sorter(p) = begin
-        ps  = splitext(p)[1]
+        ps = splitext(p)[1]
         url = "/jan/scratchpad/$ps/"
         surl = strip(url, '/')
         pubdate = pagevar(surl, :published)
@@ -107,7 +110,7 @@ Plug in the list of recent blog posts, limited to 6 most recent.
         if post == "index.md"
             continue
         end
-        ps  = splitext(post)[1]
+        ps = splitext(post)[1]
         url = "/jan/scratchpad/$ps/"
         surl = strip(url, '/')
         title = pagevar(surl, :title)
@@ -117,21 +120,24 @@ Plug in the list of recent blog posts, limited to 6 most recent.
         else
             date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """
-            <div class="col">
-                <a href="$url" class="text-decoration-none card-link">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                                <i class="bi bi-file-text"></i>
-                            </div>
-                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        """)
+        write(
+            io,
+            """
+      <div class="col">
+          <a href="$url" class="text-decoration-none card-link">
+              <div class="card h-100 shadow-sm">
+                  <div class="card-body d-flex flex-column">
+                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                          <i class="bi bi-file-text"></i>
+                      </div>
+                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
+                  </div>
+              </div>
+          </a>
+      </div>
+  """
+        )
     end
     return String(take!(io))
 end
@@ -151,10 +157,10 @@ Source: https://github.com/abhishalya/abhishalya.github.io
     list = readdir("jan/wip")
     filter!(f -> endswith(f, ".md"), list)
     sorter(p) = begin
-        ps  = splitext(p)[1]
+        ps = splitext(p)[1]
         url = "/jan/wip/$ps/"
         surl = strip(url, '/')
-        pubdate = pagevar(surl, :published)
+        pubdate = pagevar(surl, :drafted)
         if isnothing(pubdate)
             return Date(Dates.unix2datetime(stat("jan/wip/$p").ctime))
         end
@@ -167,31 +173,34 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         if post == "index.md"
             continue
         end
-        ps  = splitext(post)[1]
+        ps = splitext(post)[1]
         url = "/jan/wip/$ps/"
         surl = strip(url, '/')
         title = pagevar(surl, :title)
-        pubdate = pagevar(surl, :published)
+        pubdate = pagevar(surl, :drafted)
         if isnothing(pubdate)
             date = "$curyear-$curmonth-$curday"
         else
             date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """
-            <div class="col">
-                <a href="$url" class="text-decoration-none card-link">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                                <i class="bi bi-file-text"></i>
-                            </div>
-                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        """)
+        write(
+            io,
+            """
+      <div class="col">
+          <a href="$url" class="text-decoration-none card-link">
+              <div class="card h-100 shadow-sm">
+                  <div class="card-body d-flex flex-column">
+                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                          <i class="bi bi-file-text"></i>
+                      </div>
+                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
+                  </div>
+              </div>
+          </a>
+      </div>
+  """
+        )
     end
     return String(take!(io))
 end
@@ -210,10 +219,10 @@ Plug in the list of recent WIP posts, limited to 6 most recent.
     list = readdir("jan/wip")
     filter!(f -> endswith(f, ".md"), list)
     sorter(p) = begin
-        ps  = splitext(p)[1]
+        ps = splitext(p)[1]
         url = "/jan/wip/$ps/"
         surl = strip(url, '/')
-        pubdate = pagevar(surl, :published)
+        pubdate = pagevar(surl, :drafted)
         if isnothing(pubdate)
             return Date(Dates.unix2datetime(stat("jan/wip/$p").ctime))
         end
@@ -228,31 +237,34 @@ Plug in the list of recent WIP posts, limited to 6 most recent.
         if post == "index.md"
             continue
         end
-        ps  = splitext(post)[1]
+        ps = splitext(post)[1]
         url = "/jan/wip/$ps/"
         surl = strip(url, '/')
         title = pagevar(surl, :title)
-        pubdate = pagevar(surl, :published)
+        pubdate = pagevar(surl, :drafted)
         if isnothing(pubdate)
             date = "$curyear-$curmonth-$curday"
         else
             date = Date(pubdate, dateformat"d U Y")
         end
-        write(io, """
-            <div class="col">
-                <a href="$url" class="text-decoration-none card-link">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                                <i class="bi bi-file-text"></i>
-                            </div>
-                            <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                            <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        """)
+        write(
+            io,
+            """
+      <div class="col">
+          <a href="$url" class="text-decoration-none card-link">
+              <div class="card h-100 shadow-sm">
+                  <div class="card-body d-flex flex-column">
+                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
+                          <i class="bi bi-file-text"></i>
+                      </div>
+                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
+                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
+                  </div>
+              </div>
+          </a>
+      </div>
+  """
+        )
     end
     return String(take!(io))
 end
@@ -283,9 +295,9 @@ function hfun_custom_taglist()::String
         title = pagevar(rpath, :title)
         pubdate = pagevar(rpath, :published)
         if isnothing(pubdate)
-            date    = "$curyear-$curmonth-$curday"
+            date = "$curyear-$curmonth-$curday"
         else
-            date    = Date(pubdate, dateformat"d U Y")
+            date = Date(pubdate, dateformat"d U Y")
         end
         # write some appropriate HTML
         write(io, """$date   </i></span><a href="$url">$title</a>""")

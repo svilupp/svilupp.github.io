@@ -17,3 +17,11 @@
     text-decoration: none;
     color: inherit;
 }
+
+/* Prevent Tailwind from affecting Bootstrap styles */
+.bootstrap-styles {
+    all: revert;
+}
+.bootstrap-styles * {
+    all: revert;
+}

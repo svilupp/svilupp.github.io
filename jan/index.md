@@ -1,5 +1,6 @@
 +++
 title = "Jan's Scratchpad"
+indexpage = true
 +++
 
 ~~~

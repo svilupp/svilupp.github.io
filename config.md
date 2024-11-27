@@ -8,6 +8,7 @@ ignore = ["node_modules/", "franklin", "franklin.pub"]
 
 hasmath = false
 hascode = true
+indexpage = false
 
 # RSS setup
 generate_rss = true

@@ -1,5 +1,6 @@
 @def title = "Work in Progress"
 @def tags = ["housekeeping"]
+@def indexpage = false
 
 # Work in Progress
 

@@ -1,5 +1,6 @@
 @def title = "Scratchpad All Posts"
 @def tags = ["housekeeping"]
+@def indexpage = false
 
 
 # Posts

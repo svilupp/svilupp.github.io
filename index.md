@@ -1,5 +1,6 @@
 +++
 title = "Welcome"
+indexpage = true
 +++
 
 ~~~

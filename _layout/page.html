@@ -14,15 +14,17 @@
     {{ispage index.html}}
     {{insert nav.html}}
     {{end}}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <article class="blog-post">
-                    <h1 class="display-4 mb-4">{{title}}</h1>
-                    {{ispage posts/*}}
-                    <p class="blog-post-meta text-muted mb-4">{{published}}</p>
-                    {{end}}
-                    {{content}}
+    <div class="max-w-7xl mx-auto mt-20 px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-3/4 mx-auto">
+                <article>
+                    <div class="franklin-content">
+                        <h1 class="page-title">{{title}}</h1>
+                        {{ispage posts/*}}
+                        <p class="post-date">{{published}}</p>
+                        {{end}}
+                        {{content}}
+                    </div>
                 </article>
             </div>
         </div>

@@ -1,17 +1,17 @@
 <!-- Custom template for blog posts listing -->
-<div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {{for post in blogposts}}
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">{{fill post.title}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{fill post.rss_pubdate}}</h6>
+        <div class="w-full">
+            <div class="h-full bg-white rounded-lg shadow-sm">
+                <div class="p-6">
+                    <h5 class="text-xl font-bold mb-2">{{fill post.title}}</h5>
+                    <h6 class="text-sm text-gray-600 mb-2">{{fill post.rss_pubdate}}</h6>
                     {{if haskey(post, "rss")}}
-                    <p class="card-text">{{fill post.rss}}</p>
+                    <p class="text-gray-700">{{fill post.rss}}</p>
                     {{end}}
-                    <div class="text-center mt-auto">
-                        <a href="{{fill post.url}}" class="btn btn-primary">Read More</a>
+                    <div class="text-center mt-4">
+                        <a href="{{fill post.url}}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read More</a>
                     </div>
                 </div>
             </div>

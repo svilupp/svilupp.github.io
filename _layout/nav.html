@@ -1,71 +1,95 @@
-<header class="bootstrap-styles" data-bs-theme="dark">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container">
-      <a href="/" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text me-2" viewBox="0 0 16 16">
-          <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-        </svg>
-        <strong>siml.earth</strong>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <!-- Top-level navigation -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Sites
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><h6 class="dropdown-header">Choose a Site</h6></li>
-              <li><a class="dropdown-item" href="/jan/">Jan's Site</a></li>
-              <li><a class="dropdown-item" href="/ann/">Ann's Site</a></li>
-            </ul>
-          </li>
+<header class="dark">
+  <nav class="bg-gray-800 fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo section -->
+        <div class="flex items-center flex-1">
+          <a href="/" class="flex items-center text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 16 16" stroke="currentColor">
+              <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+            <strong>siml.earth</strong>
+          </a>
 
-          <!-- Jan's site navigation -->
-          {{ispage /jan/*}}
-          <li class="nav-item"><hr class="dropdown-divider mx-2"></li>
-          <li class="nav-item">
-            <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/jan/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/scratchpad/">Posts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/wip/">Work in Progress</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/about/">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/tags/">Tags</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/privacy_policy/">Privacy Policy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/cookie_policy/">Cookie Policy</a>
-          </li>
-          {{end}}
+          <!-- Desktop menu - Move it inside the flex-1 container -->
+          <div class="hidden md:block ml-6">
+            <div class="flex items-center space-x-4">
+              <!-- Sites Dropdown -->
+              <div class="relative group">
+                <button class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  Sites
+                </button>
+                <div class="hidden group-hover:block absolute z-50 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 before:content-[''] before:absolute before:top-[-10px] before:left-0 before:w-full before:h-[10px]">
+                  <div class="py-1">
+                    <div class="px-4 py-2 text-sm text-gray-700">Choose a Site</div>
+                    <a href="/jan/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jan's Site</a>
+                    <a href="/ann/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Ann's Site</a>
+                  </div>
+                </div>
+              </div>
 
-          <!-- Ann's site navigation -->
-          {{ispage /ann/*}}
-          <li class="nav-item"><hr class="dropdown-divider mx-2"></li>
-          <li class="nav-item">
-            <span class="navbar-text px-2 fw-bold d-flex align-items-center">Ann's:</span>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/ann/">Under Construction</a>
-          </li>
-          {{end}}
-        </ul>
+              <!-- Jan's navigation -->
+              {{ispage /jan/*}}
+              <div class="border-l border-gray-700 h-6"></div>
+              <span class="text-gray-300 font-bold">Jan's:</span>
+              <a href="/jan/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">Home</a>
+              <a href="/jan/scratchpad/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">Posts</a>
+              <a href="/jan/wip/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">Work in Progress</a>
+              <a href="/jan/about/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">About</a>
+              <a href="/jan/tags/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">Tags</a>
+              <a href="/jan/privacy_policy/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">Privacy Policy</a>
+              <a href="/jan/cookie_policy/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">Cookie Policy</a>
+              {{end}}
+
+              <!-- Ann's navigation -->
+              {{ispage /ann/*}}
+              <div class="border-l border-gray-700 h-6"></div>
+              <span class="text-gray-300 font-bold">Ann's:</span>
+              <a href="/ann/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm">Under Construction</a>
+              {{end}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile menu button - Keep it at the end -->
+        <button type="button" class="md:hidden bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none" 
+                aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <!-- Menu icon -->
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <!-- Mobile menu items -->
+        <a href="/jan/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Jan's Site</a>
+        <a href="/ann/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Ann's Site</a>
+        
+        {{ispage /jan/*}}
+        <div class="border-t border-gray-700 my-2"></div>
+        <span class="text-gray-300 font-bold px-3">Jan's:</span>
+        <!-- Jan's mobile links -->
+        <a href="/jan/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">Home</a>
+        <a href="/jan/scratchpad/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">Posts</a>
+        <a href="/jan/wip/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">Work in Progress</a>
+        <a href="/jan/about/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">About</a>
+        <a href="/jan/tags/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">Tags</a>
+        <a href="/jan/privacy_policy/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">Privacy Policy</a>
+        <a href="/jan/cookie_policy/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">Cookie Policy</a>
+        {{end}}
+
+        {{ispage /ann/*}}
+        <div class="border-t border-gray-700 my-2"></div>
+        <span class="text-gray-300 font-bold px-3">Ann's:</span>
+        <a href="/ann/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base">Under Construction</a>
+        {{end}}
       </div>
     </div>
   </nav>

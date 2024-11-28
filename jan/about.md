@@ -1,6 +1,6 @@
-+++
-title = "About"
-+++
+@def title = "About"
+@def tags = ["housekeeping"]
+@def indexpage = false
 
 # Hey there! 👋
 
@@ -24,6 +24,7 @@ I'm passionate about:
 ## 📬 Getting in Touch
 
 - **LinkedIn:** [Connect with me](https://www.linkedin.com/in/jan-siml-360a3858/)
+- **GitHub:** [See my projects](https://github.com/svilupp)
 - **Julia Language Slack:** @svilupp
 
 ---

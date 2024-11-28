@@ -5,25 +5,21 @@
 </head>
 <body>
     <!-- Choose navigation based on current section -->
-    {{ispage /jan/*}}
-    {{insert nav_jan.html}}
-    {{end}}
-    {{ispage /ann/*}}
-    {{insert nav_ann.html}}
-    {{end}}
-    {{ispage index.html}}
     {{insert nav.html}}
-    {{end}}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <article class="blog-post">
-                    <h1 class="display-4 mb-4">{{title}}</h1>
-                    {{ispage posts/*}}
-                    <p class="blog-post-meta text-muted mb-4">{{published}}</p>
-                    {{end}}
-                    {{content}}
-                </article>
+    <!-- Added additional top margin with mt-5 before the container -->
+    <div class="mt-5">
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <article class="blog-post">
+                        <h1 class="display-4 mb-4">{{title}}</h1>
+                        {{ispage scratchpad/*}}
+                        <p class="blog-post-meta text-muted mb-4">{{published}}</p>
+                        {{end}}
+                        <h1> Massive Ass</h1>
+                        {{content}}
+                    </article>
+                </div>
             </div>
         </div>
     </div>

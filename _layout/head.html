@@ -8,7 +8,7 @@
   {{insert style.html}}
   <link rel="stylesheet" href="/_css/custom.css">
   {{isdef title}} <title>{{fill title}}</title>  {{end}}
-  {{if indexpage}} {{insert head_tailwind.html}} {{end}}
+  <!-- {{if indexpage}} {{insert head_tailwind.html}} {{end}} -->
   <!-- {{ispage /jan/index.html}} {{insert head_tailwind.html}} {{end}}
   {{ispage /index.html}} {{insert head_tailwind.html}} {{end}}
   {{ispage /jan/wip.html}} {{insert head_tailwind.html}} {{end}}
@@ -16,4 +16,11 @@
 </head>
 <body>
   {{insert nav.html}}
-  <div class="container py-3 px-3 mx-auto">
+  <div class="container px-3 mx-auto {{if indexpage}}pt-10{{else}}pt-20{{end}}">
+
+    {{ispage jan/scratchpad/*}}
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl font-bold mb-4 text-center">{{title}}</h1>
+      {{isdef published}}<p class="text-gray-600 mb-8 text-center">{{published}}</p>{{end}}
+    </div>
+    {{end}}

@@ -59,20 +59,20 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         write(
             io,
             """
-      <div class="col">
-          <a href="$url" class="text-decoration-none card-link">
-              <div class="card h-100 shadow-sm">
-                  <div class="card-body d-flex flex-column">
-                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                          <i class="bi bi-file-text"></i>
-                      </div>
-                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                  </div>
-              </div>
-          </a>
-      </div>
-  """
+        <div class="col">
+            <a href="$url" class="text-decoration-none">
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 h-[200px] flex flex-col">
+                    <div class="p-4 flex flex-col items-center justify-center flex-grow">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h5 class="text-sm font-semibold text-gray-900 mb-2 text-center line-clamp-2">$(isnothing(title) ? ps : title)</h5>
+                        <p class="text-xs text-gray-500 text-center">$date</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        """
         )
     end
     return String(take!(io))
@@ -123,20 +123,20 @@ Plug in the list of recent blog posts, limited to 6 most recent.
         write(
             io,
             """
-      <div class="col">
-          <a href="$url" class="text-decoration-none card-link">
-              <div class="card h-100 shadow-sm">
-                  <div class="card-body d-flex flex-column">
-                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                          <i class="bi bi-file-text"></i>
-                      </div>
-                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                  </div>
-              </div>
-          </a>
-      </div>
-  """
+        <div class="col">
+            <a href="$url" class="text-decoration-none">
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 h-[200px] flex flex-col">
+                    <div class="p-4 flex flex-col items-center justify-center flex-grow">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h5 class="text-sm font-semibold text-gray-900 mb-2 text-center line-clamp-2">$(isnothing(title) ? ps : title)</h5>
+                        <p class="text-xs text-gray-500 text-center">$date</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        """
         )
     end
     return String(take!(io))
@@ -186,20 +186,20 @@ Source: https://github.com/abhishalya/abhishalya.github.io
         write(
             io,
             """
-      <div class="col">
-          <a href="$url" class="text-decoration-none card-link">
-              <div class="card h-100 shadow-sm">
-                  <div class="card-body d-flex flex-column">
-                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                          <i class="bi bi-file-text"></i>
-                      </div>
-                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                  </div>
-              </div>
-          </a>
-      </div>
-  """
+        <div class="col">
+            <a href="$url" class="text-decoration-none">
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 h-[200px] flex flex-col">
+                    <div class="p-4 flex flex-col items-center justify-center flex-grow">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h5 class="text-sm font-semibold text-gray-900 mb-2 text-center line-clamp-2">$(isnothing(title) ? ps : title)</h5>
+                        <p class="text-xs text-gray-500 text-center">$date</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        """
         )
     end
     return String(take!(io))
@@ -250,20 +250,20 @@ Plug in the list of recent WIP posts, limited to 6 most recent.
         write(
             io,
             """
-      <div class="col">
-          <a href="$url" class="text-decoration-none card-link">
-              <div class="card h-100 shadow-sm">
-                  <div class="card-body d-flex flex-column">
-                      <div class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-3 mx-auto" style="width: 48px; height: 48px;">
-                          <i class="bi bi-file-text"></i>
-                      </div>
-                      <h5 class="card-title text-center mb-2 text-dark">$(isnothing(title) ? ps : title)</h5>
-                      <p class="card-subtitle mb-3 text-muted text-center small">$date</p>
-                  </div>
-              </div>
-          </a>
-      </div>
-  """
+        <div class="col">
+            <a href="$url" class="text-decoration-none">
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 h-[200px] flex flex-col">
+                    <div class="p-4 flex flex-col items-center justify-center flex-grow">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h5 class="text-sm font-semibold text-gray-900 mb-2 text-center line-clamp-2">$(isnothing(title) ? ps : title)</h5>
+                        <p class="text-xs text-gray-500 text-center">$date</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        """
         )
     end
     return String(take!(io))

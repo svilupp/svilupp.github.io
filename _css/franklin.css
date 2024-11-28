@@ -74,22 +74,64 @@ html {
     TEXT GEOMETRY
 ================================================================== */
 
+.franklin-toc {
+    padding-left: 0;
+}
+
+.franklin-toc ol {
+    counter-reset: item;
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
 .franklin-toc li {
-  /* Avoid clickable elements being too close together. */
-  margin: 0.6rem 0;
+    display: block;
+    margin: 0.25rem 0;
+}
+
+/* Top level items */
+.franklin-toc > ol > li:before {
+    content: counter(item, lower-alpha) ". ";
+    counter-increment: item;
+}
+
+/* Nested items */
+.franklin-toc > ol > li > ol > li {
+    padding-left: 2rem;
+}
+
+/* Remove bullets from empty items */
+.franklin-toc li:empty {
+    display: none;
+}
+
+.franklin-toc li > ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Links in TOC */
+.franklin-toc a {
+    color: #004de6;
+    text-decoration: none;
+}
+
+.franklin-toc a:hover {
+    text-decoration: underline;
 }
 
 .franklin-content {
   position: relative;
-  padding-left: 12.5%;
-  padding-right: 12.5%;
+  padding-left: 8%;
+  padding-right: 8%;
   line-height: 1.35em;
 }
 
 /* On wide screens, fix content width to a max value. */
 @media (min-width: 940px) {
   .franklin-content {
-    width: 705px;
+    width: 850px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -98,8 +140,8 @@ html {
 /* On narrow device, reduce margins. */
 @media (max-width: 480px) {
   .franklin-content {
-    padding-left: 6%;
-    padding-right: 6%;
+    padding-left: 4%;
+    padding-right: 4%;
   }
 }
 
@@ -333,4 +375,73 @@ code {
   margin-bottom: 5px;
   border-radius: 0 10px 10px 0;
   border-left: 5px solid #4c9cf1;
+}
+
+/* ==================================================================
+    CUSTOM BUTTON STYLES
+================================================================== */
+
+/* Override any conflicting styles for our Tailwind buttons */
+.franklin-content a.inline-block {
+  color: white;
+  text-decoration: none;
+}
+
+.franklin-content a.inline-block:hover {
+  text-decoration: none;
+}
+
+/* Ensure proper button colors and contrast */
+.franklin-content a.bg-indigo-700 {
+  background-color: #4338ca !important; /* indigo-700 */
+}
+
+.franklin-content a.bg-indigo-700:hover {
+  background-color: #3730a3 !important; /* indigo-800 */
+}
+
+/* Ensure proper text contrast */
+.franklin-content a.text-white {
+  color: white !important;
+}
+
+/* Ensure proper padding and margins aren't overwritten */
+.franklin-content a.px-6 {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.franklin-content a.py-3 {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* ==================================================================
+    CONTENT LISTS (non-TOC)
+================================================================== */
+
+.franklin-content ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+}
+
+.franklin-content ol {
+    list-style-type: decimal;
+    padding-left: 2rem;
+}
+
+.franklin-content ul li,
+.franklin-content ol li {
+    margin: 0.5rem 0;
+}
+
+.franklin-content ul ul,
+.franklin-content ol ul {
+    list-style-type: circle;
+    margin: 0.5rem 0;
+}
+
+.franklin-content ul ul ul,
+.franklin-content ol ul ul {
+    list-style-type: square;
 }

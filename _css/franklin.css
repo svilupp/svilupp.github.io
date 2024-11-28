@@ -80,47 +80,78 @@ html {
 }
 
 .franklin-content {
-  @apply max-w-none prose prose-slate lg:prose-lg prose-headings:font-bold prose-headings:border-gray-200 px-4 sm:px-6 md:px-8;
-  line-height: 1.6;
-  padding-left: 0;
-  padding-right: 0;
+  max-width: 65ch;
+  margin: 0 auto;
+  line-height: 1.75;
+  color: #374151;
+  font-size: 1.125rem;
 }
 
-/* On wide screens, fix content width to a max value. */
-@media (min-width: 940px) {
-  .franklin-content {
-    width: 705px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+/* Content Typography */
+.franklin-content p {
+  margin: 1.5rem 0;
+  line-height: 1.75;
 }
 
-/* On narrow device, reduce margins. */
-@media (max-width: 480px) {
-  .franklin-content {
-    padding-left: 6%;
-    padding-right: 6%;
-  }
+.franklin-content ul,
+.franklin-content ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+  list-style-position: outside;
 }
 
-/* ==================================================================
-    TITLES
-================================================================== */
+.franklin-content ul {
+  list-style-type: disc;
+}
+
+.franklin-content ol {
+  list-style-type: decimal;
+}
+
+.franklin-content li {
+  margin: 0.5rem 0;
+  padding-left: 0.5rem;
+}
 
 .franklin-content h1 {
-  @apply text-4xl font-bold mt-8 mb-4;
-  padding-bottom: 0.5em;
-  border-bottom: 3px double #e5e7eb;
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+  color: #111827;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .franklin-content h2 {
-  @apply text-3xl font-semibold mt-6 mb-3;
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin: 1.75rem 0 1rem;
+  color: #111827;
+}
+
+.franklin-content h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 1.5rem 0 1rem;
+  color: #111827;
+}
+
+.franklin-content h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #111827;
   padding-bottom: 0.3em;
   border-bottom: 1px solid #e5e7eb;
 }
 
 .franklin-content h3 {
-  @apply text-2xl font-medium mt-4 mb-2;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #111827;
 }
 
 .franklin-content h1,
@@ -129,7 +160,7 @@ h3,
 h4,
 h5,
 h6 {
-  @apply text-gray-900;
+  color: #111827;
 }
 
 .franklin-content h1 a { color: inherit; }
@@ -173,6 +204,22 @@ td {
 
 .franklin-content blockquote p {
   display: inline;
+}
+
+/* Spacing between bullet points. */
+.franklin-content li p {
+  margin: 0.75rem 0;
+}
+
+.franklin-content a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.franklin-content a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
 /* ==================================================================
@@ -325,9 +372,51 @@ code {
 
 /* Code block styling */
 .franklin-content pre {
-  @apply my-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-x-auto;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+  overflow-x: auto;
 }
 
 .franklin-content code {
-  @apply px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono text-sm;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+}
+
+/* Content Typography */
+.franklin-content p {
+  margin: 1.5rem 0;
+}
+
+.franklin-content ul,
+.franklin-content ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.franklin-content li {
+  margin: 0.5rem 0;
+}
+
+/* Page Title Styling */
+.page-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  color: #111827;
+}
+
+/* Post Date */
+.post-date {
+  color: #6b7280;
+  font-size: 1rem;
+  margin-bottom: 2rem;
 }

@@ -5,15 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {{if hasmath}} {{insert head_katex.html }}     {{end}}
   {{if hascode}} {{insert head_highlight.html }}   {{end}}
+  {{insert head_tailwind.html}}
   {{insert style.html}}
   <link rel="stylesheet" href="/_css/custom.css">
   {{isdef title}} <title>{{fill title}}</title>  {{end}}
-  {{if indexpage}} {{insert head_tailwind.html}} {{end}}
-  <!-- {{ispage /jan/index.html}} {{insert head_tailwind.html}} {{end}}
-  {{ispage /index.html}} {{insert head_tailwind.html}} {{end}}
-  {{ispage /jan/wip.html}} {{insert head_tailwind.html}} {{end}}
-  {{ispage /jan/scratchpad/index.html}} {{insert head_tailwind.html}} {{end}} -->
 </head>
 <body>
   {{insert nav.html}}
-  <div class="container py-3 px-3 mx-auto">
+  <div class="max-w-7xl mx-auto py-3 px-3">

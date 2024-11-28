@@ -18,10 +18,11 @@
     color: inherit;
 }
 
-/* Prevent Tailwind from affecting Bootstrap styles */
-.bootstrap-styles {
-    all: revert;
+/* Any styles that can't be handled by Tailwind utilities directly */
+.hover-lift {
+    @apply transition-all duration-200 ease-in-out;
 }
-.bootstrap-styles * {
-    all: revert;
+
+.hover-lift:hover {
+    @apply -translate-y-1 shadow-lg;
 }

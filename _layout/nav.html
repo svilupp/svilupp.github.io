@@ -1,71 +1,51 @@
-<header class="bootstrap-styles" data-bs-theme="dark">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container">
-      <a href="/" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text me-2" viewBox="0 0 16 16">
+<header class="bg-gray-800 fixed w-full top-0 z-50">
+  <nav class="mx-auto max-w-7xl px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="/" class="flex items-center text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2" viewBox="0 0 16 16">
           <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
           <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
           <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
         </svg>
         <strong>siml.earth</strong>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="md:hidden text-gray-400 hover:text-white" type="button" @click="open = !open" aria-label="Toggle navigation">
+        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+          <path class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <!-- Top-level navigation -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Sites
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><h6 class="dropdown-header">Choose a Site</h6></li>
-              <li><a class="dropdown-item" href="/jan/">Jan's Site</a></li>
-              <li><a class="dropdown-item" href="/ann/">Ann's Site</a></li>
-            </ul>
-          </li>
+      <div class="hidden md:flex md:items-center md:space-x-4">
+        <!-- Top-level navigation -->
+        <div class="relative group">
+          <button class="text-gray-300 hover:text-white px-3 py-2">Sites</button>
+          <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block">
+            <div class="py-1">
+              <div class="px-4 py-2 text-sm text-gray-700">Choose a Site</div>
+              <a href="/jan/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jan's Site</a>
+              <a href="/ann/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Ann's Site</a>
+            </div>
+          </div>
+        </div>
 
-          <!-- Jan's site navigation -->
-          {{ispage /jan/*}}
-          <li class="nav-item"><hr class="dropdown-divider mx-2"></li>
-          <li class="nav-item">
-            <span class="navbar-text px-2 fw-bold d-flex align-items-center">Jan's:</span>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/jan/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/scratchpad/">Posts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/wip/">Work in Progress</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/about/">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/tags/">Tags</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/privacy_policy/">Privacy Policy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jan/cookie_policy/">Cookie Policy</a>
-          </li>
-          {{end}}
+        <!-- Jan's site navigation -->
+        {{ispage /jan/*}}
+        <div class="border-l border-gray-700 h-6"></div>
+        <span class="text-gray-300 font-bold">Jan's:</span>
+        <a href="/jan/" class="text-gray-300 hover:text-white px-3 py-2">Home</a>
+        <a href="/jan/scratchpad/" class="text-gray-300 hover:text-white px-3 py-2">Posts</a>
+        <a href="/jan/wip/" class="text-gray-300 hover:text-white px-3 py-2">Work in Progress</a>
+        <a href="/jan/about/" class="text-gray-300 hover:text-white px-3 py-2">About</a>
+        <a href="/jan/tags/" class="text-gray-300 hover:text-white px-3 py-2">Tags</a>
+        <a href="/jan/privacy_policy/" class="text-gray-300 hover:text-white px-3 py-2">Privacy Policy</a>
+        <a href="/jan/cookie_policy/" class="text-gray-300 hover:text-white px-3 py-2">Cookie Policy</a>
+        {{end}}
 
-          <!-- Ann's site navigation -->
-          {{ispage /ann/*}}
-          <li class="nav-item"><hr class="dropdown-divider mx-2"></li>
-          <li class="nav-item">
-            <span class="navbar-text px-2 fw-bold d-flex align-items-center">Ann's:</span>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/ann/">Under Construction</a>
-          </li>
-          {{end}}
-        </ul>
+        <!-- Ann's site navigation -->
+        {{ispage /ann/*}}
+        <div class="border-l border-gray-700 h-6"></div>
+        <span class="text-gray-300 font-bold">Ann's:</span>
+        <a href="/ann/" class="text-gray-300 hover:text-white px-3 py-2">Under Construction</a>
+        {{end}}
       </div>
     </div>
   </nav>

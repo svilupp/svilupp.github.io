@@ -80,10 +80,10 @@ html {
 }
 
 .franklin-content {
-  position: relative;
-  padding-left: 12.5%;
-  padding-right: 12.5%;
-  line-height: 1.35em;
+  @apply max-w-none prose prose-slate lg:prose-lg prose-headings:font-bold prose-headings:border-gray-200 px-4 sm:px-6 md:px-8;
+  line-height: 1.6;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* On wide screens, fix content width to a max value. */
@@ -107,9 +107,21 @@ html {
     TITLES
 ================================================================== */
 
-.franklin-content h1 { font-size: 24px; }
-.franklin-content h2 { font-size: 22px; }
-.franklin-content h3 { font-size: 20px; }
+.franklin-content h1 {
+  @apply text-4xl font-bold mt-8 mb-4;
+  padding-bottom: 0.5em;
+  border-bottom: 3px double #e5e7eb;
+}
+
+.franklin-content h2 {
+  @apply text-3xl font-semibold mt-6 mb-3;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.franklin-content h3 {
+  @apply text-2xl font-medium mt-4 mb-2;
+}
 
 .franklin-content h1,
 h2,
@@ -117,21 +129,7 @@ h3,
 h4,
 h5,
 h6 {
-  text-align: left;
-}
-
-.franklin-content h1 {
-  padding-bottom: 0.5em;
-  border-bottom: 3px double lightgrey;
-  margin-top: 1.5em;
-  margin-bottom: 1em;
-}
-
-.franklin-content h2 {
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid lightgrey;
-  margin-top: 2em;
-  margin-bottom: 1em;
+  @apply text-gray-900;
 }
 
 .franklin-content h1 a { color: inherit; }
@@ -292,16 +290,6 @@ code {
   font-size: var(--small);
 }
 
-/* .franklin-content code { */
-
-/* background-color: rgba(27,31,35,0.05); */
-
-/* padding: 0.1em 0.2em; */
-
-/* border-radius: 2px; */
-
-/* font-size: 90%; } */
-
 .hljs {
   font-size: var(--small);
   line-height: 1.35em;
@@ -333,4 +321,13 @@ code {
   margin-bottom: 5px;
   border-radius: 0 10px 10px 0;
   border-left: 5px solid #4c9cf1;
+}
+
+/* Code block styling */
+.franklin-content pre {
+  @apply my-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-x-auto;
+}
+
+.franklin-content code {
+  @apply px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono text-sm;
 }

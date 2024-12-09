@@ -55,6 +55,8 @@ Despite never having touched Xcode before, the journey from idea to working app 
 
 The result isn't just a working app – it's proof that we're entering an age where personal software development is accessible to anyone willing to learn. When the perfect solution doesn't exist in the App Store, maybe it's time to build it yourself.
 
+## What's Next?
+
 Want to explore the app or learn more about the development process? Check it out at [Memsieve.app](https://github.com/svilupp/ios-memsieve-app).
 
 ![Recording View](/assets/memsieve_ios_app/screenshot.png)

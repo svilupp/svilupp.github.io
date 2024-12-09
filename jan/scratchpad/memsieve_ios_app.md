@@ -57,7 +57,7 @@ The result isn't just a working app – it's proof that we're entering an age wh
 
 Want to explore the app or learn more about the development process? Check it out at [Memsieve.app](https://github.com/svilupp/ios-memsieve-app).
 
-![Recording View](/assets/memsieve_ios_app/recording_view.png)
-![Transcription View](/assets/memsieve_ios_app/transcription_view.png)
+![Recording View](/assets/memsieve_ios_app/screenshot.png)
+![Transcription View](/assets/memsieve_ios_app/screenshot2.png)
 
 *This post is part of a series exploring practical applications of GenAI in personal software development.*

@@ -29,7 +29,7 @@ I put Flash 2.0 to the test with a basic object detection task in screenshots - 
 
 ### Test Case 2: UI Navigation Understanding
 
-Let's try something a bit more complex - a GitHub branch change. This tasks requires both visual understanding and contextual reasoning to know where to click.
+Let's try something a bit more complex - a GitHub branch change. This task requires both visual understanding and contextual reasoning to know where to click.
 
 ![Screenshot 2 with GitHub branch change](/assets/compuse_gemini_flash2/github_detections2.png)
 

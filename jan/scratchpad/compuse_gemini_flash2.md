@@ -13,7 +13,7 @@ For the past couple of months, I've been wrestling with various computer vision 
 
 ## Enter Gemini Flash 2.0
 
-Google announced Gemini Flash 2.0 today, and while the benchmarks are impressive, what's truly revolutionary are its tool-use and multimodal capabilities together. Not only does it excel at computer vision and screenshot understanding, but it also demonstrates strong performance across other modalities - bringing us closer to "Jarvis"-like experiences. Most remarkably, it delivers this comprehensive "Computer Use" experience at the same price point as the original Flash model.
+Google announced [Gemini Flash 2.0](https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/#gemini-2-0-flash) today, and while the benchmarks are impressive, what's truly revolutionary are its tool-use and multimodal capabilities together. Not only does it excel at computer vision and screenshot understanding, but it also demonstrates strong performance across other modalities - bringing us closer to "Jarvis"-like experiences. Most remarkably, it delivers this comprehensive "Computer Use" experience at the same price point as the original Flash model.
 
 Note: If you use PromptingTools.jl, use `model = "gem20f"` with version `0.69` or higher.
 

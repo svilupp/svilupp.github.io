@@ -5,7 +5,7 @@
 
 ## TL;DR
 
-Gemini Flash 2.0 was just announced today, and it seems to be a game-changer for "Computer Use" - a term coined by Anthropic for agent-based computer control. Beyond just computer vision (and understand of screenshots specifically), it offers a comprehensive solution for multimodal AI interaction at an incredibly accessible price point.
+Gemini Flash 2.0 was just announced today, and it seems to be a game-changer for "Computer Use" - a term coined by Anthropic for agent-based computer control. Beyond just computer vision (and understanding of screenshots specifically), it offers a comprehensive solution for tool-use and multimodal AI interactions at an incredibly accessible price point.
 
 ## The Problem with Specialized Solutions
 
